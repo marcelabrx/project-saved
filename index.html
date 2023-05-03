@@ -131,7 +131,7 @@
                         <h2 class="pt-6 pb-6 text-gray-900 text-2xl font-bold">Operaciones</h2>
                         <button class="px-2 py-2 bg-purple-500 rounded-md text-white hover:bg-purple-700">+ Nueva Operación</button>
                     </div>
-                    <div class="flex items-center justify-center text-gray-600">
+                    <div class="flex items-center justify-center text-gray-600 pb-4">
                         <div class="flex-col">
                             <img class="p-4" src="./img/wallet.svg" alt="wallet__operation">
                             <p class="mb-4 text-xl font-bold text-center ">Sin resultados</p>
@@ -163,6 +163,47 @@
                 </div>
             </div>
         </section>
+        <!-- Card - "Nueva operacion" -->
+        <div class="lg:my-20">
+            <form class= "flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
+                <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Nueva Operación</h2>
+                <section class="flex flex-wrap">
+                    <label class="font-bold w-full px-4 pt-6 pb-2">Descripción</label>
+                    <input type="text" class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
+                </section>
+                <section class="flex flex-wrap">
+                    <label class="font-bold w-full px-4 pt-6 pb-2">Monto</label>
+                    <input type="number" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
+                </section>
+                <section class="flex flex-wrap">
+                    <label class="font-bold w-full px-4 pt-6 pb-2">Tipo</label>
+                    <select name="" id="" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                        <option value="">Gasto</option>
+                        <option value="">Ganancia</option>
+                    </select>
+                </section>
+                <section class="flex flex-wrap">
+                    <label for="" class="font-bold w-full px-4 pt-6 pb-2">Categoría</label>
+                    <select class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                        <option value="">Todas</option>
+                        <option value="">Comida</option>
+                        <option value="">Servicios</option>
+                        <option value="">Salidas</option>
+                        <option value="">Educación</option>
+                        <option value="">Transporte</option>
+                        <option value="">Trabajo</option>
+                    </select>
+                </section>
+                <section class="flex flex-wrap">
+                    <label for="" class="font-bold w-full px-4 pt-6 pb-2">Fecha</label>
+                    <input type="date" name="" id="" class="w-full flex items-start border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                </section>
+                <div class="flex items-end justify-end mt-10">
+                    <button class="px-8 py-2 mr-4 rounded-md bg-neutral-100 hover:bg-[#ebebeb]">Cancelar</button> 
+                    <button class="px-8 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700 text-white">Agregar</button>
+                </div>
+            </form>
+        </div>
         <!-- Section - "Categorias" -->
         <section class="my-20">
             <div class= "flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
