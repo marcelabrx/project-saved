@@ -82,7 +82,7 @@
                     <!-- Filters Pannel -->
                     <form action="">
                         <!-- Filters Pannel - Type -->
-                        <div class="" py-4 text-gray-900">
+                        <div class=" py-4 text-gray-900">
                             <label class="text-lg font-bold ml-1">Tipo</label>
                             <select class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                                 <option value="">Todos</option>
@@ -124,23 +124,23 @@
                 </div>
             </div>
             <!-- Card - "Operaciones" -->
-            <div class="flex-col bg-white mx-6 mt-20 mb-10 px-4 pb-4 radius rounded-lg shadow-xl lg:w-2/4 lg:mb-20 lg:">
+            <div class="flex-col bg-white mx-6 mt-20 mb-10 px-4 pb-4 radius rounded-lg shadow-xl lg:w-2/4 lg:mb-20 lg:h-fit">
                 <!-- Section - any operation  -->
                 <div class="">
                     <div class="lg:flex justify-between items-center lg:m-5">
                         <h2 class="pt-6 pb-6 text-gray-900 text-2xl font-bold">Operaciones</h2>
                         <button class="px-2 py-2 bg-purple-500 rounded-md text-white hover:bg-purple-700">+ Nueva Operación</button>
                     </div>
-                    <div class="hidden flex items-center justify-center text-gray-600">
+                    <div class="flex items-center justify-center text-gray-600">
                         <div class="flex-col">
-                            <img class="p-4 lg:py-20" src="./img/wallet.svg" alt="wallet__operation">
+                            <img class="p-4" src="./img/wallet.svg" alt="wallet__operation">
                             <p class="mb-4 text-xl font-bold text-center ">Sin resultados</p>
                             <p class="text-center">Cambia los filtros o agrega operaciones</p>
                         </div>
                     </div>
                 </div>
                 <!-- Section - information new operation -->
-                <div class="mt-4">
+                <div class="mt-4 hidden">
                     <table class="w-full table-fixed border border-purple-100 flex-wrap">           
                         <tr class="hidden border border-purple-100 md:flex md:justify-between ">
                             <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Descripción</th>
@@ -155,8 +155,8 @@
                             <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">27/11/1999</td>
                             <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">$300</td>
                             <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
-                                <button class="p-2"><i class="fa-solid fa-pen-to-square text-green-600"></i></button> 
-                                <button class="p-2"><i class="fa-solid fa-trash text-red-600"></i></button>
+                                <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
+                                <button><i class="fa-solid fa-trash text-red-600"></i></button>
                             </td>
                         </tr>
                     </table>
@@ -172,53 +172,52 @@
                     <input type="text" class="p-2 ml-2 w-[65%] border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 lg:w-[85%]">
                     <button class="p-2 w-[25%] rounded-lg bg-purple-500 text-white lg:w-[10%]">Agregar</button>
                 </section>
-                <div class="flex flex-col text-xs">
+                <div class="flex flex-col text-md">
                     <article class="flex justify-between p-4">
                         <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500"> Comida</p>
                         <div>
-                            <button class="p-2"><i class="fa-solid fa-pen-to-square text-green-600"></i></button>
-                            <button class="p-2"><i class="fa-solid fa-trash text-red-600"></i></button>
+                            <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
+                            <button><i class="fa-solid fa-trash text-red-600"></i></button>
                         </div>
                     </article>
                     <article class="flex justify-between align-center p-4">
                         <p class=" p-2 w-fit rounded-lg bg-purple-50 text-purple-500">Servicios</p>
                         <div>
-                        <button class="p-2"><i class="fa-solid fa-pen-to-square text-green-600"></i></button>
-                        <button class="p-2"><i class="fa-solid fa-trash text-red-600"></i></button>
+                        <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
+                        <button><i class="fa-solid fa-trash text-red-600"></i></button>
                     </div>
                     </article>
                     <article class="flex justify-between align-center p-4">
-                        <p class=" p-2 w-fit rounded-lg bg-purple-50 text-purple-500">Salidas</p>
+                        <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500">Salidas</p>
                         <div>
-                        <button class="p-2"><i class="fa-solid fa-pen-to-square text-green-600"></i></button>
-                        <button class="p-2"><i class="fa-solid fa-trash text-red-600"></i></button>
+                        <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
+                        <button><i class="fa-solid fa-trash text-red-600"></i></button>
                     </div>
                     </article>
                     <article class="flex justify-between align-center p-4">
                         <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500 ">Educación</p>
                         <div>
-                        <button class="p-2"><i class="fa-solid fa-pen-to-square text-green-600"></i></button>
-                        <button class="p-2"><i class="fa-solid fa-trash text-red-600"></i></button>
+                        <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
+                        <button><i class="fa-solid fa-trash text-red-600"></i></button>
                     </div>
                     </article>
                     <article class="flex justify-between align-center p-4">
                         <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500">Transporte</p>
                         <div>
-                        <button class="p-2"><i class="fa-solid fa-pen-to-square text-green-600"></i></button>
-                        <button class="p-2 text-red-600"><i class="fa-solid fa-trash text-red-600"></i></button>
+                        <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
+                        <button><i class="fa-solid fa-trash text-red-600"></i></button>
                     </div>
                     </article>
                     <article class="flex justify-between align-center p-4">
                         <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500">Trabajo</p>
                         <div>
-                        <button class="p-2"><i class="fa-solid fa-pen-to-square text-green-600"></i></button>
-                        <button class="p-2"><i class="fa-solid fa-trash text-red-600"></i></button>
+                        <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
+                        <button><i class="fa-solid fa-trash text-red-600"></i></button>
                     </div>
                     </article>
                 </div>
             </div>
         </section>
     </main>
-
 </body>
 </html>
