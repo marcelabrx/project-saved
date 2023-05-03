@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <script src="https://kit.fontawesome.com/a7b05e6997.js" crossorigin="anonymous"></script>
     <title>Proyecto Ahorradas</title>
+    <link rel="icon" href="./img/saved.ico">
 </head>
 <body class="bg-[#ebebeb] box-border m-0 p-0">
     <!-- ****** Header ****** -->
@@ -52,6 +53,116 @@
         </nav>
     </header>
     <main>
+        <!-- Section - "Balance" -->
+        <section class="lg:flex lg:justify-center lg:align-start lg:px-20 lg:py-10">
+            <div class="lg:w-1/4">
+                <!-- Card - "Balance" -->
+                <div class="flex-col bg-white mx-6 mt-20 mb-8 px-4 radius rounded-lg shadow-xl lg:mb-0">
+                    <h2 class="pt-6 pb-10 text-4xl font-bold">Balance</h2>
+                    <div class="flex justify-between py-4 text-gray-900">
+                        <div class="text-lg">Ganancias</div>
+                        <div class="text-green-500">+$0</div>
+                    </div>
+                    <div class="flex justify-between py-4 text-gray-900">
+                        <div class="text-lg">Gastos</div>
+                        <div class="text-red-600">+$0</div>
+                    </div>
+                    <div class="flex justify-between py-4 text-gray-900">
+                        <div class="text-2xl">Total</div>
+                        <div>$0</div>
+                    </div>
+                </div>
+                <!-- Card - "Filtros" -->
+                <div class="flex-col bg-white mx-6 mt-20 px-4 pb-4 radius rounded-lg shadow-xl lg:mt-6">
+                    <div class="flex justify-between">
+                        <h2 class="pt-6 pb-10 text-gray-900 text-2xl font-bold">Filtros</h2>
+                        <a href="" class="pt-8 pb-10 text-blue-600 hover:text-gray-900 active:text-gray-900">Ocultar Filtros</a>
+                        <a href="" class="hidden pt-8 pb-10 text-blue-600">Mostrar Filtros</a>
+                    </div>
+                    <!-- Filters Pannel -->
+                    <form action="">
+                        <!-- Filters Pannel - Type -->
+                        <div class="" py-4 text-gray-900">
+                            <label class="text-lg font-bold ml-1">Tipo</label>
+                            <select class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                                <option value="">Todos</option>
+                                <option value="">Gasto</option>
+                                <option value="">Ganancia</option>
+                            </select>
+                        </div>
+                        <!-- Filters Pannel - Category -->
+                        <div class="py-4 text-gray-900">
+                            <label class="text-lg font-bold">Categoría</label>
+                            <select class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                                <option value="">Todas</option>
+                                <option value="">Comida</option>
+                                <option value="">Servicios</option>
+                                <option value="">Salidas</option>
+                                <option value="">Educación</option>
+                                <option value="">Transporte</option>
+                                <option value="">Trabajo</option>
+                            </select>
+                        </div>
+                        <!-- Filters Pannel - Since -->
+                        <div class="py-4 text-gray-900">
+                            <div class="text-lg font-bold">Desde</div>
+                            <input type="date" name="" id="" class="w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                        </div>
+                        <!-- Filters Pannel - Order for.. -->
+                        <div class="py-4 text-gray-900">
+                            <label class="text-lg font-bold">Oredenar por</label>
+                            <select class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                                <option value="">Más reciente</option>
+                                <option value="">Menos reciente</option>
+                                <option value="">Mayor monto</option>
+                                <option value="">Menor monto</option>
+                                <option value="">A/Z</option>
+                                <option value="">Z/A</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Card - "Operaciones" -->
+            <div class="flex-col bg-white mx-6 mt-20 mb-10 px-4 pb-4 radius rounded-lg shadow-xl lg:w-2/4 lg:mb-20 lg:">
+                <!-- Section - any operation  -->
+                <div class="">
+                    <div class="lg:flex justify-between items-center lg:m-5">
+                        <h2 class="pt-6 pb-6 text-gray-900 text-2xl font-bold">Operaciones</h2>
+                        <button class="px-2 py-2 bg-purple-500 rounded-md text-white hover:bg-purple-700">+ Nueva Operación</button>
+                    </div>
+                    <div class="hidden flex items-center justify-center text-gray-600">
+                        <div class="flex-col">
+                            <img class="p-4 lg:py-20" src="./img/wallet.svg" alt="wallet__operation">
+                            <p class="mb-4 text-xl font-bold text-center ">Sin resultados</p>
+                            <p class="text-center">Cambia los filtros o agrega operaciones</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Section - information new operation -->
+                <div class="mt-4">
+                    <table class="w-full table-fixed border border-purple-100 flex-wrap">           
+                        <tr class="hidden border border-purple-100 md:flex md:justify-between ">
+                            <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Descripción</th>
+                            <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Categoría</th>
+                            <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Fecha</th>
+                            <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Monto</th>
+                            <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Acciones</th>
+                        </tr>
+                        <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
+                            <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">skjvzksjf</td>
+                            <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">Trabajo</td>
+                            <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">27/11/1999</td>
+                            <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">$300</td>
+                            <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
+                                <button class="p-2"><i class="fa-solid fa-pen-to-square text-green-600"></i></button> 
+                                <button class="p-2"><i class="fa-solid fa-trash text-red-600"></i></button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
         <!-- Section - "Categorias" -->
         <section class="my-20">
             <div class= "flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
