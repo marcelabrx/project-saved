@@ -54,7 +54,7 @@
     </header>
     <main>
         <!-- Section - "Balance" -->
-        <section class="lg:flex lg:justify-center lg:align-start lg:px-20 lg:py-10">
+        <section class="lg:flex lg:justify-center lg:align-start">
             <div class="lg:w-1/4">
                 <!-- Card - "Balance" -->
                 <div class="flex-col bg-white mx-6 mt-20 mb-8 px-4 radius rounded-lg shadow-xl lg:mb-0">
@@ -163,10 +163,11 @@
                 </div>
             </div>
         </section>
-        <!-- Card - "Nueva operacion" -->
+        <!-- Card - "Nueva operacion" / "Editar Operación" -->
         <div class="lg:my-20">
             <form class= "flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
-                <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Nueva Operación</h2>
+                <h2 class= "hidden pt-6 pb-10 ml-3 text-4xl font-bold">Nueva Operación</h2>
+                <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Editar Operación</h2>
                 <section class="flex flex-wrap">
                     <label class="font-bold w-full px-4 pt-6 pb-2">Descripción</label>
                     <input type="text" class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
@@ -200,48 +201,8 @@
                 </section>
                 <div class="flex items-end justify-end mt-10">
                     <button class="px-8 py-2 mr-4 rounded-md bg-neutral-100 hover:bg-[#ebebeb]">Cancelar</button> 
-                    <button class="px-8 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700 text-white">Agregar</button>
-                </div>
-            </form>
-        </div>
-        <!-- Card - edit operation -->
-        <div class="lg:my-20">
-            <form class= "flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
-                <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Editar operación</h2>
-                <section class="flex flex-wrap">
-                    <label class="font-bold w-full px-4 pt-6 pb-2">Descripción</label>
-                    <input type="text" class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
-                </section>
-                <section class="flex flex-wrap">
-                    <label class="font-bold w-full px-4 pt-6 pb-2">Monto</label>
-                    <input type="number" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
-                </section>
-                <section class="flex flex-wrap">
-                    <label class="font-bold w-full px-4 pt-6 pb-2">Tipo</label>
-                    <select name="" id="" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                        <option value="">Gasto</option>
-                        <option value="">Ganancia</option>
-                    </select>
-                </section>
-                <section class="flex flex-wrap">
-                    <label for="" class="font-bold w-full px-4 pt-6 pb-2">Categoría</label>
-                    <select class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                        <option value="">Todas</option>
-                        <option value="">Comida</option>
-                        <option value="">Servicios</option>
-                        <option value="">Salidas</option>
-                        <option value="">Educación</option>
-                        <option value="">Transporte</option>
-                        <option value="">Trabajo</option>
-                    </select>
-                </section>
-                <section class="flex flex-wrap">
-                    <label for="" class="font-bold w-full px-4 pt-6 pb-2">Fecha</label>
-                    <input type="date" name="" id="" class="w-full flex items-start border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                </section>
-                <div class="flex items-end justify-end mt-10">
-                    <button class="px-8 py-2 mr-4 rounded-md bg-neutral-100 hover:bg-[#ebebeb]">Cancelar</button> 
-                    <button class="px-8 py-2 rounded-md bg-purple-500 hover:bg-purple-700 text-white">Agregar</button>
+                    <button class="hidden px-8 py-2 rounded-md bg-purple-500 hover:bg-purple-700 text-white">Agregar</button>
+                    <button class="px-8 py-2 rounded-md bg-purple-500 hover:bg-purple-700 text-white">Editar</button>
                 </div>
             </form>
         </div>
@@ -300,7 +261,7 @@
                 </div>
             </div>
         </section>
-        <!--Card- edit categories-->
+        <!--Card - edit categories-->
         <section class="my-20">
             <form class= "flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
                 <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Editar categoría</h2>
@@ -311,16 +272,16 @@
                 </div>
             </form>
         </section>
-         <!--Section reportes-->
-         <section class= "my-20">
+        <!--Section "Reportes"-->
+        <section class= "my-20">
             <div class="flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
-            <h2 class= "pb-20 text-4xl font-bold">Reportes</h2>
-            <div class="hidden">
-            <img src="./img/charts.svg" alt="charts.svg" class="px-[20%]">
-            <p class="font-bold text-2xl text-center pt-10">Operaciones insuficientes</p>
-            <p class="text-center pt-4 pb-20">Prueba agregando más operaciones</p>
-            </div>
-                 <table class="table-fixed w-full">
+                <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Reportes</h2>
+                <div class="hidden">
+                    <img src="./img/charts.svg" alt="charts.svg" class="px-[20%]">
+                    <p class="font-bold text-2xl text-center pt-10">Operaciones insuficientes</p>
+                    <p class="text-center pt-4 pb-20">Prueba agregando más operaciones</p>
+                </div>
+                <table class="table-fixed w-full">
                     <caption class="text-bold text-2xl text-start p-4">Resumen</caption>
                     <tr class="flex justify-between text-left">
                         <th class="p-4 w-[45%]">Categoría con mayor ganancia</th>
@@ -348,48 +309,47 @@
                         <td class="p-4 text-red-600">Total</td>
                     </tr>
                 </table>
-            <table class="table-fixed w-full my-20">
-                <caption class="text-bold text-2xl text-start p-4">Totales por categoría</caption>
-                <tr class="flex justify-between text-left">
-                    <th class="p-4 w-[25%]">Categoría</th>
-                    <th class="p-4">Ganancias</th>
-                    <th class="p-4">Gastos</th>
-                    <th class="p-4">Balance</th>
-                </tr>
-                <tr class="flex justify-between text-left">
-                    <th class="p-4 w-[25%]">Categoría</th>
-                    <td class="p-4 text-green-600">Entrada</td>
-                    <td class="p-4 text-red-600">Salida</td>
-                    <td class="p-4">Total</td>
-                </tr>
-                <tr class="flex justify-between text-left">
-                    <th class="p-4 w-[25%]">Categoría</th>
-                    <td class="p-4 text-green-600">Entrada</td>
-                    <td class="p-4 text-red-600 ">Salida</td>
-                    <td class="p-4">Total</td>
-                </tr>
-              </table>
-              <table class="table-fixed w-full my-20">
-                <caption class="text-bold text-2xl text-start p-4">Totales por mes</caption>
-                <tr class="flex justify-between text-left">
-                    <th class="p-4 w-[25%]">Mes</th>
-                    <th class="p-4">Ganancias</th>
-                    <th class="p-4">Gastos</th>
-                    <th class="p-4">Balance</th>
-                </tr>
-                <tr class="flex justify-between text-left">
-                    <td class="p-4 w-[25%]">Mes</td>
-                    <td class="p-4 text-green-600">Entrada</td>
-                    <td class="p-4 text-red-600">Salida</td>
-                    <td class="p-4">Total</td>
-                </tr>
-              </table>
+                <table class="table-fixed w-full my-20">
+                    <caption class="text-bold text-2xl text-start p-4">Totales por categoría</caption>
+                    <tr class="flex justify-between text-left">
+                        <th class="p-4 w-[25%]">Categoría</th>
+                        <th class="p-4">Ganancias</th>
+                        <th class="p-4">Gastos</th>
+                        <th class="p-4">Balance</th>
+                    </tr>
+                    <tr class="flex justify-between text-left">
+                        <th class="p-4 w-[25%]">Categoría</th>
+                        <td class="p-4 text-green-600">Entrada</td>
+                        <td class="p-4 text-red-600">Salida</td>
+                        <td class="p-4">Total</td>
+                    </tr>
+                    <tr class="flex justify-between text-left">
+                        <th class="p-4 w-[25%]">Categoría</th>
+                        <td class="p-4 text-green-600">Entrada</td>
+                        <td class="p-4 text-red-600 ">Salida</td>
+                        <td class="p-4">Total</td>
+                    </tr>
+                </table>
+                <table class="table-fixed w-full my-20">
+                    <caption class="text-bold text-2xl text-start p-4">Totales por mes</caption>
+                    <tr class="flex justify-between text-left">
+                        <th class="p-4 w-[25%]">Mes</th>
+                        <th class="p-4">Ganancias</th>
+                        <th class="p-4">Gastos</th>
+                        <th class="p-4">Balance</th>
+                    </tr>
+                    <tr class="flex justify-between text-left">
+                        <td class="p-4 w-[25%]">Mes</td>
+                        <td class="p-4 text-green-600">Entrada</td>
+                        <td class="p-4 text-red-600">Salida</td>
+                        <td class="p-4">Total</td>
+                    </tr>
+                </table>
+            </div>
         </section> 
-    </div>
-            </section> 
-       <!--  Ventana modal -->  
-       <div class="relative z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <!--
+        <!-- Modal Window -->  
+        <div class="hidden relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <!--
           Background backdrop, show/hide based on modal state.
       
           Entering: "ease-out duration-300"
@@ -398,47 +358,46 @@
           Leaving: "ease-in duration-200"
             From: "opacity-100"
             To: "opacity-0"
-        -->
-        
-        <div class="fixed inset-0 bg-transparent bg-opacity-75 transition-opacity"></div>
-      
-        <div class="fixed inset-0 z-10 overflow-y-auto">
-          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <!--
-              Modal panel, show/hide based on modal state.
-      
-              Entering: "ease-out duration-300"
-                From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                To: "opacity-100 translate-y-0 sm:scale-100"
-              Leaving: "ease-in duration-200"
-                From: "opacity-100 translate-y-0 sm:scale-100"
-                To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             -->
-            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-              <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                <div class="sm:flex sm:items-start">
-                  <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <div class="h-6 w-6 text-red-600 text-center" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                      <i class="fa-solid fa-trash text-red-600"></i>
-                    </div>
-                  </div>
-                  <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                    <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Eliminar</h3>
-                    <div class="mt-2">
-                      <p class="text-sm text-gray-500"> Estás segura de querer eliminar "Nueva Operación"? Toda la información será removida de forma permanente. Esta acción no podrá deshacerse.</p>
-                    </div>
-                  </div>
+        
+            <div class="fixed inset-0 bg-transparent bg-opacity-75 transition-opacity">
+                <div class="fixed inset-0 z-10 overflow-y-auto">
+                    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <!--
+                        Modal panel, show/hide based on modal state.
+                
+                        Entering: "ease-out duration-300"
+                            From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                            To: "opacity-100 translate-y-0 sm:scale-100"
+                        Leaving: "ease-in duration-200"
+                            From: "opacity-100 translate-y-0 sm:scale-100"
+                            To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        -->
+                        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                <div class="sm:flex sm:items-start">
+                                    <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                        <div class="h-6 w-6 text-red-600 text-center" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                            <i class="fa-solid fa-trash text-red-600"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Eliminar</h3>
+                                        <div class="mt-2">
+                                            <p class="text-sm text-gray-500"> Estás segura de querer eliminar "Nueva Operación"? Toda la información será removida de forma permanente. Esta acción no podrá deshacerse.</p>
+                                        </div>    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                <button type="button" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Eliminar</button>
+                                <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancelar</button>
+                            </div> 
+                        </div>
+                    </div>  
                 </div>
-              </div>
-              <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                <button type="button" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Eliminar</button>
-                <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancelar</button>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-    
     </main>
 </body>
 </html>
