@@ -2,6 +2,7 @@
 const $ = (selector) => document.querySelector(selector)
 const all = (selector)=> document.querySelectorAll(selector)
 
+
 // Show or hide handlers
 const showElement = (selector) => $(selector).classList.remove("hidden")
 const hideElement = (selector) => $(selector).classList.add("hidden")
@@ -61,43 +62,24 @@ const renderOperations = (operations) => {
 
 // renderOperations(placeholderOperations)
 
-// //section categorias
-// $("#btn-add-categories").addEventListener("click",()=>{
-//   showElement2("#edit-categories")
-//   hiddeElement("#section-categories")
-// })
 
-// $("#btn-cancel-add").addEventListener("click",()=>{
-//   hiddeElement("#edit-categories")
-//   showElement2("#section-categories")
-// })
+// const saveOperationsData = () => {
+//     return {
+//         id: userId ? userId : randomId(), 
+//         description: $(description).value,
+//         categorie: $(categorie).value,
+//         date: $(date).value,
+//         amount: $(amount).value,
+//     }
+// }
 
-// $("#btn-confirm-add").addEventListener("click",()=>{
-//   hiddeElement("#edit-categories")
-//   showElement2("#section-categories")
-// })
+//los saque de la funcion initializeApp porque no funcionaban... mostraba todas las secciones cuando abrias la pagina.
+//hay que ver como inicializar de una manera mas prolija
+//const initializeApp = () => { 
+        hideElement("#categorie-section")  
+        hideElement("#reports-section")
 
-// $("#btn-edit-categories").addEventListener("click",()=>{
-//   showElement2("#edit-categories")
-//   hiddeElement("#section-categories")
-// })
-
-// $("#btn-delete-categories").addEventListener("click",()=>{
-//   showElement2("#modal-window")
-// })
-
-const saveOperationsData = () => {
-    return {
-        id: userId ? userId : randomId(), 
-        description: $(description).value,
-        categorie: $(categorie).value,
-        date: $(date).value,
-        amount: $(amount).value,
-    }
-}
-
-const initializeApp = () => {
-    // agregar id correspondientes en el html
+//     // agregar id correspondientes en el html
     const home = () =>{
         hideElement("#categorie-section")  
         hideElement("#reports-section")
@@ -105,13 +87,13 @@ const initializeApp = () => {
         showElement("#balance-card-left") 
         showElement("#balance-card-right") 
     }
-
-    // btn balance
+    // btn balance 
     $("#balance-btn").addEventListener("click", home)
 
     $("#title-home").addEventListener("click", home)
 
-    //btn categorías
+
+//btn categorías
     $("#categorie-btn").addEventListener("click", () => {
         showElement("#categorie-section") 
         hideElement("#balance-section") 
@@ -143,7 +125,7 @@ const initializeApp = () => {
     })
 
     //add operation 
-    $("#")
+    //$("#")
 
     //mobile - open 
     $(".fa-bars").addEventListener("click", () => {
@@ -158,19 +140,19 @@ const initializeApp = () => {
     })
 
     //filters panel 
-    $("#btn-hide-filters").addEventListener("click",(e) => {
+    $("#btn-hide-filters").addEventListener("click",(e)=>{
         e.preventDefault()
         hideElement("#filters-panel")
         hideElement("#btn-hide-filters")
         showElement("#btn-show-filters")
-    })
-    
-    $("#btn-show-filters").addEventListener("click",(e) => {
+      })
+      
+      $("#btn-show-filters").addEventListener("click",(e)=>{
         e.preventDefault()
         showElement("#filters-panel")
         showElement("#btn-hide-filters")
         hideElement("#btn-show-filters")
-    })
+      })
 
     //selector gasto/ganancia
     $("#select-panel").addEventListener("click", () => {
@@ -179,5 +161,47 @@ const initializeApp = () => {
         hideElement("#any-operation")
     })
 
-}
 
+
+//section categorias
+$("#btn-add-categories").addEventListener("click",()=>{
+    showElement("#edit-categories")
+    hideElement("#categorie-section")
+  })
+  
+  $("#btn-cancel-add").addEventListener("click",()=>{
+    hideElement("#edit-categories")
+    showElement("#categorie-section")
+  })
+  
+  $("#btn-confirm-add").addEventListener("click",()=>{
+    hideElement("#edit-categories")
+    showElement("#categorie-section")
+  })
+//   Bueno, tene en cuenta entonces que este fragmento de codigo no deberia estar suelto
+// Porque sino cuando agregas una categoria nueva
+// No tendria el evento agregado
+// Este for tendria que estar puesto donde generas esa tabla de categorias
+// Parecido a lo que yo tuve que hacer en la super app
+  const btnEditCategories = document.querySelectorAll(".btn-edit-categories");
+  for (const btn  of btnEditCategories) {
+ btn.addEventListener ("click", () => {
+        showElement("#edit-categories")
+        hideElement("#categorie-section")
+    })
+    }
+    const btnDeleteCategories = document.querySelectorAll(".btn-delete-categories");
+    for (const btn  of btnDeleteCategories) {
+   btn.addEventListener ("click", () => {
+          showElement("#modal-window")
+      })
+      }
+
+      //modal-window buttons
+    $("#modal-cancel").addEventListener("click", ()=>{
+        hideElement("#modal-window")
+    })
+
+    $("#modal-delete").addEventListener("click", ()=>{
+        hideElement("#modal-window")
+    })
