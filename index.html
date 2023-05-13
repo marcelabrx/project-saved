@@ -22,6 +22,7 @@
                     <!-- Title section and hide and pop up burger menu -->
                     <a href="" class="p-4">
                         <h1
+                        id="title-home"
                         class="block margin-5 p-2 rounded-md text-white text-3xl font-medium active:bg-[#fbfbfb] active:text-purple-500 hover:bg-[#fbfbfb] hover:text-purple-500 lg:p-4 lg:text-4xl"
                         ><i class="fa-solid fa-wallet text-2xl lg:text-4xl"></i> AhorrADAs
                         </h1>
@@ -34,16 +35,19 @@
                 <!-- Section : Drop-down menu -->
                 <div class="bg-white space-y-1 px-2 pb-3 pt-2 shadow-lg lg:flex lg:items-center lg:bg-[#9C9BD2] lg:shadow-none">
                     <a
+                    id="balance-btn"
                     href="#"
                     class="block mt-1 px-3 py-2 rounded-md text-gray-900 text-base font-medium active:bg-[#fbfbfb] active:text-purple-500 hover:bg-[#fbfbfb] hover:text-purple-500 lg:mr-2 lg:p4 lg:text-white lg:text-lg"
                     ></i><i class="fa-solid fa-chart-line"></i> Balance</a
                     >
                     <a
+                    id="categorie-btn"
                     href="#"
                     class="block mt-1 px-3 py-2 rounded-md text-gray-900 text-base font-medium active:bg-[#fbfbfb] active:text-purple-500 hover:bg-[#fbfbfb] hover:text-purple-500 lg:mr-2 lg:p4 lg:text-white lg:text-lg"
                     ><i class="fa-solid fa-tag"></i> Categorias</a
                     >
                     <a
+                    id="reports-btn"
                     href="#"
                     class="block mt-1 px-3 py-2 rounded-md text-gray-900 text-base font-medium active:bg-[#fbfbfb] active:text-purple-500 hover:bg-[#fbfbfb] hover:text-purple-500 lg:mr-2 lg:p4 lg:text-white lg:text-lg"
                     ><i class="fa-solid fa-chart-pie"></i> Reportes</a
@@ -54,8 +58,8 @@
     </header>
     <main>
         <!-- Section - Balance -->
-        <section class="lg:flex lg:justify-center lg:align-start">
-            <div class="lg:w-1/4">
+        <section id="balance-section" class="lg:flex lg:justify-center lg:align-start">
+            <div id="balance-card-left" class="lg:w-1/4">
                 <!-- Card - Balance -->
                 <div class="flex-col bg-white mx-6 mt-20 mb-8 px-4 radius rounded-lg shadow-xl lg:mb-0">
                     <h2 class="pt-6 pb-10 text-4xl font-bold">Balance</h2>
@@ -76,15 +80,15 @@
                 <div class="flex-col bg-white mx-6 mt-20 px-4 pb-4 radius rounded-lg shadow-xl lg:mt-6">
                     <div class="flex justify-between">
                         <h2 class="pt-6 pb-10 text-gray-900 text-2xl font-bold">Filtros</h2>
-                        <a href="" class="pt-8 pb-10 text-blue-600 hover:text-gray-900 active:text-gray-900">Ocultar Filtros</a>
-                        <a href="" class="hidden pt-8 pb-10 text-blue-600">Mostrar Filtros</a>
+                        <a id="btn-hide-filters" href="" class="pt-8 pb-10 text-blue-600 hover:text-gray-900 active:text-gray-900">Ocultar Filtros</a>
+                        <a id="btn-show-filters" href="" class="hidden pt-8 pb-10 text-blue-600">Mostrar Filtros</a>
                     </div>
                     <!-- Filters Panel -->
-                    <form action="">
+                    <form id="filters-panel" action="">
                         <!-- Filters Panel - Type -->
                         <div class=" py-4 text-gray-900">
                             <label class="text-lg font-bold ml-1">Tipo</label>
-                            <select class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                            <select id="select-panel" class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                                 <option value="">Todos</option>
                                 <option value="">Gasto</option>
                                 <option value="">Ganancia</option>
@@ -124,14 +128,14 @@
                 </div>
             </div>
             <!-- Card - Operations -->
-            <div class="flex-col bg-white mx-6 mt-20 mb-10 px-4 pb-4 radius rounded-lg shadow-xl lg:w-2/4 lg:mb-20 lg:h-fit">
-                <!-- Section - Any operation -->
-                <div class="">
+            <div id="balance-card-right" class="flex-col bg-white mx-6 mt-20 mb-10 px-4 pb-4 radius rounded-lg shadow-xl lg:w-2/4 lg:mb-20 lg:h-fit">
+                <div>
                     <div class="lg:flex justify-between items-center lg:m-5">
                         <h2 class="pt-6 pb-6 text-gray-900 text-2xl font-bold">Operaciones</h2>
-                        <button class="px-2 py-2 bg-purple-500 rounded-md text-white hover:bg-purple-700">+ Nueva Operación</button>
+                        <button id="add-operation" class="px-2 py-2 bg-purple-500 rounded-md text-white hover:bg-purple-700">+ Nueva Operación</button>
                     </div>
-                    <div class="flex items-center justify-center text-gray-600 pb-4">
+                    <!-- Section - Any operation -->
+                    <div id="any-operation" class="flex items-center justify-center text-gray-600 pb-4">
                         <div class="flex-col">
                             <img class="p-4" src="./img/wallet.svg" alt="wallet__operation">
                             <p class="mb-4 text-xl font-bold text-center ">Sin resultados</p>
@@ -140,8 +144,8 @@
                     </div>
                 </div>
                 <!-- Section - Information new operation -->
-                <div class="mt-4 hidden">
-                    <table class="w-full table-fixed border border-purple-100 flex-wrap">           
+                <div id="new-operation" class="mt-4">
+                    <table id="table" class="hidden w-full table-fixed border border-purple-100 flex-wrap">           
                         <tr class="hidden border border-purple-100 md:flex md:justify-between ">
                             <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Descripción</th>
                             <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Categoría</th>
@@ -149,43 +153,36 @@
                             <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Monto</th>
                             <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Acciones</th>
                         </tr>
-                        <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
-                            <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">skjvzksjf</td>
-                            <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">Trabajo</td>
-                            <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">27/11/1999</td>
-                            <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">$300</td>
-                            <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
-                                <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
-                                <button><i class="fa-solid fa-trash text-red-600"></i></button>
-                            </td>
-                        </tr>
+                        <tbody id="operationsTable">
+                            <!--Operations rendered from the localstorage -->
+                        </tbody>
                     </table>
                 </div>
             </div>
         </section>
         <!-- Card - New operation / Edit Operation -->
-        <div class="lg:my-20">
+        <div id="operations-form" class="hidden lg:my-20">
             <form class= "flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
-                <h2 class= "hidden pt-6 pb-10 ml-3 text-4xl font-bold">Nueva Operación</h2>
-                <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Editar Operación</h2>
+                <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Nueva Operación</h2>
+                <h2 class= "hidden pt-6 pb-10 ml-3 text-4xl font-bold">Editar Operación</h2>
                 <section class="flex flex-wrap">
                     <label class="font-bold w-full px-4 pt-6 pb-2">Descripción</label>
-                    <input type="text" class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
+                    <input type="text" id="description" name="description" class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
                 </section>
                 <section class="flex flex-wrap">
                     <label class="font-bold w-full px-4 pt-6 pb-2">Monto</label>
-                    <input type="number" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
+                    <input type="number" id="amount" name="amount" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
                 </section>
                 <section class="flex flex-wrap">
                     <label class="font-bold w-full px-4 pt-6 pb-2">Tipo</label>
-                    <select name="" id="" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                    <select name="type" id="type" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                         <option value="">Gasto</option>
                         <option value="">Ganancia</option>
                     </select>
                 </section>
                 <section class="flex flex-wrap">
                     <label for="" class="font-bold w-full px-4 pt-6 pb-2">Categoría</label>
-                    <select class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                    <select  name="categorie" id="categorie" class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                         <option value="">Todas</option>
                         <option value="">Comida</option>
                         <option value="">Servicios</option>
@@ -197,17 +194,17 @@
                 </section>
                 <section class="flex flex-wrap">
                     <label for="" class="font-bold w-full px-4 pt-6 pb-2">Fecha</label>
-                    <input type="date" name="" id="" class="w-full flex items-start border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                    <input type="date" name="date" id="date" class="w-full flex items-start border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                 </section>
                 <div class="flex items-end justify-end mt-10">
                     <button class="px-8 py-2 mr-4 rounded-md bg-neutral-100 hover:bg-[#ebebeb]">Cancelar</button> 
-                    <button class="hidden px-8 py-2 rounded-md bg-purple-500 hover:bg-purple-700 text-white">Agregar</button>
-                    <button class="px-8 py-2 rounded-md bg-purple-500 hover:bg-purple-700 text-white">Editar</button>
+                    <button class="px-8 py-2 rounded-md bg-purple-500 hover:bg-purple-700 text-white">Agregar</button>
+                    <button class="hidden px-8 py-2 rounded-md bg-purple-500 hover:bg-purple-700 text-white">Editar</button>
                 </div>
             </form>
         </div>
         <!-- Section - Categories -->
-        <section class="my-20">
+        <section id="categorie-section" class="my-20">
             <div class= "flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
                 <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Categorías</h2>
                 <section class="flex flex-wrap justify-between w-full align-center">
@@ -262,7 +259,7 @@
             </div>
         </section>
         <!--Card - Edit categories-->
-        <section class="my-20">
+        <section class="hidden my-20">
             <form class= "flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
                 <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Editar categoría</h2>
                 <input type="text" class="p-2 ml-2 w-full border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 w-full">
@@ -273,7 +270,7 @@
             </form>
         </section>
         <!--Section - Reports-->
-        <section class= "my-20">
+        <section id="reports-section" class= "my-20">
             <div class="flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
                 <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Reportes</h2>
                 <div class="hidden">
