@@ -9,11 +9,58 @@ const hideElement = (selector) => $(selector).classList.add("hidden")
 const cleanContainer = (selector) => $(selector).innerHTML = ""
 
 // LocalStorage Handlers
-const getData = (key) => JSON.parse(localStorage.getItem(key))
-const setData = (key, array) => localStorage.setItem(key, JSON.stringify(array))
+let getData = (key) => JSON.parse(localStorage.getItem(key))
+let setData = (key, array) => localStorage.setItem(key, JSON.stringify(array))
 
 // Random id generator
 const randomId = () => self.crypto.randomUUID()
+
+const allOperations = getData("operations") || []
+//falta que el local me muestre el contenido del array operation
+const renderOperations = (operations) => {
+    for (const {id, description, categorie, date, amount} of operations){
+        $("#operationsTable").innerHTML += `
+        <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
+            <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">${description}</td>
+            <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">${categorie}</td>
+            <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${date}</td>
+            <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
+            <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
+                <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
+                <button><i class="fa-solid fa-trash text-red-600"></i></button>
+            </td>                            
+        </tr>
+        `
+    }
+}
+
+// renderOperations(placeholderOperations)
+const saveOperationsData = () => {
+    return {
+        id: randomId(), 
+        description: $("#description").value,
+        categorie: $("#categorie").value,
+        date: $("#date").value,
+        amount: $("#amount").valueAsNumber
+    }
+}
+
+let addOperation=()=>{
+    const currentOperation= getData("operations")
+    newOperation= saveOperationsData()
+    currentOperation.push(newOperation)
+    setData=("operations", currentOperation)
+    //console.log(currentOperation)
+}
+// const sendNewData = (key, callback) => {
+//     const currentData = getData(key)
+//     const newData = callback()
+//     currentData.push(newData)
+//     setData(key, currentData)
+// }
+
+
+
 
 // const placeholderOperations = [
 //     {
@@ -38,47 +85,14 @@ const randomId = () => self.crypto.randomUUID()
 //       amount: 200000
 //     }
 // ]
-
-// if (!getData(operations)) {
-//     setData("operations", [])
-// }
-
-const renderOperations = (operations) => {
-    for (const {id, description, categorie, date, amount} of operations){
-        $("#operationsTable").innerHTML += `
-        <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
-            <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">${description}</td>
-            <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">${categorie}</td>
-            <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${date}</td>
-            <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
-            <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
-                <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
-                <button><i class="fa-solid fa-trash text-red-600"></i></button>
-            </td>                            
-        </tr>
-        `
-    }
-}
-
-// renderOperations(placeholderOperations)
-
-
-// const saveOperationsData = () => {
-//     return {
-//         id: userId ? userId : randomId(), 
-//         description: $(description).value,
-//         categorie: $(categorie).value,
-//         date: $(date).value,
-//         amount: $(amount).value,
-//     }
-// }
-
 //los saque de la funcion initializeApp porque no funcionaban... mostraba todas las secciones cuando abrias la pagina.
 //hay que ver como inicializar de una manera mas prolija
-//const initializeApp = () => { 
+const initializeApp = () => { 
+    setData("operations", allOperations)
+    renderOperations(allOperations)
+
         hideElement("#categorie-section")  
         hideElement("#reports-section")
-
 //     // agregar id correspondientes en el html
     const home = () =>{
         hideElement("#categorie-section")  
@@ -87,6 +101,12 @@ const renderOperations = (operations) => {
         showElement("#balance-card-left") 
         showElement("#balance-card-right") 
     }
+
+    $("#btn-add-operations-data").addEventListener("click",(e)=>{
+        e.preventDefault();
+        addOperation()
+        })
+
     // btn balance 
     $("#balance-btn").addEventListener("click", home)
 
@@ -114,7 +134,7 @@ const renderOperations = (operations) => {
     })
 
     // btn add operation
-    $("#add-operation").addEventListener("click", () => {
+    $("#add-operation").addEventListener("click",() => {
         showElement("#operations-form")
         hideElement("#categorie-section")
         hideElement("#balance-section") 
@@ -122,6 +142,7 @@ const renderOperations = (operations) => {
         hideElement("#balance-card-left") 
         hideElement("#balance-card-right") 
         hideElement("#table") 
+        
     })
 
     //add operation 
@@ -178,7 +199,9 @@ $("#btn-add-categories").addEventListener("click",()=>{
     hideElement("#edit-categories")
     showElement("#categorie-section")
   })
-//   Bueno, tene en cuenta entonces que este fragmento de codigo no deberia estar suelto
+  
+// mensaje de Pili respecto a los botones edit categories y delete categories
+//  Bueno, tene en cuenta entonces que este fragmento de codigo no deberia estar suelto
 // Porque sino cuando agregas una categoria nueva
 // No tendria el evento agregado
 // Este for tendria que estar puesto donde generas esa tabla de categorias
@@ -205,3 +228,6 @@ $("#btn-add-categories").addEventListener("click",()=>{
     $("#modal-delete").addEventListener("click", ()=>{
         hideElement("#modal-window")
     })
+
+}
+   window.addEventListener("load", initializeApp)
