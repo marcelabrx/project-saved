@@ -1,7 +1,6 @@
 // Getting elements from DOM
-const $ = (selector) => document.querySelector(selector)
-const all = (selector)=> document.querySelectorAll(selector)
 
+const $ = (selector) => document.querySelector(selector)
 
 // Show or hide handlers
 const showElement = (selector) => $(selector).classList.remove("hidden")
@@ -9,14 +8,45 @@ const hideElement = (selector) => $(selector).classList.add("hidden")
 const cleanContainer = (selector) => $(selector).innerHTML = ""
 
 // LocalStorage Handlers
-let getData = (key) => JSON.parse(localStorage.getItem(key))
-let setData = (key, array) => localStorage.setItem(key, JSON.stringify(array))
+const getOperations = (key) => JSON.parse(localStorage.getItem(key))
+//No FUNCIONAlet setOperations = (key, array) => localStorage.setItem(key, JSON.stringify(array))
 
 // Random id generator
 const randomId = () => self.crypto.randomUUID()
 
-const allOperations = getData("operations") || []
+if(!getOperations("operations")){
+    setOperations("operations", [])
+}
+//const allOperations = getData("operations") || []
 //falta que el local me muestre el contenido del array operation
+
+// const placeholderOperations = [
+//     {
+//       id:1,
+//       description: "sdfgfg", 
+//       categorie: "Comida", 
+//       date: "2017-01-26",
+//       amount: 200000
+//     },
+//     {
+//       id:2,
+//       description: "dos", 
+//       categorie: "Trabajo", 
+//       date: "2017-01-26",
+//       amount: 200000
+//     },
+//     {
+//       id:3,
+//       description: "uno", 
+//       categorie: "Compras", 
+//       date: "2017-01-26",
+//       amount: 200000
+//     }
+// ]
+
+
+
+
 const renderOperations = (operations) => {
     for (const {id, description, categorie, date, amount} of operations){
         $("#operationsTable").innerHTML += `
@@ -31,11 +61,11 @@ const renderOperations = (operations) => {
             </td>                            
         </tr>
         `
-    }
-}
+    }}
 
+    
 // renderOperations(placeholderOperations)
-const saveOperationsData = () => {
+ const saveOperationsData = () => {
     return {
         id: randomId(), 
         description: $("#description").value,
@@ -45,51 +75,19 @@ const saveOperationsData = () => {
     }
 }
 
-let addOperation=()=>{
-    const currentOperation= getData("operations")
+
+    const addOperation=()=>{
+    const currentOperation= getOperations("operations")
     newOperation= saveOperationsData()
     currentOperation.push(newOperation)
-    setData=("operations", currentOperation)
-    //console.log(currentOperation)
+    localStorage.setItem("operations", JSON.stringify(currentOperation))
 }
-// const sendNewData = (key, callback) => {
-//     const currentData = getData(key)
-//     const newData = callback()
-//     currentData.push(newData)
-//     setData(key, currentData)
-// }
 
 
-
-
-// const placeholderOperations = [
-//     {
-//       id:1,
-//       description: "sdfgfg", 
-//       categorie: "Comida", 
-//       date: "2017-01-26",
-//       amount: 200000
-//     },
-//     {
-//       id:2,
-//       description: "sdfgfg", 
-//       categorie: "Trabajo", 
-//       date: "2017-01-26",
-//       amount: 200000
-//     },
-//     {
-//       id:3,
-//       description: "sdfgfg", 
-//       categorie: "Compras", 
-//       date: "2017-01-26",
-//       amount: 200000
-//     }
-// ]
-//los saque de la funcion initializeApp porque no funcionaban... mostraba todas las secciones cuando abrias la pagina.
 //hay que ver como inicializar de una manera mas prolija
 const initializeApp = () => { 
-    setData("operations", allOperations)
-    renderOperations(allOperations)
+    //setOperations("operations", allOperations)
+    //renderOperations(allOperations)
 
         hideElement("#categorie-section")  
         hideElement("#reports-section")
@@ -103,8 +101,9 @@ const initializeApp = () => {
     }
 
     $("#btn-add-operations-data").addEventListener("click",(e)=>{
-        e.preventDefault();
+        e.preventDefault()
         addOperation()
+    
         })
 
     // btn balance 
@@ -133,7 +132,7 @@ const initializeApp = () => {
         hideElement("#table") 
     })
 
-    // btn add operation
+//     // btn add operation
     $("#add-operation").addEventListener("click",() => {
         showElement("#operations-form")
         hideElement("#categorie-section")
@@ -145,8 +144,8 @@ const initializeApp = () => {
         
     })
 
-    //add operation 
-    //$("#")
+//     //add operation 
+//     //$("#")
 
     //mobile - open 
     $(".fa-bars").addEventListener("click", () => {
