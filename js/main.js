@@ -1,5 +1,4 @@
 // Getting elements from DOM
-
 const $ = (selector) => document.querySelector(selector)
 
 // Show or hide handlers
@@ -8,42 +7,15 @@ const hideElement = (selector) => $(selector).classList.add("hidden")
 const cleanContainer = (selector) => $(selector).innerHTML = ""
 
 // LocalStorage Handlers
-const getOperations = (key) => JSON.parse(localStorage.getItem(key))
-//No FUNCIONAlet setOperations = (key, array) => localStorage.setItem(key, JSON.stringify(array))
+const getInfo = (key) => JSON.parse(localStorage.getItem(key))
+const setInfo = (key, array) => localStorage.setItem(key, JSON.stringify(array))
+
 
 // Random id generator
 const randomId = () => self.crypto.randomUUID()
 
-if(!getOperations("operations")){
-    setOperations("operations", [])
-}
-//const allOperations = getData("operations") || []
-//falta que el local me muestre el contenido del array operation
 
-// const placeholderOperations = [
-//     {
-//       id:1,
-//       description: "sdfgfg", 
-//       categorie: "Comida", 
-//       date: "2017-01-26",
-//       amount: 200000
-//     },
-//     {
-//       id:2,
-//       description: "dos", 
-//       categorie: "Trabajo", 
-//       date: "2017-01-26",
-//       amount: 200000
-//     },
-//     {
-//       id:3,
-//       description: "uno", 
-//       categorie: "Compras", 
-//       date: "2017-01-26",
-//       amount: 200000
-//     }
-// ]
-
+const allOperations = getInfo("operations") || []
 
 
 
@@ -61,11 +33,12 @@ const renderOperations = (operations) => {
             </td>                            
         </tr>
         `
-    }}
+    }
+}
 
     
 // renderOperations(placeholderOperations)
- const saveOperationsData = () => {
+const saveOperationsData = () => {
     return {
         id: randomId(), 
         description: $("#description").value,
@@ -76,50 +49,49 @@ const renderOperations = (operations) => {
 }
 
 
-    const addOperation=()=>{
-    const currentOperation= getOperations("operations")
-    newOperation= saveOperationsData()
+
+const addOperation = () => {
+    const currentOperation = getInfo("operations")
+    const newOperation = saveOperationsData()
     currentOperation.push(newOperation)
-    localStorage.setItem("operations", JSON.stringify(currentOperation))
+    console.log(currentOperation)
+    setInfo ("operations", currentOperation)
 }
 
 
-//hay que ver como inicializar de una manera mas prolija
-const initializeApp = () => { 
-    //setOperations("operations", allOperations)
-    //renderOperations(allOperations)
 
-        hideElement("#categorie-section")  
-        hideElement("#reports-section")
-//     // agregar id correspondientes en el html
+const initializeApp = () => { 
+    setInfo("operations", allOperations)
+    renderOperations(allOperations)
+    
+    hideElement("#categorie-section")  
+    hideElement("#reports-section")
+     
     const home = () =>{
-        hideElement("#categorie-section")  
-        hideElement("#reports-section")
         showElement("#balance-section") 
         showElement("#balance-card-left") 
-        showElement("#balance-card-right") 
-    }
+        showElement("#balance-card-right")
+        hideElement("#categorie-section")  
+        hideElement("#reports-section")
+        hideElement("#operations-form") 
 
-    $("#btn-add-operations-data").addEventListener("click",(e)=>{
-        e.preventDefault()
-        addOperation()
+    }
     
-        })
+    //POR AHORA NO HACE FALTA EL BOTON DE TITLE HOME
+    // $("#title-home").addEventListener("click", home)
 
     // btn balance 
     $("#balance-btn").addEventListener("click", home)
 
-    $("#title-home").addEventListener("click", home)
-
-
-//btn categorías
+    //btn categorías
     $("#categorie-btn").addEventListener("click", () => {
         showElement("#categorie-section") 
         hideElement("#balance-section") 
         hideElement("#reports-section") 
         hideElement("#balance-card-left") 
         hideElement("#balance-card-right") 
-        hideElement("#table") 
+        hideElement("#new-operation")
+        hideElement("#operations-form") 
     })
 
     //btn reportes
@@ -129,23 +101,39 @@ const initializeApp = () => {
         hideElement("#balance-section") 
         hideElement("#balance-card-left") 
         hideElement("#balance-card-right") 
-        hideElement("#table") 
+        hideElement("#new-operation")
+        hideElement("#operations-form") 
     })
 
-//     // btn add operation
-    $("#add-operation").addEventListener("click",() => {
+    // btn add operation
+    $("#btn-new-operation").addEventListener("click",() => {
         showElement("#operations-form")
         hideElement("#categorie-section")
         hideElement("#balance-section") 
         hideElement("#reports-section") 
         hideElement("#balance-card-left") 
         hideElement("#balance-card-right") 
-        hideElement("#table") 
+        hideElement("#new-operation") 
         
     })
+    $("#btn-add-operation").addEventListener("click",(e) => {
+        e.preventDefault()
+        addOperation()
+        showElement("#balance-section")
+        showElement("#balance-card-left") 
+        showElement("#balance-card-right")
+        showElement("#new-operation")
+        showElement("#operationsTable")
+        showElement("#table")
+        hideElement("#any-operation")
+        hideElement("#operations-form")
+    })
 
-//     //add operation 
-//     //$("#")
+    $("#btn-cancel-operation").addEventListener("click",(e)=>{
+        e.preventDefault()
+        home()
+    })
+    
 
     //mobile - open 
     $(".fa-bars").addEventListener("click", () => {
@@ -165,14 +153,14 @@ const initializeApp = () => {
         hideElement("#filters-panel")
         hideElement("#btn-hide-filters")
         showElement("#btn-show-filters")
-      })
+    })
       
-      $("#btn-show-filters").addEventListener("click",(e)=>{
+    $("#btn-show-filters").addEventListener("click",(e)=>{
         e.preventDefault()
         showElement("#filters-panel")
         showElement("#btn-hide-filters")
         hideElement("#btn-show-filters")
-      })
+    })
 
     //selector gasto/ganancia
     $("#select-panel").addEventListener("click", () => {
@@ -181,52 +169,52 @@ const initializeApp = () => {
         hideElement("#any-operation")
     })
 
-
-
-//section categorias
-$("#btn-add-categories").addEventListener("click",()=>{
-    showElement("#edit-categories")
-    hideElement("#categorie-section")
-  })
-  
-  $("#btn-cancel-add").addEventListener("click",()=>{
-    hideElement("#edit-categories")
-    showElement("#categorie-section")
-  })
-  
-  $("#btn-confirm-add").addEventListener("click",()=>{
-    hideElement("#edit-categories")
-    showElement("#categorie-section")
-  })
-  
-// mensaje de Pili respecto a los botones edit categories y delete categories
-//  Bueno, tene en cuenta entonces que este fragmento de codigo no deberia estar suelto
-// Porque sino cuando agregas una categoria nueva
-// No tendria el evento agregado
-// Este for tendria que estar puesto donde generas esa tabla de categorias
-// Parecido a lo que yo tuve que hacer en la super app
-  const btnEditCategories = document.querySelectorAll(".btn-edit-categories");
-  for (const btn  of btnEditCategories) {
- btn.addEventListener ("click", () => {
+    //section categorias
+    $("#btn-add-categories").addEventListener("click",()=>{
         showElement("#edit-categories")
         hideElement("#categorie-section")
     })
+    
+    $("#btn-cancel-add").addEventListener("click",()=>{
+        hideElement("#edit-categories")
+        showElement("#categorie-section")
+    })
+    
+    $("#btn-confirm-add").addEventListener("click",()=>{
+        hideElement("#edit-categories")
+        showElement("#categorie-section")
+    })
+  
+    // mensaje de Pili respecto a los botones edit categories y delete categories
+    //  Bueno, tene en cuenta entonces que este fragmento de codigo no deberia estar suelto
+    // Porque sino cuando agregas una categoria nueva
+    // No tendria el evento agregado
+    // Este for tendria que estar puesto donde generas esa tabla de categorias
+    // Parecido a lo que yo tuve que hacer en la super app
+
+    // ESTO VA EN LOS BTN DELETE Y EDIT DE RENDER OPERATIONS
+    const btnEditCategories = document.querySelectorAll(".btn-edit-categories");
+        for (const btn  of btnEditCategories) {
+            btn.addEventListener ("click", () => {
+            showElement("#edit-categories")
+            hideElement("#categorie-section")
+        })
     }
     const btnDeleteCategories = document.querySelectorAll(".btn-delete-categories");
-    for (const btn  of btnDeleteCategories) {
-   btn.addEventListener ("click", () => {
-          showElement("#modal-window")
-      })
-      }
+        for (const btn  of btnDeleteCategories) {
+            btn.addEventListener ("click", () => {
+            showElement("#modal-window")
+        })
+    }
 
-      //modal-window buttons
-    $("#modal-cancel").addEventListener("click", ()=>{
+    //modal-window buttons
+    $("#modal-cancel").addEventListener("click", () =>{
         hideElement("#modal-window")
     })
 
-    $("#modal-delete").addEventListener("click", ()=>{
+    $("#modal-delete").addEventListener("click", () =>{
         hideElement("#modal-window")
     })
 
 }
-   window.addEventListener("load", initializeApp)
+window.addEventListener("load", initializeApp)
