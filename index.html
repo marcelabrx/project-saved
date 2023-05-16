@@ -135,7 +135,7 @@
                         <button id="btn-new-operation" class="px-2 py-2 bg-purple-500 rounded-md text-white hover:bg-purple-700">+ Nueva Operación</button>
                     </div>
                     <!-- Section - Any operation -->
-                    <div id="any-operation" class="flex items-center justify-center text-gray-600 pb-4">
+                    <div id="any-operation" class="hidden flex items-center justify-center text-gray-600 pb-4">
                         <div class="flex-col">
                             <img class="p-4" src="./img/wallet.svg" alt="wallet__operation">
                             <p class="mb-4 text-xl font-bold text-center ">Sin resultados</p>
@@ -144,18 +144,18 @@
                     </div>
                 </div>
                 <!-- Section - Information new operation -->
-                <!-- <div id="new-operation" class="hidden mt-4"> -->
-                    <table id="table" class="hidden w-full table-fixed border border-purple-100 flex-wrap">           
-                        <thead class="hidden">
-                        <tr class="border border-purple-100 md:flex md:justify-between ">
-                            <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Descripción</th>
-                            <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Categoría</th>
-                            <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Fecha</th>
-                            <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Monto</th>
-                            <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Acciones</th>
-                        </tr>
-                    </thead>
-                        <tbody id="operationsTable">
+                <div id="new-operation" class="mt-4">
+                    <table id="table" class="w-full table-fixed border border-purple-100 flex-wrap">
+                        <thead >
+                            <tr class="hidden border border-purple-100 md:flex md:justify-between">
+                                <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Descripción</th>
+                                <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Categoría</th>
+                                <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Fecha</th>
+                                <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Monto</th>
+                                <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Acciones</th>
+                            </tr>
+                        </thead>           
+                        <tbody id="operations-table">
                             <!--Operations rendered from the localstorage -->
                         </tbody>
                     </table>

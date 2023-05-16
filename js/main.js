@@ -6,6 +6,18 @@ const showElement = (selector) => $(selector).classList.remove("hidden")
 const hideElement = (selector) => $(selector).classList.add("hidden")
 const cleanContainer = (selector) => $(selector).innerHTML = ""
 
+const showElements = (selectors) => {
+    for (const eachSelector of selectors){
+        $(eachSelector).classList.remove("hidden")
+    }
+}
+
+const hideElements = (selectors) => {
+    for (const eachSelector of selectors){
+        $(eachSelector).classList.add("hidden")
+    }
+}
+
 // LocalStorage Handlers
 const getInfo = (key) => JSON.parse(localStorage.getItem(key))
 const setInfo = (key, array) => localStorage.setItem(key, JSON.stringify(array))
@@ -14,22 +26,31 @@ const setInfo = (key, array) => localStorage.setItem(key, JSON.stringify(array))
 // Random id generator
 const randomId = () => self.crypto.randomUUID()
 
+
 const allOperations = getInfo("operations") || []
 
+
+//limpiar tabla antes del for (las cosas se me duplican porque no le pongo el clean container)
 const renderOperations = (operations) => {
-    for (const {id, description, categorie, date, amount} of operations){
-        $("#operationsTable").innerHTML += `
-        <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
-            <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">${description}</td>
-            <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">${categorie}</td>
-            <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${date}</td>
-            <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
-            <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
-                <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
-                <button><i class="fa-solid fa-trash text-red-600"></i></button>
-            </td>                            
-        </tr>
-        `
+    cleanContainer("#operations-table")
+    if (operations.length){
+        hideElement("#any-operation")
+        for (const {id, description, categorie, date, amount} of operations){
+            $("#operations-table").innerHTML += `
+            <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
+                <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">${description}</td>
+                <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">${categorie}</td>
+                <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${date}</td>
+                <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
+                <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
+                    <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
+                    <button><i class="fa-solid fa-trash text-red-600"></i></button>
+                </td>                            
+            </tr>
+            `
+        }
+    }else {
+        showElement("#any-operation")
     }
 }
 
@@ -45,36 +66,53 @@ const saveOperationsData = () => {
     }
 }
 
+
+
 const addOperation = () => {
     const currentOperation = getInfo("operations")
     const newOperation = saveOperationsData()
     currentOperation.push(newOperation)
+    console.log(currentOperation)
     setInfo ("operations", currentOperation)
 }
 
+const deleteOperation = () => {
+
+}
 
 const initializeApp = () => { 
     setInfo("operations", allOperations)
     renderOperations(allOperations)
-    
+
     hideElement("#categorie-section")  
     hideElement("#reports-section")
-     
+    hideElement("#new-operation")
+
     const home = () =>{
         showElement("#balance-section") 
         showElement("#balance-card-left") 
         showElement("#balance-card-right")
         hideElement("#categorie-section")  
         hideElement("#reports-section")
-        hideElement("#operations-form") 
-
+        hideElement("#operations-form")
+       
     }
     
-    //POR AHORA NO HACE FALTA EL BOTON DE TITLE HOME
-    // $("#title-home").addEventListener("click", home)
+    //Falta que muestre el contendio de la tabla cuando tiene informacion
+    // $("#title-home").addEventListener("click", ()=>{
+    //     renderOperations(getInfo("operations")) 
+    //     showElement("#new-operation")
+    //     showElement("#table")
+    //     home()
+    // })
 
     // btn balance 
-    $("#balance-btn").addEventListener("click", home)
+    $("#balance-btn").addEventListener("click", ()=>{
+    home()
+    renderOperations(getInfo("operations")) 
+    showElement("#new-operation")
+    showElement("#table")
+    })
 
     //btn categorías
     $("#categorie-btn").addEventListener("click", () => {
@@ -83,7 +121,7 @@ const initializeApp = () => {
         hideElement("#reports-section") 
         hideElement("#balance-card-left") 
         hideElement("#balance-card-right") 
-        hideElement("#table")
+        hideElement("#new-operation")
         hideElement("#operations-form") 
     })
 
@@ -94,7 +132,7 @@ const initializeApp = () => {
         hideElement("#balance-section") 
         hideElement("#balance-card-left") 
         hideElement("#balance-card-right") 
-        hideElement("#table")
+        hideElement("#new-operation")
         hideElement("#operations-form") 
     })
 
@@ -106,27 +144,27 @@ const initializeApp = () => {
         hideElement("#reports-section") 
         hideElement("#balance-card-left") 
         hideElement("#balance-card-right") 
-        hideElement("#table") 
+        hideElement("#new-operation") 
         
     })
     $("#btn-add-operation").addEventListener("click",(e) => {
         e.preventDefault()
         addOperation()
-        showElement("#balance-section")
-        showElement("#balance-card-left") 
-        showElement("#balance-card-right")
-        showElement("#operationsTable")
+        renderOperations(getInfo("operations")) 
+        showElement("#new-operation")
         showElement("#table")
-        hideElement("#any-operation")
-        hideElement("#operations-form")
+        home()
     })
 
     $("#btn-cancel-operation").addEventListener("click",(e)=>{
         e.preventDefault()
+        renderOperations(getInfo("operations")) 
+        showElement("#new-operation")
+        showElement("#table")
         home()
     })
     
-    
+
     //mobile - open 
     $(".fa-bars").addEventListener("click", () => {
         hideElement(".fa-bars")
