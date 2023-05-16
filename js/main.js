@@ -95,7 +95,6 @@ const initializeApp = () => {
         hideElement("#categorie-section")  
         hideElement("#reports-section")
         hideElement("#operations-form")
-       
     }
     
     //Falta que muestre el contendio de la tabla cuando tiene informacion
