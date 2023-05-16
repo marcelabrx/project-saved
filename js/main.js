@@ -14,10 +14,7 @@ const setInfo = (key, array) => localStorage.setItem(key, JSON.stringify(array))
 // Random id generator
 const randomId = () => self.crypto.randomUUID()
 
-
 const allOperations = getInfo("operations") || []
-
-
 
 const renderOperations = (operations) => {
     for (const {id, description, categorie, date, amount} of operations){
@@ -48,16 +45,12 @@ const saveOperationsData = () => {
     }
 }
 
-
-
 const addOperation = () => {
     const currentOperation = getInfo("operations")
     const newOperation = saveOperationsData()
     currentOperation.push(newOperation)
-    console.log(currentOperation)
     setInfo ("operations", currentOperation)
 }
-
 
 
 const initializeApp = () => { 
@@ -90,7 +83,7 @@ const initializeApp = () => {
         hideElement("#reports-section") 
         hideElement("#balance-card-left") 
         hideElement("#balance-card-right") 
-        hideElement("#new-operation")
+        hideElement("#table")
         hideElement("#operations-form") 
     })
 
@@ -101,7 +94,7 @@ const initializeApp = () => {
         hideElement("#balance-section") 
         hideElement("#balance-card-left") 
         hideElement("#balance-card-right") 
-        hideElement("#new-operation")
+        hideElement("#table")
         hideElement("#operations-form") 
     })
 
@@ -113,7 +106,7 @@ const initializeApp = () => {
         hideElement("#reports-section") 
         hideElement("#balance-card-left") 
         hideElement("#balance-card-right") 
-        hideElement("#new-operation") 
+        hideElement("#table") 
         
     })
     $("#btn-add-operation").addEventListener("click",(e) => {
@@ -122,7 +115,6 @@ const initializeApp = () => {
         showElement("#balance-section")
         showElement("#balance-card-left") 
         showElement("#balance-card-right")
-        showElement("#new-operation")
         showElement("#operationsTable")
         showElement("#table")
         hideElement("#any-operation")
@@ -134,7 +126,7 @@ const initializeApp = () => {
         home()
     })
     
-
+    
     //mobile - open 
     $(".fa-bars").addEventListener("click", () => {
         hideElement(".fa-bars")

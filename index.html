@@ -61,32 +61,32 @@
         <section id="balance-section" class="lg:flex lg:justify-center lg:align-start">
             <div id="balance-card-left" class="lg:w-1/4">
                 <!-- Card - Balance -->
-                <div class="flex-col bg-white mx-6 mt-20 mb-8 px-4 radius rounded-lg shadow-xl lg:mb-0">
-                    <h2 class="pt-6 pb-10 text-4xl font-bold">Balance</h2>
-                    <div class="flex justify-between py-4 text-gray-900">
+                <div class="flex-col bg-white mx-6 my-20 px-4 radius rounded-lg shadow-xl lg:mb-0">
+                    <h2 class="py-6 text-4xl font-bold">Balance</h2>
+                    <div class="flex justify-between py-2 text-gray-900">
                         <div class="text-lg">Ganancias</div>
                         <div class="text-green-500">+$0</div>
                     </div>
-                    <div class="flex justify-between py-4 text-gray-900">
+                    <div class="flex justify-between py-2 text-gray-900">
                         <div class="text-lg">Gastos</div>
                         <div class="text-red-600">+$0</div>
                     </div>
-                    <div class="flex justify-between py-4 text-gray-900">
+                    <div class="flex justify-between py-2 text-gray-900">
                         <div class="text-2xl">Total</div>
                         <div>$0</div>
                     </div>
                 </div>
                 <!-- Card - Filters -->
-                <div class="flex-col bg-white mx-6 mt-20 px-4 pb-4 radius rounded-lg shadow-xl lg:mt-6">
+                <div class="flex-col bg-white mx-6 my-20 px-4 pb-4 radius rounded-lg shadow-xl lg:mt-6">
                     <div class="flex justify-between">
-                        <h2 class="pt-6 pb-10 text-gray-900 text-2xl font-bold">Filtros</h2>
+                        <h2 class="py-6 text-gray-900 text-2xl font-bold">Filtros</h2>
                         <a id="btn-hide-filters" href="" class="pt-8 pb-10 text-blue-600 hover:text-gray-900 active:text-gray-900">Ocultar Filtros</a>
                         <a id="btn-show-filters" href="" class="hidden pt-8 pb-10 text-blue-600">Mostrar Filtros</a>
                     </div>
                     <!-- Filters Panel -->
-                    <form id="filters-panel" action="">
+                    <form id="filters-panel" action="" >
                         <!-- Filters Panel - Type -->
-                        <div class=" py-4 text-gray-900">
+                        <div class=" text-gray-900">
                             <label class="text-lg font-bold ml-1">Tipo</label>
                             <select id="select-panel" class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                                 <option value="">Todos</option>
@@ -95,7 +95,7 @@
                             </select>
                         </div>
                         <!-- Filters Panel - Category -->
-                        <div class="py-4 text-gray-900">
+                        <div class=" text-gray-900">
                             <label class="text-lg font-bold">Categoría</label>
                             <select class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                                 <option value="">Todas</option>
@@ -108,12 +108,12 @@
                             </select>
                         </div>
                         <!-- Filters Panel - Since -->
-                        <div class="py-4 text-gray-900">
+                        <div class=" text-gray-900">
                             <div class="text-lg font-bold">Desde</div>
                             <input type="date" name="" id="" class="w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                         </div>
                         <!-- Filters Panel - Order -->
-                        <div class="py-4 text-gray-900">
+                        <div class="text-gray-900">
                             <label class="text-lg font-bold">Ordenar por</label>
                             <select class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                                 <option value="">Más reciente</option>
@@ -144,8 +144,9 @@
                     </div>
                 </div>
                 <!-- Section - Information new operation -->
-                <div id="new-operation" class="hidden mt-4">
+                <!-- <div id="new-operation" class="hidden mt-4"> -->
                     <table id="table" class="hidden w-full table-fixed border border-purple-100 flex-wrap">           
+                        <thead class="hidden">
                         <tr class="border border-purple-100 md:flex md:justify-between ">
                             <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Descripción</th>
                             <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Categoría</th>
@@ -153,11 +154,12 @@
                             <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Monto</th>
                             <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Acciones</th>
                         </tr>
+                    </thead>
                         <tbody id="operationsTable">
                             <!--Operations rendered from the localstorage -->
                         </tbody>
                     </table>
-                </div>
+                <!-- </div> -->
             </div>
         </section>
         <!-- Card - New operation / Edit Operation -->
