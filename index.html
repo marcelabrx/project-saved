@@ -96,15 +96,10 @@
                         </div>
                         <!-- Filters Panel - Category -->
                         <div class=" text-gray-900">
-                            <label class="text-lg font-bold">Categoría</label>
-                            <select class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                            <label for="categories-select" class="text-lg font-bold">Categoría</label>
+                            <select id="categories-select" class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                                 <option value="">Todas</option>
-                                <option value="">Comida</option>
-                                <option value="">Servicios</option>
-                                <option value="">Salidas</option>
-                                <option value="">Educación</option>
-                                <option value="">Transporte</option>
-                                <option value="">Trabajo</option>
+                                <!--Operations rendered from the localstorage -->
                             </select>
                         </div>
                         <!-- Filters Panel - Since -->
@@ -183,15 +178,10 @@
                     </select>
                 </section>
                 <section class="flex flex-wrap">
-                    <label for="" class="font-bold w-full px-4 pt-6 pb-2">Categoría</label>
+                    <label for="catogorie" class="font-bold w-full px-4 pt-6 pb-2">Categoría</label>
                     <select  name="categorie" id="categorie" class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                         <option value="">Todas</option>
-                        <option value="">Comida</option>
-                        <option value="">Servicios</option>
-                        <option value="">Salidas</option>
-                        <option value="">Educación</option>
-                        <option value="">Transporte</option>
-                        <option value="">Trabajo</option>
+                       <!--Operations rendered from the localstorage -->
                     </select>
                 </section>
                 <section class="flex flex-wrap">
@@ -211,53 +201,11 @@
                 <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Categorías</h2>
                 <section class="flex flex-wrap justify-between w-full align-center">
                     <p class="p-4 w-full font-bold"> Nombre </p>
-                    <input type="text" class="p-2 ml-2 w-[65%] border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 lg:w-[85%]">
+                    <input type="text" id="input-add-categories" class="p-2 ml-2 w-[65%] border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 lg:w-[85%]">
                     <button id="btn-add-categories" class="px-4 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700 lg:w-[10%]">Agregar</button>
                 </section>
-                <div class="flex flex-col text-md">
-                    <article class="flex justify-between p-4">
-                        <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500"> Comida</p>
-                        <div>
-                            <button><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
-                            <button><i class="btn-delete-categories fa-solid fa-trash text-red-600"></i></button>
-                        </div>
-                    </article>
-                    <article class="flex justify-between align-center p-4">
-                        <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500">Servicios</p>
-                        <div>
-                        <button ><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
-                        <button><i class=" btn-delete-categories fa-solid fa-trash text-red-600"></i></button>
-                    </div>
-                    </article>
-                    <article class="flex justify-between align-center p-4">
-                        <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500">Salidas</p>
-                        <div>
-                        <button><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
-                        <button><i class="btn-delete-categories fa-solid fa-trash text-red-600"></i></button>
-                    </div>
-                    </article>
-                    <article class="flex justify-between align-center p-4">
-                        <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500 ">Educación</p>
-                        <div>
-                        <button><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
-                        <button><i class="btn-delete-categories fa-solid fa-trash text-red-600"></i></button>
-                    </div>
-                    </article>
-                    <article class="flex justify-between align-center p-4">
-                        <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500">Transporte</p>
-                        <div>
-                        <button><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
-                        <button><i class=" btn-delete-categories fa-solid fa-trash text-red-600"></i></button>
-                    </div>
-                    </article>
-                    <article class="flex justify-between align-center p-4">
-                        <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500">Trabajo</p>
-                        <div>
-                        <button><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
-                        <button><i class="btn-delete-categories fa-solid fa-trash text-red-600"></i></button>
-                    </div>
-                    </article>
-                </div>
+                <div id="categories-section" class="flex flex-col text-md">
+                    <!--Operations rendered from the localstorage -->
             </div>
         </section>
         <!--Card - Edit categories-->

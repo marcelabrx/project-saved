@@ -26,20 +26,50 @@ const setInfo = (key, array) => localStorage.setItem(key, JSON.stringify(array))
 // Random id generator
 const randomId = () => self.crypto.randomUUID()
 
+//Default categories
+const defaultCategories=[
+    {
+        id: randomId(),
+        categorieName: "Comida"
+    },
+    {
+        id: randomId(),
+        categorieName: "Servicios"
+    },
+    {
+        id: randomId(),
+        categorieName: "Salidas"
+    },
+    {
+        id: randomId(),
+        categorieName: "Educación"
+    },
+    {
+        id: randomId(),
+        categorieName: "Transporte"
+    },
+    {
+        id: randomId(),
+        categorieName: "Trabajo"
+    },
+]
 
+//Getting Info operations
 const allOperations = getInfo("operations") || []
+const allCategories = getInfo("categories") || defaultCategories
 
-
+//Render functions
 //limpiar tabla antes del for (las cosas se me duplican porque no le pongo el clean container)
 const renderOperations = (operations) => {
     cleanContainer("#operations-table")
     if (operations.length){
         hideElement("#any-operation")
         for (const {id, description, categorie, date, amount} of operations){
+            const categorieSelected = getInfo("categories").find(cat => cat.id === categorie)
             $("#operations-table").innerHTML += `
             <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
                 <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">${description}</td>
-                <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">${categorie}</td>
+                <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">${categorieSelected.categorieName}</td>
                 <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${date}</td>
                 <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
                 <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
@@ -54,19 +84,48 @@ const renderOperations = (operations) => {
     }
 }
 
-    
-// renderOperations(placeholderOperations)
+const renderCategories = (categories) => {
+    cleanContainer("#categories-section")
+    for (const {id, categorieName} of  categories) { 
+            $("#categories-section").innerHTML += `
+            <article class="flex justify-between p-4">
+                        <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500" value="${id}">${categorieName}</p>
+                        <div>
+                            <button><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
+                            <button><i class="btn-delete-categories fa-solid fa-trash text-red-600"></i></button>
+                        </div>
+                    </article>
+                    `
+            $("#categories-select").innerHTML += `
+                <option value="${id}">${categorieName}</option>
+            `
+            $("#categorie").innerHTML +=`
+            <option value="${id}">${categorieName}</option>
+            `
+    }
+}
+ 
+//Save data operations
+
+const saveCategoriesData=()=>{
+    return{
+        id : randomId(),
+        categorieName: $("#input-add-categories")
+    }
+}
+
 const saveOperationsData = () => {
+    const categoriesId= $("#categorie").options[$("#categorie").selectedIndex].getAttribute("data-id")
     return {
         id: randomId(), 
         description: $("#description").value,
-        categorie: $("#categorie").value,
+        categorie: categoriesId,
         date: $("#date").value,
         amount: $("#amount").valueAsNumber
     }
 }
 
-
+//Add data functions
 
 const addOperation = () => {
     const currentOperation = getInfo("operations")
@@ -76,6 +135,14 @@ const addOperation = () => {
     setInfo ("operations", currentOperation)
 }
 
+const addCategories=()=>{
+    const currentCategorie= getInfo("categories")
+    const newCategorie= saveCategoriesData
+    currentCategorie.push(newCategorie)
+    setInfo("categories", currentCategorie)
+    }
+
+//modifying funtions    
 const deleteOperation = (id) => {
     const currentOperation = getInfo("operations").filter(operation => operation.id != id)
     setInfo("operations", currentOperation)
@@ -92,8 +159,9 @@ const editOperationForm = (id) => {
 
 const initializeApp = () => { 
     setInfo("operations", allOperations)
+    setInfo("categories", allCategories)
     renderOperations(allOperations)
-
+    renderCategories(allCategories)
     hideElement("#categorie-section")  
     hideElement("#reports-section")
     hideElement("#new-operation")
@@ -136,6 +204,7 @@ const initializeApp = () => {
         e.preventDefault()
         addOperation()
         renderOperations(getInfo("operations"))
+        renderCategories(getInfo("operations"))
         showElements(["#new-operation", "#table"]) 
         home()
     })
@@ -183,6 +252,8 @@ const initializeApp = () => {
     $("#btn-add-categories").addEventListener("click",()=>{
         showElement("#edit-categories")
         hideElement("#categorie-section")
+        addCategories()
+        renderCategories(getInfo("categories")) 
     })
     
     $("#btn-cancel-add").addEventListener("click",()=>{
