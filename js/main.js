@@ -7,14 +7,14 @@ const hideElement = (selector) => $(selector).classList.add("hidden")
 const cleanContainer = (selector) => $(selector).innerHTML = ""
 
 const showElements = (selectors) => {
-    for (const eachSelector of selectors){
-        $(eachSelector).classList.remove("hidden")
+    for (const selector of selectors){
+        $(selector).classList.remove("hidden")
     }
 }
 
 const hideElements = (selectors) => {
-    for (const eachSelector of selectors){
-        $(eachSelector).classList.add("hidden")
+    for (const selector of selectors){
+        $(selector).classList.add("hidden")
     }
 }
 
@@ -43,8 +43,8 @@ const renderOperations = (operations) => {
                 <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${date}</td>
                 <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
                 <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
-                    <button><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
-                    <button><i class="fa-solid fa-trash text-red-600"></i></button>
+                    <button onClick="editOperationForm('${id}')"><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
+                    <button onClick="deleteOperation('${id}')"><i class="fa-solid fa-trash text-red-600"></i></button>
                 </td>                            
             </tr>
             `
@@ -76,7 +76,17 @@ const addOperation = () => {
     setInfo ("operations", currentOperation)
 }
 
-const deleteOperation = () => {
+const deleteOperation = (id) => {
+    const currentOperation = getInfo("operations").filter(operation => operation.id != id)
+    setInfo("operations", currentOperation)
+    renderOperations(currentOperation)
+}
+
+const editOperationForm = (id) => {
+    showElements(["#operations-form", "#btn-edit-operation", ".edit-operation-title"])
+    hideElements([".new-operation-title", "#btn-add-operation", "#balance-section", "#balance-card-left", "#balance-card-right", "#categorie-section"])
+    // const currentOperation = getInfo("operations").find(operation => operation.id === id)
+    // setInfo("operations", currentOperation)
 
 }
 
@@ -89,105 +99,76 @@ const initializeApp = () => {
     hideElement("#new-operation")
 
     const home = () =>{
-        showElement("#balance-section") 
-        showElement("#balance-card-left") 
-        showElement("#balance-card-right")
-        hideElement("#categorie-section")  
-        hideElement("#reports-section")
-        hideElement("#operations-form")
+        showElements(["#balance-section", "#balance-card-left", "#balance-card-right"])
+        hideElements(["#categorie-section", "#reports-section", "#operations-form"])
     }
     
     //Falta que muestre el contendio de la tabla cuando tiene informacion
-    // $("#title-home").addEventListener("click", ()=>{
-    //     renderOperations(getInfo("operations")) 
-    //     showElement("#new-operation")
-    //     showElement("#table")
-    //     home()
-    // })
+    // $("#title-home").addEventListener("click", )
 
     // btn balance 
-    $("#balance-btn").addEventListener("click", ()=>{
-    home()
-    renderOperations(getInfo("operations")) 
-    showElement("#new-operation")
-    showElement("#table")
+    $("#balance-btn").addEventListener("click", () => {
+        home()
+        renderOperations(getInfo("operations")) 
+        showElements(["#new-operation", "#table"])
     })
 
     //btn categorías
     $("#categorie-btn").addEventListener("click", () => {
-        showElement("#categorie-section") 
-        hideElement("#balance-section") 
-        hideElement("#reports-section") 
-        hideElement("#balance-card-left") 
-        hideElement("#balance-card-right") 
-        hideElement("#new-operation")
-        hideElement("#operations-form") 
+        showElement("#categorie-section")
+        hideElements(["#balance-section", "#reports-section", "#balance-card-left", "#balance-card-right", "#new-operation", "#operations-form"]) 
     })
 
     //btn reportes
     $("#reports-btn").addEventListener("click", () => {
         showElement("#reports-section")
-        hideElement("#categorie-section") 
-        hideElement("#balance-section") 
-        hideElement("#balance-card-left") 
-        hideElement("#balance-card-right") 
-        hideElement("#new-operation")
-        hideElement("#operations-form") 
+        hideElements(["#categorie-section", "#balance-section", "#balance-card-left", "#balance-card-right", "#new-operation", "#operations-form"])
     })
 
-    // btn add operation
+    // btn add new operation
     $("#btn-new-operation").addEventListener("click",() => {
         showElement("#operations-form")
-        hideElement("#categorie-section")
-        hideElement("#balance-section") 
-        hideElement("#reports-section") 
-        hideElement("#balance-card-left") 
-        hideElement("#balance-card-right") 
-        hideElement("#new-operation") 
-        
+        hideElements(["#categorie-section", "#balance-section", "#reports-section", "#balance-card-left", "#balance-card-right"])        
     })
+
+    //add operation
     $("#btn-add-operation").addEventListener("click",(e) => {
         e.preventDefault()
         addOperation()
-        renderOperations(getInfo("operations")) 
-        showElement("#new-operation")
-        showElement("#table")
+        renderOperations(getInfo("operations"))
+        showElements(["#new-operation", "#table"]) 
         home()
     })
 
     $("#btn-cancel-operation").addEventListener("click",(e)=>{
         e.preventDefault()
-        renderOperations(getInfo("operations")) 
-        showElement("#new-operation")
-        showElement("#table")
+        renderOperations(getInfo("operations"))
+        showElements(["#new-operation", "#table"]) 
         home()
     })
     
 
-    //mobile - open 
+    //mobile - open menu
     $(".fa-bars").addEventListener("click", () => {
+        showElements([".fa-xmark", "#options-menu"])
         hideElement(".fa-bars")
-        showElement(".fa-xmark")
-        showElement("#options-menu")
     })
+
     $(".fa-xmark").addEventListener("click", () => {
         showElement(".fa-bars")
-        hideElement(".fa-xmark")
-        hideElement("#options-menu")
+        hideElements([".fa-xmark", "#options-menu"])
     })
 
     //filters panel 
-    $("#btn-hide-filters").addEventListener("click",(e)=>{
+    $("#btn-hide-filters").addEventListener("click", (e) => {
         e.preventDefault()
-        hideElement("#filters-panel")
-        hideElement("#btn-hide-filters")
         showElement("#btn-show-filters")
+        hideElements(["#filters-panel", "#btn-hide-filters"])
     })
       
     $("#btn-show-filters").addEventListener("click",(e)=>{
         e.preventDefault()
-        showElement("#filters-panel")
-        showElement("#btn-hide-filters")
+        showElements(["#filters-panel", "#btn-hide-filters"])
         hideElement("#btn-show-filters")
     })
 
