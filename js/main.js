@@ -130,7 +130,6 @@ const saveOperationsData = (operationId) => {
     }
 }
 
-
 //Add data functions
 
 const addOperation = () => {
