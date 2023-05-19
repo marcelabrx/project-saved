@@ -156,8 +156,7 @@ const deleteOperation = (id) => {
 const editOperationForm = (id) => {
     showElements(["#operations-form", "#btn-edit-operation", ".edit-operation-title"])
     hideElements([".new-operation-title", "#btn-add-operation", "#balance-section", "#balance-card-left", "#balance-card-right", "#categorie-section"])
-    const currentOperation = getInfo("operations").find(operation => operation.id === id)
-    console.log(currentOperation)
+    // const currentOperation = getInfo("operations").find(operation => operation.id === id)
     // setInfo("operations", currentOperation)
 
 }
