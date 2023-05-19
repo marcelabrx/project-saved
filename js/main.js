@@ -151,7 +151,8 @@ const deleteOperation = (id) => {
 const editOperationForm = (id) => {
     showElements(["#operations-form", "#btn-edit-operation", ".edit-operation-title"])
     hideElements([".new-operation-title", "#btn-add-operation", "#balance-section", "#balance-card-left", "#balance-card-right", "#categorie-section"])
-    // const currentOperation = getInfo("operations").find(operation => operation.id === id)
+    const currentOperation = getInfo("operations").find(operation => operation.id === id)
+    console.log(currentOperation)
     // setInfo("operations", currentOperation)
 
 }
@@ -204,8 +205,8 @@ const initializeApp = () => {
         addOperation()
         renderOperations(getInfo("operations"))
         renderCategories(getInfo("operations"))
-        showElements(["#new-operation", "#table"]) 
-        home()
+        showElements([home, "#new-operation", "#table", "#new-operation-title"]) 
+        
     })
 
     $("#btn-cancel-operation").addEventListener("click",(e)=>{
