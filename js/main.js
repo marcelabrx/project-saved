@@ -87,9 +87,6 @@ const renderOperations = (operations) => {
 // getInfo("categories").filter(cat => console.log(cat.id))
 const renderCategories = (categories) => {
     cleanContainer("#categories-section")
-    //estos 2 clean container no me permiten ver la opcion de todos, pero si no los pongo y agrego operaciones, se duplican
-    // cleanContainer("#categories-select")
-    // cleanContainer("#categorie")
     for (const {id, categorieName} of  categories) { 
         $("#categories-section").innerHTML += `
         <article class="flex justify-between p-4">
@@ -100,15 +97,22 @@ const renderCategories = (categories) => {
             </div>
         </article>
         `
+    }
+    }
+
+
+const renderCategoriesOptions = (categories) => {
+    for (const {id, categorieName} of  categories) { 
         $("#categories-select").innerHTML += `
-            <option value="${id}">${categorieName}</option>
-        `
-        $("#categorie").innerHTML +=`
-        <option value="${categorieName}" data-id="${id}">${categorieName}</option>
-        `
+        <option value="${id}">${categorieName}</option>
+    `
+    $("#categorie").innerHTML +=`
+    <option value="${id}">${categorieName}</option>
+    `
     }
 }
- 
+
+
 //Save data operations
 
 const saveCategoriesData = () => {
@@ -119,13 +123,12 @@ const saveCategoriesData = () => {
 }
 
 const saveOperationsData = (operationId) => {
-    const categoriesId = $("#categorie").options[$("#categorie").selectedIndex].getAttribute("data-id")
     return {
         id: operationId ? operationId : randomId(), 
         description: $("#description").value,
         amount: $("#amount").valueAsNumber,
         type: $("#type").value,
-        categorie: categoriesId,
+        categorie: $("#categorie").value,
         date: $("#date").value,
     }
 }
@@ -173,7 +176,7 @@ const editOperationForm = (id) => {
     $("#description").value = editSelected.description
     $("#amount").valueAsNumber = editSelected.amount
     $("#type").value = editSelected.type
-    // $("#categorie").value = editSelected.categorie
+    $("#categorie").value = editSelected.categorie
     $("#date").value = editSelected.date
 }
 
@@ -184,6 +187,7 @@ const initializeApp = () => {
     setInfo("categories", allCategories)
     renderOperations(allOperations)
     renderCategories(allCategories)
+    renderCategoriesOptions(allCategories)
     hideElement("#categorie-section")  
     hideElement("#reports-section")
     hideElement("#new-operation")
@@ -233,6 +237,7 @@ const initializeApp = () => {
         e.preventDefault()
         addOperation()
         renderOperations(getInfo("operations"))
+        renderCategoriesOptions(getInfo("operations"))
         renderCategories(getInfo("categories"))
         showElements(["#new-operation", "#table"]) 
         home()
@@ -278,6 +283,19 @@ const initializeApp = () => {
         hideElement("#btn-show-filters")
     })
 
+    $("#categories-select").addEventListener("input", (e)=>{
+        const categorieId= e.target.value
+        const currentsOperations= getInfo("operations")
+        if(!categorieId){
+         renderOperations("currentsOperations")
+        }else{
+         const filteredOperations= currentsOperations.filter(operation=> operation.categorie ===categorieId)
+         renderOperations(filteredOperations)
+         
+        }    
+     }
+     )
+
     //selector gasto/ganancia
     $("#select-panel").addEventListener("click", () => {
         const selectPanel = $("#select-panel").value
@@ -291,6 +309,7 @@ const initializeApp = () => {
         // hideElement("#categorie-section")
         addCategories()
         renderCategories(getInfo("categories"))
+        renderCategoriesOptions(getInfo("categories"))
         showElement("#succesfull-alert") 
     })
     
