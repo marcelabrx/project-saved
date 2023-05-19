@@ -65,11 +65,11 @@ const renderOperations = (operations) => {
     if (operations.length){
         hideElement("#any-operation")
         for (const {id, description, categorie, date, amount} of operations){
-            // const categorieSelected = getInfo("categories").find(cat => cat.id === categorie)
+            const categorieSelected = getInfo("categories").find(cat => cat.id === categorie)
             $("#operations-table").innerHTML += `
             <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
                 <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">${description}</td>
-                <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">${categorie}</td>
+                <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">${categorieSelected.categorieName}</td>
                 <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${date}</td>
                 <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
                 <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
@@ -84,8 +84,12 @@ const renderOperations = (operations) => {
     }
 }
 
+// getInfo("categories").filter(cat => console.log(cat.id))
 const renderCategories = (categories) => {
     cleanContainer("#categories-section")
+    //estos 2 clean container no me permiten ver la opcion de todos, pero si no los pongo y agrego operaciones, se duplican
+    // cleanContainer("#categories-select")
+    // cleanContainer("#categorie")
     for (const {id, categorieName} of  categories) { 
         $("#categories-section").innerHTML += `
         <article class="flex justify-between p-4">
@@ -96,12 +100,12 @@ const renderCategories = (categories) => {
             </div>
         </article>
         `
-        // $("#categories-select").innerHTML += `
-        //     <option value="${id}">${categorieName}</option>
-        // `
-        // $("#categorie").innerHTML +=`
-        // <option value="${id}">${categorieName}</option>
-        // `
+        $("#categories-select").innerHTML += `
+            <option value="${id}">${categorieName}</option>
+        `
+        $("#categorie").innerHTML +=`
+        <option value="${categorieName}" data-id="${id}">${categorieName}</option>
+        `
     }
 }
  
@@ -115,15 +119,16 @@ const saveCategoriesData = () => {
 }
 
 const saveOperationsData = () => {
-    // const categoriesId = $("#categorie").options[$("#categorie").selectedIndex].getAttribute("data-id")
+    const categoriesId = $("#categorie").options[$("#categorie").selectedIndex].getAttribute("data-id")
     return {
         id: randomId(), 
         description: $("#description").value,
-        categorie: "",
+        categorie: categoriesId,
         date: $("#date").value,
         amount: $("#amount").valueAsNumber
     }
 }
+
 
 //Add data functions
 
@@ -136,7 +141,7 @@ const addOperation = () => {
 
 const addCategories = () => {
     const currentCategorie = getInfo("categories")
-    const newCategorie = saveCategoriesData
+    const newCategorie = saveCategoriesData()
     currentCategorie.push(newCategorie)
     setInfo("categories", currentCategorie)
 }
@@ -204,10 +209,11 @@ const initializeApp = () => {
         e.preventDefault()
         addOperation()
         renderOperations(getInfo("operations"))
-        renderCategories(getInfo("operations"))
-        showElements([home, "#new-operation", "#table", "#new-operation-title"]) 
-        
+        renderCategories(getInfo("categories"))
+        showElements(["#new-operation", "#table"]) 
+        home()
     })
+    
 
     $("#btn-cancel-operation").addEventListener("click",(e)=>{
         e.preventDefault()
