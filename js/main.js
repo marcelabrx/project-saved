@@ -27,7 +27,7 @@ const setInfo = (key, array) => localStorage.setItem(key, JSON.stringify(array))
 const randomId = () => self.crypto.randomUUID()
 
 //Default categories
-const defaultCategories=[
+const defaultCategories = [
     {
         id: randomId(),
         categorieName: "Comida"
@@ -65,11 +65,11 @@ const renderOperations = (operations) => {
     if (operations.length){
         hideElement("#any-operation")
         for (const {id, description, categorie, date, amount} of operations){
-            const categorieSelected = getInfo("categories").find(cat => cat.id === categorie)
+            // const categorieSelected = getInfo("categories").find(cat => cat.id === categorie)
             $("#operations-table").innerHTML += `
             <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
                 <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">${description}</td>
-                <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">${categorieSelected.categorieName}</td>
+                <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">${categorie}</td>
                 <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${date}</td>
                 <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
                 <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
@@ -87,39 +87,39 @@ const renderOperations = (operations) => {
 const renderCategories = (categories) => {
     cleanContainer("#categories-section")
     for (const {id, categorieName} of  categories) { 
-            $("#categories-section").innerHTML += `
-            <article class="flex justify-between p-4">
-                        <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500" value="${id}">${categorieName}</p>
-                        <div>
-                            <button><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
-                            <button><i class="btn-delete-categories fa-solid fa-trash text-red-600"></i></button>
-                        </div>
-                    </article>
-                    `
-            $("#categories-select").innerHTML += `
-                <option value="${id}">${categorieName}</option>
-            `
-            $("#categorie").innerHTML +=`
-            <option value="${id}">${categorieName}</option>
-            `
+        $("#categories-section").innerHTML += `
+        <article class="flex justify-between p-4">
+            <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500" data-id="${id}">${categorieName}</p>
+            <div>
+                <button><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
+                <button><i class="btn-delete-categories fa-solid fa-trash text-red-600"></i></button>
+            </div>
+        </article>
+        `
+        // $("#categories-select").innerHTML += `
+        //     <option value="${id}">${categorieName}</option>
+        // `
+        // $("#categorie").innerHTML +=`
+        // <option value="${id}">${categorieName}</option>
+        // `
     }
 }
  
 //Save data operations
 
-const saveCategoriesData=()=>{
+const saveCategoriesData = () => {
     return{
         id : randomId(),
-        categorieName: $("#input-add-categories")
+        categorieName: $("#input-add-categories").value
     }
 }
 
 const saveOperationsData = () => {
-    const categoriesId= $("#categorie").options[$("#categorie").selectedIndex].getAttribute("data-id")
+    // const categoriesId = $("#categorie").options[$("#categorie").selectedIndex].getAttribute("data-id")
     return {
         id: randomId(), 
         description: $("#description").value,
-        categorie: categoriesId,
+        categorie: "",
         date: $("#date").value,
         amount: $("#amount").valueAsNumber
     }
@@ -131,16 +131,15 @@ const addOperation = () => {
     const currentOperation = getInfo("operations")
     const newOperation = saveOperationsData()
     currentOperation.push(newOperation)
-    console.log(currentOperation)
     setInfo ("operations", currentOperation)
 }
 
-const addCategories=()=>{
-    const currentCategorie= getInfo("categories")
-    const newCategorie= saveCategoriesData
+const addCategories = () => {
+    const currentCategorie = getInfo("categories")
+    const newCategorie = saveCategoriesData
     currentCategorie.push(newCategorie)
     setInfo("categories", currentCategorie)
-    }
+}
 
 //modifying funtions    
 const deleteOperation = (id) => {
@@ -250,8 +249,8 @@ const initializeApp = () => {
 
     //section categorias
     $("#btn-add-categories").addEventListener("click",()=>{
-        showElement("#edit-categories")
-        hideElement("#categorie-section")
+        // showElement("#edit-categories")
+        // hideElement("#categorie-section")
         addCategories()
         renderCategories(getInfo("categories")) 
     })
