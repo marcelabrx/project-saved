@@ -118,14 +118,15 @@ const saveCategoriesData = () => {
     }
 }
 
-const saveOperationsData = () => {
+const saveOperationsData = (operationId) => {
     const categoriesId = $("#categorie").options[$("#categorie").selectedIndex].getAttribute("data-id")
     return {
-        id: randomId(), 
+        id: operationId ? operationId : randomId(), 
         description: $("#description").value,
+        amount: $("#amount").valueAsNumber,
+        type: $("#type").value,
         categorie: categoriesId,
         date: $("#date").value,
-        amount: $("#amount").valueAsNumber
     }
 }
 
@@ -153,13 +154,31 @@ const deleteOperation = (id) => {
     renderOperations(currentOperation)
 }
 
+//me da error pq no puedo tomar las categories
+const editOperation = () => {
+    const operationId = $("#btn-edit-operation").getAttribute("data-id")
+    const editedOperations = getInfo("operations").map(operation => {
+        if (operation.id === operationId){
+            return saveOperationsData()
+        }
+        return operation
+    })
+    setInfo("operations", editedOperations)
+}
+
 const editOperationForm = (id) => {
     showElements(["#operations-form", "#btn-edit-operation", ".edit-operation-title"])
     hideElements([".new-operation-title", "#btn-add-operation", "#balance-section", "#balance-card-left", "#balance-card-right", "#categorie-section"])
-    // const currentOperation = getInfo("operations").find(operation => operation.id === id)
-    // setInfo("operations", currentOperation)
-
+    $("#btn-edit-operation").setAttribute("data-id", id)
+    const editSelected = getInfo("operations").find(operation => operation.id === id)
+    $("#description").value = editSelected.description
+    $("#amount").valueAsNumber = editSelected.amount
+    $("#type").value = editSelected.type
+    // $("#categorie").value = editSelected.categorie
+    $("#date").value = editSelected.date
 }
+
+
 
 const initializeApp = () => { 
     setInfo("operations", allOperations)
@@ -170,13 +189,16 @@ const initializeApp = () => {
     hideElement("#reports-section")
     hideElement("#new-operation")
 
-    const home = () =>{
+    const home = () => {
         showElements(["#balance-section", "#balance-card-left", "#balance-card-right"])
         hideElements(["#categorie-section", "#reports-section", "#operations-form"])
     }
-    
+
     //Falta que muestre el contendio de la tabla cuando tiene informacion
-    // $("#title-home").addEventListener("click", )
+    $("#title-home").addEventListener("click", () => {
+        home()
+        renderOperations(getInfo("operations"))
+    })
 
     // btn balance 
     $("#balance-btn").addEventListener("click", () => {
@@ -197,6 +219,10 @@ const initializeApp = () => {
         hideElements(["#categorie-section", "#balance-section", "#balance-card-left", "#balance-card-right", "#new-operation", "#operations-form"])
     })
 
+    $("#close-succesfull-alert").addEventListener("click", () => {
+        hideElement("#succesfull-alert")
+    })
+
     // btn add new operation
     $("#btn-new-operation").addEventListener("click",() => {
         showElement("#operations-form")
@@ -214,13 +240,20 @@ const initializeApp = () => {
     })
     
 
-    $("#btn-cancel-operation").addEventListener("click",(e)=>{
+    $("#btn-cancel-operation").addEventListener("click",(e)=> {
         e.preventDefault()
         renderOperations(getInfo("operations"))
         showElements(["#new-operation", "#table"]) 
         home()
     })
     
+    $("#btn-edit-operation").addEventListener("click", (e) => {
+        e.preventDefault()
+        editOperation()
+        showElements(["#new-operation", "#table"]) 
+        home()
+        renderOperations(getInfo("operations"))
+    })
 
     //mobile - open menu
     $(".fa-bars").addEventListener("click", () => {
@@ -258,7 +291,8 @@ const initializeApp = () => {
         // showElement("#edit-categories")
         // hideElement("#categorie-section")
         addCategories()
-        renderCategories(getInfo("categories")) 
+        renderCategories(getInfo("categories"))
+        showElement("#succesfull-alert") 
     })
     
     $("#btn-cancel-add").addEventListener("click",()=>{

@@ -58,12 +58,12 @@
     </header>
     <main>
         <!--Succesfull alert-->
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+        <div id="succesfull-alert" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
             <strong class="font-bold">¡Increíble!</strong>
             <span class="block sm:inline">Su elección ha sido agregada satisfactoriamente.</span>
-            <span role="button" class="absolute top-0 bottom-0 right-0 px-4 py-3">
+            <button id="close-succesfull-alert" role="button" class="absolute top-0 bottom-0 right-0 px-4 py-3">
                <i class="fa-solid fa-xmark fill-current h-6 w-6 text-green-500"></i>
-            </span>
+            </button>
         </div>
         <!-- Section - Balance -->
         <section id="balance-section" class="lg:flex lg:justify-center lg:align-start">
@@ -181,8 +181,8 @@
                 <section class="flex flex-wrap">
                     <label class="font-bold w-full px-4 pt-6 pb-2">Tipo</label>
                     <select name="type" id="type" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                        <option value="">Gasto</option>
-                        <option value="">Ganancia</option>
+                        <option value="Gasto">Gasto</option>
+                        <option value="Ganancia">Ganancia</option>
                     </select>
                 </section>
                 <section class="flex flex-wrap">
@@ -305,7 +305,7 @@
         </section> 
         <!-- Modal Window -->  
         <div  id="modal-window" class="hidden relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-          <div class="fixed inset-0 bg-transparent backdrop-blur-sm bg-opacity-75 transition-opacity">
+            <div class="fixed inset-0 bg-transparent backdrop-blur-sm bg-opacity-75 transition-opacity">
                 <div class="fixed inset-0 z-10 overflow-y-auto">
                     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                         <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
@@ -319,7 +319,7 @@
                                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                         <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Eliminar</h3>
                                         <div class="mt-2">
-                                            <p class="text-sm text-gray-500">¿Estás segura de querer eliminar "Nueva Operación"? Toda la información será removida de forma permanente. Esta acción no podrá deshacerse.</p>
+                                            <p class="text-sm text-gray-500">¿Estás segura de querer eliminar <span>"Nueva Operación"</span>? Toda la información será removida de forma permanente. Esta acción no podrá deshacerse.</p>
                                         </div>    
                                     </div>
                                 </div>
