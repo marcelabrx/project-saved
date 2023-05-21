@@ -59,11 +59,11 @@ const allOperations = getInfo("operations") || []
 const allCategories = getInfo("categories") || defaultCategories
 
 //Render functions
-//limpiar tabla antes del for (las cosas se me duplican porque no le pongo el clean container)
 const renderOperations = (operations) => {
     cleanContainer("#operations-table")
     if (operations.length){
         hideElement("#any-operation")
+        showElements(["#new-operation", "#table"])
         for (const {id, description, categorie, date, amount} of operations){
             const categorieSelected = getInfo("categories").find(cat => cat.id === categorie)
             $("#operations-table").innerHTML += `
@@ -74,7 +74,7 @@ const renderOperations = (operations) => {
                 <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
                 <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
                     <button onClick="editOperationForm('${id}')"><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
-                    <button onClick="deleteOperation('${id}')"><i class="fa-solid fa-trash text-red-600"></i></button>
+                    <button data-id="${id}" onClick="openDeleteModal('${id}')"><i class="btn-delete fa-solid fa-trash text-red-600"></i></button>
                 </td>                            
             </tr>
             `
@@ -98,8 +98,7 @@ const renderCategories = (categories) => {
         </article>
         `
     }
-    }
-
+}
 
 const renderCategoriesOptions = (categories) => {
     for (const {id, categorieName} of  categories) { 
@@ -112,9 +111,7 @@ const renderCategoriesOptions = (categories) => {
     }
 }
 
-
 //Save data operations
-
 const saveCategoriesData = () => {
     return{
         id : randomId(),
@@ -153,10 +150,21 @@ const addCategories = () => {
 const deleteOperation = (id) => {
     const currentOperation = getInfo("operations").filter(operation => operation.id != id)
     setInfo("operations", currentOperation)
-    renderOperations(currentOperation)
 }
 
-//me da error pq no puedo tomar las categories
+const openDeleteModal = (id) => {
+    showElement("#modal-window")
+    const selectedOperation = getInfo("operations").find(operation => operation.id === id)
+    $(".modal-text").innerHTML = selectedOperation.description
+    $("#modal-delete").setAttribute("data-id", id)
+    $("#modal-delete").addEventListener("click", () => {
+        const operationId = $("#modal-delete").getAttribute("data-id")
+        deleteOperation(operationId)
+        window.location.reload()
+    })
+    renderOperations(getInfo("operations"))
+}
+
 const editOperation = () => {
     const operationId = $("#btn-edit-operation").getAttribute("data-id")
     const editedOperations = getInfo("operations").map(operation => {
@@ -181,7 +189,6 @@ const editOperationForm = (id) => {
 }
 
 
-
 const initializeApp = () => { 
     setInfo("operations", allOperations)
     setInfo("categories", allCategories)
@@ -190,7 +197,7 @@ const initializeApp = () => {
     renderCategoriesOptions(allCategories)
     hideElement("#categorie-section")  
     hideElement("#reports-section")
-    hideElement("#new-operation")
+    // hideElement("#new-operation")
 
     const home = () => {
         showElements(["#balance-section", "#balance-card-left", "#balance-card-right"])
@@ -227,24 +234,24 @@ const initializeApp = () => {
     })
 
     // btn add new operation
-    $("#btn-new-operation").addEventListener("click",() => {
+    $("#btn-new-operation").addEventListener("click", () => {
         showElement("#operations-form")
         hideElements(["#categorie-section", "#balance-section", "#reports-section", "#balance-card-left", "#balance-card-right"])        
     })
 
     //add operation
-    $("#btn-add-operation").addEventListener("click",(e) => {
+    $("#btn-add-operation").addEventListener("click", (e) => {
         e.preventDefault()
         addOperation()
         renderOperations(getInfo("operations"))
         renderCategoriesOptions(getInfo("operations"))
         renderCategories(getInfo("categories"))
-        showElements(["#new-operation", "#table"]) 
+        showElements(["#new-operation", "#table", "#succesfull-alert"]) 
         home()
     })
     
 
-    $("#btn-cancel-operation").addEventListener("click",(e)=> {
+    $("#btn-cancel-operation").addEventListener("click",(e) => {
         e.preventDefault()
         renderOperations(getInfo("operations"))
         showElements(["#new-operation", "#table"]) 
@@ -277,24 +284,22 @@ const initializeApp = () => {
         hideElements(["#filters-panel", "#btn-hide-filters"])
     })
       
-    $("#btn-show-filters").addEventListener("click",(e)=>{
+    $("#btn-show-filters").addEventListener("click", (e) => {
         e.preventDefault()
         showElements(["#filters-panel", "#btn-hide-filters"])
         hideElement("#btn-show-filters")
     })
 
-    $("#categories-select").addEventListener("input", (e)=>{
-        const categorieId= e.target.value
-        const currentsOperations= getInfo("operations")
-        if(!categorieId){
-         renderOperations("currentsOperations")
-        }else{
-         const filteredOperations= currentsOperations.filter(operation=> operation.categorie ===categorieId)
-         renderOperations(filteredOperations)
-         
+    $("#categories-select").addEventListener("input", (e) => {
+        const categorieId = e.target.value
+        const currentsOperations = getInfo("operations")
+        if (!categorieId) {
+            renderOperations("currentsOperations")
+        } else {
+            const filteredOperations = currentsOperations.filter(operation => operation.categorie === categorieId)
+            renderOperations(filteredOperations) 
         }    
-     }
-     )
+    })
 
     //selector gasto/ganancia
     $("#select-panel").addEventListener("click", () => {
@@ -304,7 +309,7 @@ const initializeApp = () => {
     })
 
     //section categorias
-    $("#btn-add-categories").addEventListener("click",()=>{
+    $("#btn-add-categories").addEventListener("click", () => {
         // showElement("#edit-categories")
         // hideElement("#categorie-section")
         addCategories()
@@ -313,12 +318,12 @@ const initializeApp = () => {
         showElement("#succesfull-alert") 
     })
     
-    $("#btn-cancel-add").addEventListener("click",()=>{
+    $("#btn-cancel-add").addEventListener("click", () => {
         hideElement("#edit-categories")
         showElement("#categorie-section")
     })
     
-    $("#btn-confirm-add").addEventListener("click",()=>{
+    $("#btn-confirm-add").addEventListener("click", () => {
         hideElement("#edit-categories")
         showElement("#categorie-section")
     })
