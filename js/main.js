@@ -84,7 +84,7 @@ const renderOperations = (operations) => {
     }
 }
 
-// getInfo("categories").filter(cat => console.log(cat.id))
+
 const renderCategories = (categories) => {
     cleanContainer("#categories-section")
     for (const {id, categorieName} of  categories) { 
@@ -92,8 +92,8 @@ const renderCategories = (categories) => {
         <article class="flex justify-between p-4">
             <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500" data-id="${id}">${categorieName}</p>
             <div>
-                <button><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600"></i></button>
-                <button><i class="btn-delete-categories fa-solid fa-trash text-red-600"></i></button>
+                <button><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600" onclick=editCategoriesForm("${id}")></i></button>
+                <button><i class="btn-delete-categories fa-solid fa-trash text-red-600" onclick=deleteCategorieId("${id}")></i></button>
             </div>
         </article>
         `
@@ -111,6 +111,10 @@ const renderCategoriesOptions = (categories) => {
     }
 }
 
+// renderInput=()=>{
+//     $("render-input").innerHTML =`<input type="text" id="input-add-categories" class="p-2 ml-2 w-[65%] border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 lg:w-[85%]">`
+// }
+
 //Save data operations
 const saveCategoriesData = () => {
     return{
@@ -119,6 +123,16 @@ const saveCategoriesData = () => {
     }
 }
 
+const saveCategoriesData2=()=>{
+    return{
+        id : randomId(),
+        categorieName: $("#input-edit-categories").value
+    }
+}
+//con esta guardo la nueva categoria
+//categorieName: $("#input-add-categories").value
+//con esta edito la categoria
+//categorieName: $("#input-edit-categories").value
 const saveOperationsData = (operationId) => {
     return {
         id: operationId ? operationId : randomId(), 
@@ -152,6 +166,12 @@ const deleteOperation = (id) => {
     setInfo("operations", currentOperation)
 }
 
+const deleteCategorie=(id)=>{
+    const currentCategorie = getInfo("categories").filter(categorie=> categorie.id != id )
+    setInfo("categories", currentCategorie)
+    renderCategories(currentCategorie)
+ }
+
 const openDeleteModal = (id) => {
     showElement("#modal-window")
     const selectedOperation = getInfo("operations").find(operation => operation.id === id)
@@ -165,6 +185,20 @@ const openDeleteModal = (id) => {
     renderOperations(getInfo("operations"))
 }
 
+
+const deleteCategorieId=(id)=>{
+    $("#modal-delete").setAttribute("data-id",id)
+    const selectedCategorie= getInfo("categories").find(categorie=>categorie.id ===id)
+    $(".modal-text").innerText= selectedCategorie.categorieName
+    showElement("#modal-window")
+    $("#modal-delete").addEventListener("click", ()=>{
+        deleteCategorie(id)
+        
+        window.location.reload()
+    })
+    renderCategories(getInfo("categories"))}
+
+
 const editOperation = () => {
     const operationId = $("#btn-edit-operation").getAttribute("data-id")
     const editedOperations = getInfo("operations").map(operation => {
@@ -175,6 +209,7 @@ const editOperation = () => {
     })
     setInfo("operations", editedOperations)
 }
+
 
 const editOperationForm = (id) => {
     showElements(["#operations-form", "#btn-edit-operation", ".edit-operation-title"])
@@ -188,6 +223,25 @@ const editOperationForm = (id) => {
     $("#date").value = editSelected.date
 }
 
+const editCategorie=()=>{
+    const categorieId= $("#btn-confirm-add").getAttribute("data-id")
+    const editedCategorie= getInfo("categories").map(categorie => {
+        if(categorie.id === categorieId){
+            return saveCategoriesData2(categorieId)
+        }
+        return categorie
+    })
+    setInfo("categories", editedCategorie)
+    //console.log(saveCategoriesData())
+}
+
+const editCategoriesForm= (id)=>{
+    showElement("#edit-categories")
+    hideElement("#categorie-section")
+    $("#btn-confirm-add").setAttribute("data-id", id)
+    const categorieSelected=getInfo("categories").find(categorie => categorie.id === id)
+    $("#input-edit-categories").value = categorieSelected.categorieName
+}
 
 const initializeApp = () => { 
     setInfo("operations", allOperations)
@@ -214,7 +268,9 @@ const initializeApp = () => {
     $("#balance-btn").addEventListener("click", () => {
         home()
         renderOperations(getInfo("operations")) 
+        renderCategories(getInfo("categories"))
         showElements(["#new-operation", "#table"])
+
     })
 
     //btn categorías
@@ -318,14 +374,17 @@ const initializeApp = () => {
         showElement("#succesfull-alert") 
     })
     
+    //section categorie edition
     $("#btn-cancel-add").addEventListener("click", () => {
         hideElement("#edit-categories")
         showElement("#categorie-section")
     })
     
     $("#btn-confirm-add").addEventListener("click", () => {
+        editCategorie()
         hideElement("#edit-categories")
         showElement("#categorie-section")
+        renderCategories(getInfo("categories"))
     })
   
     // mensaje de Pili respecto a los botones edit categories y delete categories
@@ -336,19 +395,19 @@ const initializeApp = () => {
     // Parecido a lo que yo tuve que hacer en la super app
 
     // ESTO VA EN LOS BTN DELETE Y EDIT DE RENDER OPERATIONS
-    const btnEditCategories = document.querySelectorAll(".btn-edit-categories");
-        for (const btn  of btnEditCategories) {
-            btn.addEventListener ("click", () => {
-            showElement("#edit-categories")
-            hideElement("#categorie-section")
-        })
-    }
-    const btnDeleteCategories = document.querySelectorAll(".btn-delete-categories");
-        for (const btn  of btnDeleteCategories) {
-            btn.addEventListener ("click", () => {
-            showElement("#modal-window")
-        })
-    }
+    // const btnEditCategories = document.querySelectorAll(".btn-edit-categories");
+    //     for (const btn  of btnEditCategories) {
+    //         btn.addEventListener ("click", () => {
+    //         showElement("#edit-categories")
+    //         hideElement("#categorie-section")
+    //     })
+    // }
+    // const btnDeleteCategories = document.querySelectorAll(".btn-delete-categories");
+    //     for (const btn  of btnDeleteCategories) {
+    //         btn.addEventListener ("click", () => {
+    //         showElement("#modal-window")
+    //     })
+    // }
 
     //modal-window buttons
     $("#modal-cancel").addEventListener("click", () =>{
