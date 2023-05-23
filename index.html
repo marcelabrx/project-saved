@@ -73,15 +73,15 @@
                     <h2 class="py-6 text-4xl font-bold">Balance</h2>
                     <div class="flex justify-between py-2 text-gray-900">
                         <div class="text-lg">Ganancias</div>
-                        <div class="text-green-500">+$0</div>
+                        <div class="text-green-500">+$<span id="balance-profits">0</span></div>
                     </div>
                     <div class="flex justify-between py-2 text-gray-900">
                         <div class="text-lg">Gastos</div>
-                        <div class="text-red-600">+$0</div>
+                        <div class="text-red-600">-$<span id="balance-expenses">0</span></div>
                     </div>
                     <div class="flex justify-between py-2 text-gray-900">
                         <div class="text-2xl">Total</div>
-                        <div>$0</div>
+                        <div>$<span id="total-balance">0</span></div>
                     </div>
                 </div>
                 <!-- Card - Filters -->
@@ -173,28 +173,30 @@
                 <section class="flex flex-wrap">
                     <label class="font-bold w-full px-4 pt-6 pb-2">Descripción</label>
                     <input type="text" id="description" name="description" class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
+                    <p class="description-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una descripción válida.</p>
                 </section>
                 <section class="flex flex-wrap">
                     <label class="font-bold w-full px-4 pt-6 pb-2">Monto</label>
                     <input type="number" id="amount" name="amount" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
+                    <p class="amount-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese un monto válido.</p>
                 </section>
                 <section class="flex flex-wrap">
                     <label class="font-bold w-full px-4 pt-6 pb-2">Tipo</label>
                     <select name="type" id="type" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                        <option value="Gasto">Gasto</option>
-                        <option value="Ganancia">Ganancia</option>
+                        <option id="expenses" value="Gasto">Gasto</option>
+                        <option id="profits" value="Ganancia">Ganancia</option>
                     </select>
                 </section>
                 <section class="flex flex-wrap">
                     <label for="catogorie" class="font-bold w-full px-4 pt-6 pb-2">Categoría</label>
-                    <select  name="categorie" id="categorie" class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                        <option value="">Todas</option>
+                    <select name="categorie" id="categorie" class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                        <!--Operations rendered from the localstorage -->
                     </select>
                 </section>
                 <section class="flex flex-wrap">
                     <label for="" class="font-bold w-full px-4 pt-6 pb-2">Fecha</label>
                     <input type="date" name="date" id="date" class="w-full flex items-start border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                    <p class="date-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una fecha válida.</p>
                 </section>
                 <div class="flex items-end justify-end mt-10">
                     <button id="btn-cancel-operation" class="px-8 py-2 mr-4 rounded-md bg-neutral-100 hover:bg-[#ebebeb]">Cancelar</button> 
@@ -255,12 +257,12 @@
                         <td class="p-4 text-bold">Total</td>
                     </tr>
                     <tr class="flex justify-between text-left">
-                        <th class="p-4 w-[45%]">Categoría con mayor ganancia</th>
+                        <th class="p-4 w-[45%]">Mes con mayor ganancia</th>
                         <td class="p-4">Fecha</td>
                         <td class="p-4 text-green-600">Total</td>
                     </tr>
                     <tr class="flex justify-between text-left">
-                        <th class="p-4 w-[45%]">Categoría con mayor gasto</th>
+                        <th class="p-4 w-[45%]">Mes con mayor gasto</th>
                         <td class="p-4">Fecha</td>
                         <td class="p-4 text-red-600">Total</td>
                     </tr>

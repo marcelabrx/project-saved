@@ -69,7 +69,7 @@ const renderOperations = (operations) => {
             $("#operations-table").innerHTML += `
             <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
                 <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">${description}</td>
-                <td class="w-1/2 px-4 py-2 flex items-end justify-end md:w-1/5 md:flex md:justify-start">${categorieSelected.categorieName}</td>
+                <td class="w-1/2 px-4 py-2 flex items-end justify-end text-purple-500 md:w-1/5 md:flex md:justify-start">${categorieSelected.categorieName}</td>
                 <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${date}</td>
                 <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
                 <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
@@ -111,11 +111,15 @@ const renderCategoriesOptions = (categories) => {
     }
 }
 
-// renderInput=()=>{
-//     $("render-input").innerHTML =`<input type="text" id="input-add-categories" class="p-2 ml-2 w-[65%] border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 lg:w-[85%]">`
-// }
 
 //Save data operations
+//union de save categorie, preguntar
+const saveCategoriesData1 = (selector) => {
+    return{
+        id : randomId(),
+        categorieName: $(selector).value
+    }
+}
 const saveCategoriesData = () => {
     return{
         id : randomId(),
@@ -123,16 +127,45 @@ const saveCategoriesData = () => {
     }
 }
 
-const saveCategoriesData2=()=>{
+const saveCategoriesData2 = () => {
     return{
         id : randomId(),
         categorieName: $("#input-edit-categories").value
     }
 }
-//con esta guardo la nueva categoria
-//categorieName: $("#input-add-categories").value
-//con esta edito la categoria
-//categorieName: $("#input-edit-categories").value
+
+
+const validateForm = () => {
+    const date = $("#date").value
+    const description = $("#description").value.trim()
+    const amount = $("#amount").valueAsNumber 
+
+    if (description === "") {
+        showElement(".description-error")
+        $("#description").classList.add("border-red-600")
+    } else {
+        hideElement(".description-error")
+        $("#description").classList.remove("border-red-600")
+    }
+
+    if (isNaN(amount)) {
+        showElement(".amount-error")
+        $("#amount").classList.add("border-red-600")
+    } else {
+        hideElement(".amount-error")
+        $("#amount").classList.remove("border-red-600")
+    }
+    
+    if(date === "") {
+        showElement(".date-error")
+        $("#date").classList.add("border-red-600")
+    } else {
+        hideElement(".date-error")
+        $("#date").classList.remove("border-red-600")
+    }
+    return description !== "" && !isNaN(amount) && date !== ""
+}
+
 const saveOperationsData = (operationId) => {
     return {
         id: operationId ? operationId : randomId(), 
@@ -145,14 +178,13 @@ const saveOperationsData = (operationId) => {
 }
 
 //Add data functions
-
-const addOperation = () => {
-    const currentOperation = getInfo("operations")
-    const newOperation = saveOperationsData()
-    currentOperation.push(newOperation)
-    setInfo ("operations", currentOperation)
+const sendNewData = (key, callback) => {
+    const currentData = getInfo(key)
+    const newData = callback()
+    currentData.push(newData)
+    setInfo(key, currentData)
 }
-
+// no puedo usar el sendNewData en add categories porque en saveCteorieData no puedo pasarle el selected
 const addCategories = () => {
     const currentCategorie = getInfo("categories")
     const newCategorie = saveCategoriesData()
@@ -160,43 +192,53 @@ const addCategories = () => {
     setInfo("categories", currentCategorie)
 }
 
-//modifying funtions    
-const deleteOperation = (id) => {
-    const currentOperation = getInfo("operations").filter(operation => operation.id != id)
-    setInfo("operations", currentOperation)
+//modifying funtions  
+//podemos unificar estas dos delete  
+const deleteData = (id, keys) => {
+    const currentData = getInfo(keys).filter(key => key.id != id)
+    setInfo(keys, currentData)
 }
 
-const deleteCategorie=(id)=>{
-    const currentCategorie = getInfo("categories").filter(categorie=> categorie.id != id )
-    setInfo("categories", currentCategorie)
-    renderCategories(currentCategorie)
- }
+// quise unir las delete categorie e operation en una pero no funciona
+const openDeleteModal1 = (id, keys, render) => {
+    showElement("#modal-window")
+    const selectedAction = getInfo(keys).find(key => key.id === id)
+    $(".modal-text").innerHTML = selectedAction[1]
+    $("#modal-delete").setAttribute("data-id", id)
+    $("#modal-delete").addEventListener("click", () => {
+        deleteData(id, keys)
+        window.location.reload()
+    })
+    render(getInfo(keys))
+}
 
+////podemos unificar estas dos delete 
 const openDeleteModal = (id) => {
     showElement("#modal-window")
     const selectedOperation = getInfo("operations").find(operation => operation.id === id)
     $(".modal-text").innerHTML = selectedOperation.description
     $("#modal-delete").setAttribute("data-id", id)
     $("#modal-delete").addEventListener("click", () => {
-        const operationId = $("#modal-delete").getAttribute("data-id")
-        deleteOperation(operationId)
+        // const operationId = $("#modal-delete").getAttribute("data-id")
+        deleteData(id, "operations")
         window.location.reload()
     })
     renderOperations(getInfo("operations"))
 }
 
 
-const deleteCategorieId=(id)=>{
+const deleteCategorieId = (id) => {
+    showElement("#modal-window")
     $("#modal-delete").setAttribute("data-id",id)
     const selectedCategorie= getInfo("categories").find(categorie=>categorie.id ===id)
     $(".modal-text").innerText= selectedCategorie.categorieName
-    showElement("#modal-window")
+    
     $("#modal-delete").addEventListener("click", ()=>{
-        deleteCategorie(id)
-        
+        deleteData(id, "categories")
         window.location.reload()
     })
-    renderCategories(getInfo("categories"))}
+    renderCategories(getInfo("categories"))
+}
 
 
 const editOperation = () => {
@@ -223,7 +265,7 @@ const editOperationForm = (id) => {
     $("#date").value = editSelected.date
 }
 
-const editCategorie=()=>{
+const editCategorie = () => {
     const categorieId= $("#btn-confirm-add").getAttribute("data-id")
     const editedCategorie= getInfo("categories").map(categorie => {
         if(categorie.id === categorieId){
@@ -232,16 +274,60 @@ const editCategorie=()=>{
         return categorie
     })
     setInfo("categories", editedCategorie)
-    //console.log(saveCategoriesData())
 }
 
-const editCategoriesForm= (id)=>{
+const editCategoriesForm = (id) => {
     showElement("#edit-categories")
     hideElement("#categorie-section")
     $("#btn-confirm-add").setAttribute("data-id", id)
     const categorieSelected=getInfo("categories").find(categorie => categorie.id === id)
     $("#input-edit-categories").value = categorieSelected.categorieName
 }
+const cardTotalBalance = () => {
+    // const expenses = $("#expenses").value
+    // const profits = $("#profits").value
+    // const allOperations = getInfo("operations")
+    // let accExpenses = 0
+    // let accProfits = 0
+    
+    // const expensesFiltred = allOperations.filter(({ type }) => type === expenses)
+    // for (const {amount} of expensesFiltred) {
+    //     totalExpenses = accExpenses += amount
+    //     console.log(totalExpenses)
+    //     $("#balance-expenses").innerHTML =+ totalExpenses
+    // }
+    
+    // const profitsFiltred = allOperations.filter(({ type }) => type === profits)
+    // for (const {amount} of profitsFiltred) {
+    //     totalProfits = accProfits += amount
+    //     console.log(totalProfits)
+    //     $("#balance-profits").innerHTML =+  totalProfits
+    // }
+    
+    // let totalBalance = totalProfits - totalExpenses 
+    // $("#total-balance").innerHTML =+ totalBalance
+    
+    const expenses = $("#expenses").value
+    const profits = $("#profits").value
+    const allOperations = getInfo("operations")
+    let totalExpenses = 0
+    let totalProfits = 0
+    
+    for (const { type, amount } of allOperations) {
+        if (type === expenses) {
+            totalExpenses += amount;
+            $("#balance-expenses").innerHTML = amount
+        } else if (type === profits) {
+            totalProfits += amount
+            $("#balance-profits").innerHTML =+ amount
+        }
+    }
+    
+    const totalBalance = totalProfits - totalExpenses;
+    $("#total-balance").innerHTML = totalBalance;
+
+}
+// console.log(cardTotalBalance())
 
 const initializeApp = () => { 
     setInfo("operations", allOperations)
@@ -249,9 +335,6 @@ const initializeApp = () => {
     renderOperations(allOperations)
     renderCategories(allCategories)
     renderCategoriesOptions(allCategories)
-    hideElement("#categorie-section")  
-    hideElement("#reports-section")
-    // hideElement("#new-operation")
 
     const home = () => {
         showElements(["#balance-section", "#balance-card-left", "#balance-card-right"])
@@ -285,6 +368,7 @@ const initializeApp = () => {
         hideElements(["#categorie-section", "#balance-section", "#balance-card-left", "#balance-card-right", "#new-operation", "#operations-form"])
     })
 
+    //btn succesfull alert
     $("#close-succesfull-alert").addEventListener("click", () => {
         hideElement("#succesfull-alert")
     })
@@ -295,17 +379,26 @@ const initializeApp = () => {
         hideElements(["#categorie-section", "#balance-section", "#reports-section", "#balance-card-left", "#balance-card-right"])        
     })
 
-    //add operation
+    //add and edit operation 
     $("#btn-add-operation").addEventListener("click", (e) => {
         e.preventDefault()
-        addOperation()
-        renderOperations(getInfo("operations"))
-        renderCategoriesOptions(getInfo("operations"))
-        renderCategories(getInfo("categories"))
-        showElements(["#new-operation", "#table", "#succesfull-alert"]) 
-        home()
+        if (validateForm()) {
+            sendNewData("operations", saveOperationsData)
+            renderOperations(getInfo("operations"))
+            renderCategoriesOptions(getInfo("operations"))
+            renderCategories(getInfo("categories"))
+            cardTotalBalance()
+            showElements(["#new-operation", "#table", "#succesfull-alert"]) 
+            home()
+        }
     })
     
+    $("#amount").addEventListener("input", (e) => {
+        const value = e.target.valueAsNumber
+        if (isNaN(value)) {
+            $("#amount").value = ""
+        }
+    })
 
     $("#btn-cancel-operation").addEventListener("click",(e) => {
         e.preventDefault()
@@ -316,10 +409,13 @@ const initializeApp = () => {
     
     $("#btn-edit-operation").addEventListener("click", (e) => {
         e.preventDefault()
-        editOperation()
-        showElements(["#new-operation", "#table"]) 
-        home()
-        renderOperations(getInfo("operations"))
+        if (validateForm()) {
+            editOperation()
+            showElements(["#new-operation", "#table"]) 
+            home()
+            renderOperations(getInfo("operations"))
+        }
+        
     })
 
     //mobile - open menu
@@ -366,9 +462,7 @@ const initializeApp = () => {
 
     //section categorias
     $("#btn-add-categories").addEventListener("click", () => {
-        // showElement("#edit-categories")
-        // hideElement("#categorie-section")
-        addCategories()
+        sendNewData("categories", saveCategoriesData)
         renderCategories(getInfo("categories"))
         renderCategoriesOptions(getInfo("categories"))
         showElement("#succesfull-alert") 
@@ -386,28 +480,6 @@ const initializeApp = () => {
         showElement("#categorie-section")
         renderCategories(getInfo("categories"))
     })
-  
-    // mensaje de Pili respecto a los botones edit categories y delete categories
-    //  Bueno, tene en cuenta entonces que este fragmento de codigo no deberia estar suelto
-    // Porque sino cuando agregas una categoria nueva
-    // No tendria el evento agregado
-    // Este for tendria que estar puesto donde generas esa tabla de categorias
-    // Parecido a lo que yo tuve que hacer en la super app
-
-    // ESTO VA EN LOS BTN DELETE Y EDIT DE RENDER OPERATIONS
-    // const btnEditCategories = document.querySelectorAll(".btn-edit-categories");
-    //     for (const btn  of btnEditCategories) {
-    //         btn.addEventListener ("click", () => {
-    //         showElement("#edit-categories")
-    //         hideElement("#categorie-section")
-    //     })
-    // }
-    // const btnDeleteCategories = document.querySelectorAll(".btn-delete-categories");
-    //     for (const btn  of btnDeleteCategories) {
-    //         btn.addEventListener ("click", () => {
-    //         showElement("#modal-window")
-    //     })
-    // }
 
     //modal-window buttons
     $("#modal-cancel").addEventListener("click", () =>{
@@ -417,6 +489,8 @@ const initializeApp = () => {
     $("#modal-delete").addEventListener("click", () =>{
         hideElement("#modal-window")
     })
+
+    
 
 }
 window.addEventListener("load", initializeApp)
