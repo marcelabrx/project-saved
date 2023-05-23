@@ -283,7 +283,96 @@ const editCategoriesForm = (id) => {
     const categorieSelected=getInfo("categories").find(categorie => categorie.id === id)
     $("#input-edit-categories").value = categorieSelected.categorieName
 }
-const cardTotalBalance = () => {
+let restar=(a,b)=>{
+  return a - b
+}
+
+let sumar=(a,b)=>{
+  return a + b
+}
+
+const renderBalance=(operations)=>{
+    const profits = $("#profits").value
+    const expenses = $("#expenses").value
+    let accProfits = 0
+    let accExpenses = 0
+    const expensesFiltred = operations.filter(({ type }) => type === expenses)
+        for (const {amount} of expensesFiltred) {
+        totalExpenses = accExpenses += amount
+         $("#balance-expenses").innerHTML =+ totalExpenses
+         $("#total-balance").innerHTML =+ totalExpenses
+        }
+    const profitsFiltred = operations.filter(({ type }) => type === profits)
+        for (const {amount} of profitsFiltred) {
+        totalProfits = accProfits += amount
+        $("#balance-profits").innerHTML =+  totalProfits   
+            $("#total-balance").innerHTML =+ totalProfits    
+        }
+    const total=+ restar(totalProfits, totalExpenses)
+    return $("#total-balance").innerHTML = total
+
+}
+//   const saveBalanceData=(renderBalance)=>{
+    
+// $("#balance-expenses").innerHTML =+ totalExpenses
+//      $("#total-balance").innerHTML =+ totalExpenses
+//    }
+//    const actualizarBalance = (operaciones = obtenerOperaciones()) => {
+//     const { ganancias, gastos, balance } = obtenerBalance(operaciones)
+//     $('#ganancias').innerHTML = `+$${Math.abs(ganancias)}`
+//     $('#gastos').innerHTML = `-$${Math.abs(gastos)}`
+  
+//     $('#balance').classList.remove('has-text-danger', 'has-text-success')
+//     let operador = ''
+  
+//     if (balance > 0) {
+//       $('#balance').classList.add('has-text-success')
+//       operador = '+'
+//     } else if (balance < 0) {
+//       $('#balance').classList.add('has-text-danger')
+//       operador = '-'
+//     }
+  
+//     $('#balance').innerHTML = `${operador}$${Math.abs(balance)}`
+//   }
+  
+       
+//  const renderBalance = (operations) => {
+//     const profits = $("#profits").value
+//      const expenses = $("#expenses").value
+//      let accProfits = 0
+//     let accExpenses = 0
+//     return operations.filter(({type})=> {
+//         if (type === profits) {
+//           return {
+//             ...total,
+//             ganancias: total.ganancias + operacion.monto,
+//             balance: total.balance + operacion.monto,
+//           }
+//         }
+  
+//         if (operacion.tipo === OPERACIONES.GASTO) {
+//           return {
+//             ...total,
+//             gastos: total.gastos + operacion.monto,
+//             balance: total.balance - operacion.monto,
+//           }
+//         }
+//       },
+//       {
+//         ganancias: 0,
+//         gastos: 0,
+//         balance: 0,
+//       }
+//     )
+//   }
+
+  
+
+
+// console.log(cardTotalBalance())
+
+    //const cardTotalBalance = () => {
     // const expenses = $("#expenses").value
     // const profits = $("#profits").value
     // const allOperations = getInfo("operations")
@@ -307,27 +396,34 @@ const cardTotalBalance = () => {
     // let totalBalance = totalProfits - totalExpenses 
     // $("#total-balance").innerHTML =+ totalBalance
     
-    const expenses = $("#expenses").value
-    const profits = $("#profits").value
-    const allOperations = getInfo("operations")
-    let totalExpenses = 0
-    let totalProfits = 0
-    
-    for (const { type, amount } of allOperations) {
-        if (type === expenses) {
-            totalExpenses += amount;
-            $("#balance-expenses").innerHTML = amount
-        } else if (type === profits) {
-            totalProfits += amount
-            $("#balance-profits").innerHTML =+ amount
-        }
-    }
-    
-    const totalBalance = totalProfits - totalExpenses;
-    $("#total-balance").innerHTML = totalBalance;
 
-}
-// console.log(cardTotalBalance())
+    //let totalBalance = cardProfists - cardExpenses
+     //$("#total-balance").innerHTML =+ totalBalance 
+    
+     //console.log(totalBalance)
+
+    // const expenses = $("#expenses").value
+    // const profits = $("#profits").value
+    // const allOperations = getInfo("operations")
+    // let totalExpenses = 0
+    // let totalProfits = 0
+    
+    // for (const { type, amount } of allOperations) {
+    //     if (type === expenses) {
+    //         totalExpenses= amount
+    //         totalExpenses++
+    //         $("#balance-expenses").innerHTML = amount
+    //     } else if (type === profits) {
+    //        totalProfits = amount
+    //         $("#balance-profits").innerHTML = totalProfits
+    //     }
+    // }
+    
+    // const totalBalance = totalProfits - totalExpenses;
+    // $("#total-balance").innerHTML = totalBalance;
+//  }
+
+ //console.log(cardTotalBalance())
 
 const initializeApp = () => { 
     setInfo("operations", allOperations)
@@ -335,6 +431,7 @@ const initializeApp = () => {
     renderOperations(allOperations)
     renderCategories(allCategories)
     renderCategoriesOptions(allCategories)
+    renderBalance(allOperations)
 
     const home = () => {
         showElements(["#balance-section", "#balance-card-left", "#balance-card-right"])
@@ -387,7 +484,7 @@ const initializeApp = () => {
             renderOperations(getInfo("operations"))
             renderCategoriesOptions(getInfo("operations"))
             renderCategories(getInfo("categories"))
-            cardTotalBalance()
+            renderBalance(getInfo("operations"))
             showElements(["#new-operation", "#table", "#succesfull-alert"]) 
             home()
         }
