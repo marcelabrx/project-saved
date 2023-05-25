@@ -30,27 +30,27 @@ const randomId = () => self.crypto.randomUUID()
 const defaultCategories = [
     {
         id: randomId(),
-        categorieName: "Comida"
+        categoryName: "Comida"
     },
     {
         id: randomId(),
-        categorieName: "Servicios"
+        categoryName: "Servicios"
     },
     {
         id: randomId(),
-        categorieName: "Salidas"
+        categoryName: "Salidas"
     },
     {
         id: randomId(),
-        categorieName: "Educación"
+        categoryName: "Educación"
     },
     {
         id: randomId(),
-        categorieName: "Transporte"
+        categoryName: "Transporte"
     },
     {
         id: randomId(),
-        categorieName: "Trabajo"
+        categoryName: "Trabajo"
     },
 ]
 
@@ -64,17 +64,17 @@ const renderOperations = (operations) => {
     if (operations.length){
         hideElement("#any-operation")
         showElements(["#new-operation", "#table"])
-        for (const {id, description, categorie, date, amount} of operations){
-            const categorieSelected = getInfo("categories").find(cat => cat.id === categorie)
+        for (const {id, description, category, date, amount} of operations){
+            const categorySelected = getInfo("categories").find(cat => cat.id === category)
             $("#operations-table").innerHTML += `
             <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
                 <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">${description}</td>
-                <td class="w-1/2 px-4 py-2 flex items-end justify-end text-purple-500 md:w-1/5 md:flex md:justify-start">${categorieSelected.categorieName}</td>
+                <td class="w-1/2 px-4 py-2 flex items-end justify-end text-purple-500 md:w-1/5 md:flex md:justify-start">${categorySelected.categoryName}</td>
                 <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${date}</td>
                 <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
                 <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
-                    <button onClick="editOperationForm('${id}')"><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
-                    <button data-id="${id}" onClick="openDeleteModal('${id}')"><i class="btn-delete fa-solid fa-trash text-red-600"></i></button>
+                    <button onclick="editOperationForm('${id}')"><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
+                    <button data-id="${id}" onclick="openDeleteModal('${id}')"><i class="btn-delete fa-solid fa-trash text-red-600"></i></button>
                 </td>                            
             </tr>
             `
@@ -87,13 +87,13 @@ const renderOperations = (operations) => {
 
 const renderCategories = (categories) => {
     cleanContainer("#categories-section")
-    for (const {id, categorieName} of  categories) { 
+    for (const {id, categoryName} of  categories) { 
         $("#categories-section").innerHTML += `
         <article class="flex justify-between p-4">
-            <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500" data-id="${id}">${categorieName}</p>
+            <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500" data-id="${id}">${categoryName}</p>
             <div>
                 <button><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600" onclick=editCategoriesForm("${id}")></i></button>
-                <button><i class="btn-delete-categories fa-solid fa-trash text-red-600" onclick=deleteCategorieId("${id}")></i></button>
+                <button><i class="btn-delete-categories fa-solid fa-trash text-red-600" onclick=deleteCategoryId("${id}")></i></button>
             </div>
         </article>
         `
@@ -101,12 +101,12 @@ const renderCategories = (categories) => {
 }
 
 const renderCategoriesOptions = (categories) => {
-    for (const {id, categorieName} of  categories) { 
+    for (const {id, categoryName} of  categories) { 
         $("#categories-select").innerHTML += `
-        <option value="${id}">${categorieName}</option>
+        <option value="${id}">${categoryName}</option>
     `
-    $("#categorie").innerHTML +=`
-    <option value="${id}">${categorieName}</option>
+    $("#category").innerHTML +=`
+    <option value="${id}">${categoryName}</option>
     `
     }
 }
@@ -117,20 +117,20 @@ const renderCategoriesOptions = (categories) => {
 const saveCategoriesData1 = (selector) => {
     return{
         id : randomId(),
-        categorieName: $(selector).value
+        categoryName: $(selector).value
     }
 }
 const saveCategoriesData = () => {
     return{
         id : randomId(),
-        categorieName: $("#input-add-categories").value
+        categoryName: $("#input-add-categories").value
     }
 }
 
 const saveCategoriesData2 = () => {
     return{
         id : randomId(),
-        categorieName: $("#input-edit-categories").value
+        categoryName: $("#input-edit-categories").value
     }
 }
 
@@ -172,7 +172,7 @@ const saveOperationsData = (operationId) => {
         description: $("#description").value,
         amount: $("#amount").valueAsNumber,
         type: $("#type").value,
-        categorie: $("#categorie").value,
+        category: $("#category").value,
         date: $("#date").value,
     }
 }
@@ -186,10 +186,10 @@ const sendNewData = (key, callback) => {
 }
 // no puedo usar el sendNewData en add categories porque en saveCteorieData no puedo pasarle el selected
 const addCategories = () => {
-    const currentCategorie = getInfo("categories")
-    const newCategorie = saveCategoriesData()
-    currentCategorie.push(newCategorie)
-    setInfo("categories", currentCategorie)
+    const currentCategory = getInfo("categories")
+    const newCategory = saveCategoriesData()
+    currentCategory.push(newCategory)
+    setInfo("categories", currentCategory)
 }
 
 //modifying funtions  
@@ -199,7 +199,7 @@ const deleteData = (id, keys) => {
     setInfo(keys, currentData)
 }
 
-// quise unir las delete categorie e operation en una pero no funciona
+// quise unir las delete category e operation en una pero no funciona porque se la paso en un onclick a el boton de eliminar en render operations 
 const openDeleteModal1 = (id, keys, render) => {
     showElement("#modal-window")
     const selectedAction = getInfo(keys).find(key => key.id === id)
@@ -227,13 +227,13 @@ const openDeleteModal = (id) => {
 }
 
 
-const deleteCategorieId = (id) => {
+const deleteCategoryId = (id) => {
     showElement("#modal-window")
     $("#modal-delete").setAttribute("data-id",id)
-    const selectedCategorie= getInfo("categories").find(categorie=>categorie.id ===id)
-    $(".modal-text").innerText= selectedCategorie.categorieName
+    const selectedCategory= getInfo("categories").find(category => category.id === id)
+    $(".modal-text").innerText= selectedCategory.categoryName
     
-    $("#modal-delete").addEventListener("click", ()=>{
+    $("#modal-delete").addEventListener("click", () => {
         deleteData(id, "categories")
         window.location.reload()
     })
@@ -255,175 +255,172 @@ const editOperation = () => {
 
 const editOperationForm = (id) => {
     showElements(["#operations-form", "#btn-edit-operation", ".edit-operation-title"])
-    hideElements([".new-operation-title", "#btn-add-operation", "#balance-section", "#balance-card-left", "#balance-card-right", "#categorie-section"])
+    hideElements([".new-operation-title", "#btn-add-operation", "#balance-section", "#balance-card-left", "#balance-card-right", "#category-section"])
     $("#btn-edit-operation").setAttribute("data-id", id)
     const editSelected = getInfo("operations").find(operation => operation.id === id)
     $("#description").value = editSelected.description
     $("#amount").valueAsNumber = editSelected.amount
     $("#type").value = editSelected.type
-    $("#categorie").value = editSelected.categorie
+    $("#category").value = editSelected.category
     $("#date").value = editSelected.date
 }
 
-const editCategorie = () => {
-    const categorieId= $("#btn-confirm-add").getAttribute("data-id")
-    const editedCategorie= getInfo("categories").map(categorie => {
-        if(categorie.id === categorieId){
-            return saveCategoriesData2(categorieId)
+const editCategory = () => {
+    const categoryId= $("#btn-confirm-add").getAttribute("data-id")
+    const editedCategory= getInfo("categories").map(category => {
+        if(category.id === categoryId){
+            return saveCategoriesData2(categoryId)
         }
-        return categorie
+        return category
     })
-    setInfo("categories", editedCategorie)
+    setInfo("categories", editedCategory)
 }
 
 const editCategoriesForm = (id) => {
     showElement("#edit-categories")
-    hideElement("#categorie-section")
+    hideElement("#category-section")
     $("#btn-confirm-add").setAttribute("data-id", id)
-    const categorieSelected=getInfo("categories").find(categorie => categorie.id === id)
-    $("#input-edit-categories").value = categorieSelected.categorieName
+    const categorySelected = getInfo("categories").find(category => category.id === id)
+    $("#input-edit-categories").value = categorySelected.categoryName
 }
-let restar=(a,b)=>{
-  return a - b
-}
+// let restar=(a,b)=>{
+//   return a - b
+// }
 
-let sumar=(a,b)=>{
-  return a + b
-}
+// let sumar=(a,b)=>{
+//   return a + b
+// }
 
-const renderBalance=(operations)=>{
-    const profits = $("#profits").value
-    const expenses = $("#expenses").value
-    let accProfits = 0
-    let accExpenses = 0
-    const expensesFiltred = operations.filter(({ type }) => type === expenses)
-        for (const {amount} of expensesFiltred) {
-        totalExpenses = accExpenses += amount
-         $("#balance-expenses").innerHTML =+ totalExpenses
-         $("#total-balance").innerHTML =+ totalExpenses
-        }
-    const profitsFiltred = operations.filter(({ type }) => type === profits)
-        for (const {amount} of profitsFiltred) {
-        totalProfits = accProfits += amount
-        $("#balance-profits").innerHTML =+  totalProfits   
-            $("#total-balance").innerHTML =+ totalProfits    
-        }
-    const total=+ restar(totalProfits, totalExpenses)
-    return $("#total-balance").innerHTML = total
-
-}
-//   const saveBalanceData=(renderBalance)=>{
-    
-// $("#balance-expenses").innerHTML =+ totalExpenses
-//      $("#total-balance").innerHTML =+ totalExpenses
-//    }
-//    const actualizarBalance = (operaciones = obtenerOperaciones()) => {
-//     const { ganancias, gastos, balance } = obtenerBalance(operaciones)
-//     $('#ganancias').innerHTML = `+$${Math.abs(ganancias)}`
-//     $('#gastos').innerHTML = `-$${Math.abs(gastos)}`
-  
-//     $('#balance').classList.remove('has-text-danger', 'has-text-success')
-//     let operador = ''
-  
-//     if (balance > 0) {
-//       $('#balance').classList.add('has-text-success')
-//       operador = '+'
-//     } else if (balance < 0) {
-//       $('#balance').classList.add('has-text-danger')
-//       operador = '-'
+// const changeBalanceColor = (total) => {
+//     className = ""
+//     if (total > 0){
+//         $("#total-balance").classList.add("text-green-500")
+//     } else if (total < 0) {
+//         $("#total-balance").classList.add("text-red-600")
+//     } else if (total = 0) {
+//         $("#total-balance").classList.add("text-gray-900")
 //     }
-  
-//     $('#balance').innerHTML = `${operador}$${Math.abs(balance)}`
-//   }
-  
-       
-//  const renderBalance = (operations) => {
-//     const profits = $("#profits").value
-//      const expenses = $("#expenses").value
-//      let accProfits = 0
-//     let accExpenses = 0
-//     return operations.filter(({type})=> {
-//         if (type === profits) {
-//           return {
-//             ...total,
-//             ganancias: total.ganancias + operacion.monto,
-//             balance: total.balance + operacion.monto,
-//           }
-//         }
-  
-//         if (operacion.tipo === OPERACIONES.GASTO) {
-//           return {
-//             ...total,
-//             gastos: total.gastos + operacion.monto,
-//             balance: total.balance - operacion.monto,
-//           }
-//         }
-//       },
-//       {
-//         ganancias: 0,
-//         gastos: 0,
-//         balance: 0,
-//       }
-//     )
-//   }
+// }
+const renderReports = () => {
+    const currentOperations = getInfo("operations")
+    const allCategories = getInfo("categories")
+    if (currentOperations.length >= 2) {
+        // for(const {type})
+        getTotalsForCategories(currentOperations, allCategories)
+    } else {
+        showElement(".any-reports")
+        hideElement("#reports-table")
+    }      
+}
 
-  
+const getBalance = (operations) => {
+    let profits = 0
+    let expenses = 0 
+    let total = 0 
+    
+    for (const operation of operations){
+        const {type, amount} = operation
+        if (type === "Ganancia"){
+            profits += amount
+            total += amount
+            $("#balance-profits").innerHTML =+ profits
+        }
+
+        if (type === "Gasto" ){
+            expenses += amount
+            total -= amount
+            $("#balance-expenses").innerHTML =+ expenses
+        }
+        $("#total-balance").innerHTML =+ total 
+    }
+    
+    return {
+        profits: profits,
+        expenses: expenses,
+        total: total
+    }
+}
+
+const generateBalance = () => {
+    let className = "" 
+    if (total > 0){
+        className = "text-green-500"
+    } else if (total < 0) {
+        className = "text-red-600"
+    } else {
+        className = "text-gray-900"
+    }
+    $("#total-balance").innerHTML = `
+    $<span class="font-bold ${className}">$${total}</span>
+    `
+}
+
+/*
+  ************** REPORTS SECTION  **************
+ */
+const getTotalsForCategories = (operations, categories) => {
+    
+    const categoryTotals = {}
+
+    for (const operation of operations) {
+        const { category, amount, type } = operation;
+        
+        if (!categoryTotals[category]) {
+            categoryTotals[category] = {
+            profits: 0,
+            expenses: 0,
+            }
+        }
+        if (type === "Ganancia") {
+            categoryTotals[category].profits += amount;
+        } else if (type === "Gasto") {
+            categoryTotals[category].expenses += amount;
+        }
+    }
+    
+    let maxCategoryProfits = ""
+    let maxAmountProfits = 0
+    let maxCategoryExpenses = ""
+    let maxAmountExpenses = 0
+    let maxCategoryBalance = ""
+    let maxAmountBalance = 0
+
+    for (const category in categoryTotals) {
+        const {profits, expenses} = categoryTotals[category]
+        const balance = profits - expenses
+        
+        if (profits > maxAmountProfits) {
+            maxAmountProfits = profits
+            maxCategoryProfits = category
+        }
+        if (expenses > maxAmountExpenses){
+            maxAmountExpenses = expenses
+            maxCategoryExpenses = category
+        }
+        if (balance > maxAmountBalance){
+            maxAmountBalance = balance
+            maxCategoryBalance = category
+        }
+    }
+
+    for (const {id, categoryName} of categories){
+        if (id === maxCategoryProfits){
+            $("#highest-category-profits").innerHTML = categoryName 
+            $("#total-hg-category-profits").innerHTML =+ maxAmountProfits  
+        }
+        if (id === maxCategoryExpenses) {
+            $("#highest-category-expenses").innerHTML = categoryName
+            $("#total-hg-category-expenses").innerHTML =+ maxAmountExpenses
+        }
+        if (id === maxCategoryBalance){
+            $("#highest-category-balance").innerHTML = categoryName
+            $("#total-hg-category-balance").innerHTML =+ maxAmountBalance
+        }
+    }
+   
+}
 
 
-// console.log(cardTotalBalance())
-
-    //const cardTotalBalance = () => {
-    // const expenses = $("#expenses").value
-    // const profits = $("#profits").value
-    // const allOperations = getInfo("operations")
-    // let accExpenses = 0
-    // let accProfits = 0
-    
-    // const expensesFiltred = allOperations.filter(({ type }) => type === expenses)
-    // for (const {amount} of expensesFiltred) {
-    //     totalExpenses = accExpenses += amount
-    //     console.log(totalExpenses)
-    //     $("#balance-expenses").innerHTML =+ totalExpenses
-    // }
-    
-    // const profitsFiltred = allOperations.filter(({ type }) => type === profits)
-    // for (const {amount} of profitsFiltred) {
-    //     totalProfits = accProfits += amount
-    //     console.log(totalProfits)
-    //     $("#balance-profits").innerHTML =+  totalProfits
-    // }
-    
-    // let totalBalance = totalProfits - totalExpenses 
-    // $("#total-balance").innerHTML =+ totalBalance
-    
-
-    //let totalBalance = cardProfists - cardExpenses
-     //$("#total-balance").innerHTML =+ totalBalance 
-    
-     //console.log(totalBalance)
-
-    // const expenses = $("#expenses").value
-    // const profits = $("#profits").value
-    // const allOperations = getInfo("operations")
-    // let totalExpenses = 0
-    // let totalProfits = 0
-    
-    // for (const { type, amount } of allOperations) {
-    //     if (type === expenses) {
-    //         totalExpenses= amount
-    //         totalExpenses++
-    //         $("#balance-expenses").innerHTML = amount
-    //     } else if (type === profits) {
-    //        totalProfits = amount
-    //         $("#balance-profits").innerHTML = totalProfits
-    //     }
-    // }
-    
-    // const totalBalance = totalProfits - totalExpenses;
-    // $("#total-balance").innerHTML = totalBalance;
-//  }
-
- //console.log(cardTotalBalance())
 
 const initializeApp = () => { 
     setInfo("operations", allOperations)
@@ -431,11 +428,12 @@ const initializeApp = () => {
     renderOperations(allOperations)
     renderCategories(allCategories)
     renderCategoriesOptions(allCategories)
-    renderBalance(allOperations)
+    getBalance(allOperations)
+    
 
     const home = () => {
         showElements(["#balance-section", "#balance-card-left", "#balance-card-right"])
-        hideElements(["#categorie-section", "#reports-section", "#operations-form"])
+        hideElements(["#category-section", "#reports-section", "#operations-form"])
     }
 
     //Falta que muestre el contendio de la tabla cuando tiene informacion
@@ -454,15 +452,16 @@ const initializeApp = () => {
     })
 
     //btn categorías
-    $("#categorie-btn").addEventListener("click", () => {
-        showElement("#categorie-section")
+    $("#category-btn").addEventListener("click", () => {
+        showElement("#category-section")
         hideElements(["#balance-section", "#reports-section", "#balance-card-left", "#balance-card-right", "#new-operation", "#operations-form"]) 
     })
 
     //btn reportes
     $("#reports-btn").addEventListener("click", () => {
+        renderReports()
         showElement("#reports-section")
-        hideElements(["#categorie-section", "#balance-section", "#balance-card-left", "#balance-card-right", "#new-operation", "#operations-form"])
+        hideElements(["#category-section", "#balance-section", "#balance-card-left", "#balance-card-right", "#new-operation", "#operations-form"])
     })
 
     //btn succesfull alert
@@ -473,7 +472,7 @@ const initializeApp = () => {
     // btn add new operation
     $("#btn-new-operation").addEventListener("click", () => {
         showElement("#operations-form")
-        hideElements(["#categorie-section", "#balance-section", "#reports-section", "#balance-card-left", "#balance-card-right"])        
+        hideElements(["#category-section", "#balance-section", "#reports-section", "#balance-card-left", "#balance-card-right"])        
     })
 
     //add and edit operation 
@@ -484,7 +483,7 @@ const initializeApp = () => {
             renderOperations(getInfo("operations"))
             renderCategoriesOptions(getInfo("operations"))
             renderCategories(getInfo("categories"))
-            renderBalance(getInfo("operations"))
+            getBalance(getInfo("operations"))
             showElements(["#new-operation", "#table", "#succesfull-alert"]) 
             home()
         }
@@ -540,12 +539,12 @@ const initializeApp = () => {
     })
 
     $("#categories-select").addEventListener("input", (e) => {
-        const categorieId = e.target.value
+        const categoryId = e.target.value
         const currentsOperations = getInfo("operations")
-        if (!categorieId) {
+        if (!categoryId) {
             renderOperations("currentsOperations")
         } else {
-            const filteredOperations = currentsOperations.filter(operation => operation.categorie === categorieId)
+            const filteredOperations = currentsOperations.filter(operation => operation.category === categoryId)
             renderOperations(filteredOperations) 
         }    
     })
@@ -565,16 +564,16 @@ const initializeApp = () => {
         showElement("#succesfull-alert") 
     })
     
-    //section categorie edition
+    //section category edition
     $("#btn-cancel-add").addEventListener("click", () => {
         hideElement("#edit-categories")
-        showElement("#categorie-section")
+        showElement("#category-section")
     })
     
     $("#btn-confirm-add").addEventListener("click", () => {
-        editCategorie()
+        editCategory()
         hideElement("#edit-categories")
-        showElement("#categorie-section")
+        showElement("#category-section")
         renderCategories(getInfo("categories"))
     })
 
