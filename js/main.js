@@ -84,7 +84,6 @@ const renderOperations = (operations) => {
     }
 }
 
-
 const renderCategories = (categories) => {
     cleanContainer("#categories-section")
     for (const {id, categoryName} of  categories) { 
@@ -475,10 +474,10 @@ const generateTotalsForCategory = (operations, categories) => {
         
         const tableRow = `
             <tr class="flex justify-between items-center">
-                <td class="w-1/5 flex justify-start p-4"><span class="px-2 py-1 rounded-lg bg-purple-50 text-purple-500">${categoryName}</span></td>
-                <td class="w-1/5 flex justify-end p-4 text-green-600">$${profits}</td>
-                <td class="w-1/5 flex justify-end p-4 text-red-600">$${expenses}</td>
-                <td class="w-1/5 flex justify-end p-4">$${total}</td>
+                <td class="w-1/4 flex justify-start py-4"><span class="rounded-lg bg-purple-50 text-purple-500">${categoryName}</span></td>
+                <td class="w-1/4 flex justify-center py-4 text-green-600">$${profits}</td>
+                <td class="w-1/4 flex justify-center py-4 text-red-600">$${expenses}</td>
+                <td class="w-1/4 flex justify-center py-4">$${total}</td>
             </tr>
             
         `

@@ -248,57 +248,56 @@
                 <table class="table-fixed w-full justify-between">
                     <caption class="text-bold text-2xl text-start p-4">Resumen</caption>
                     <tr class="w-full flex justify-between items-center">
-                        <th class="p-4">Categoría con mayor ganancia</th>
+                        <th class="w-1/2 flex justify-start p-4">Categoría con mayor ganancia</th>
                         <td id="highest-category-profits" class="px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
                         <td id="total-hg-category-profits" class="p-4 text-green-600 font-bold"></td>
                     </tr>
                     <tr class="w-full flex justify-between items-center ">
-                        <th class="p-4">Categoría con mayor gasto</th>
+                        <th class="w-1/2 flex justify-start p-4">Categoría con mayor gasto</th>
                         <td id="highest-category-expenses" class="px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
                         <td id="total-hg-category-expenses" class="p-4 text-red-600 font-bold"></td>
                     </tr>
                     <tr class="w-full flex justify-between items-center">
-                        <th class="p-4">Categoría con mayor balance</th>
+                        <th class="w-1/2 flex justify-start p-4">Categoría con mayor balance</th>
                         <td id="highest-category-balance" class="px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
                         <td id="total-hg-category-balance" class="p-4 font-bold"></td>
                     </tr>
                     <tr class="w-full flex justify-between items-center">
-                        <th class="p-4">Mes con mayor ganancia</th>
-                        <td id="month-highest-profit" class="pl-8"></td>
-                        <td id="total-month-hg-profit"class="p-4 text-green-600 font-bold"></td>
+                        <th class="w-1/2 flex justify-start p-4">Mes con mayor ganancia</th>
+                        <td id="month-highest-profit"></td>
+                        <td id="total-month-hg-profit"class="px-2 py-1 text-green-600 font-bold"></td>
                     </tr>
                     <tr class="w-full flex justify-between items-center">
-                        <th class="p-4">Mes con mayor gasto</th>
-                        <td id="month-highest-expenditure" class="pl-14"></td>
-                        <td id="total-month-hg-expenditure" class="p-4 text-red-600 font-bold"></td>
+                        <th class="w-1/2 flex justify-start p-4">Mes con mayor gasto</th>
+                        <td id="month-highest-expenditure"></td>
+                        <td id="total-month-hg-expenditure" class="px-2 py-1 text-red-600 font-bold"></td>
                     </tr>
                 </table>
                 <table class="table-fixed w-full my-20">
-                    <caption class="text-bold text-2xl text-start p-4">Totales por categoría</caption>
-
-                    <tr class="flex justify-between">
-                        <th class="w-1/5 flex justify-start p-4">Categoría</th>
-                        <th class="w-1/5 flex justify-end p-4">Ganancias</th>
-                        <th class="w-1/5 flex justify-end p-4">Gastos</th>
-                        <th class="w-1/5 flex justify-end p-4">Balance</th>
+                    <caption class="text-bold text-2xl flex justify-start py-4">Totales por categoría</caption>
+                    <tr class="flex justify-between items-center">
+                        <th class="w-1/4 flex justify-start py-4">Categoría</th>
+                        <th class="w-1/4 flex justify-center py-4">Ganancias</th>
+                        <th class="w-1/4 flex justify-center py-4">Gastos</th>
+                        <th class="w-1/4 flex justify-center py-4">Balance</th>
                     </tr>
                     <tbody id="totals-category">
                         <!--rendered for local storage-->
                     </tbody>
                 </table>
                 <table class="table-fixed w-full my-20">
-                    <caption class="text-bold text-2xl text-start p-4">Totales por mes</caption>
-                    <tr class="flex justify-between text-left">
-                        <th class="p-4 w-[25%]">Mes</th>
-                        <th class="p-4">Ganancias</th>
-                        <th class="p-4">Gastos</th>
-                        <th class="p-4">Balance</th>
+                    <caption class="text-bold text-2xl flex justify-start py-4">Totales por mes</caption>
+                    <tr class="flex justify-between items-center">
+                        <th class="w-1/4 flex justify-start py-4">Mes</th>
+                        <th class="w-1/4 flex justify-center py-4">Ganancias</th>
+                        <th class="w-1/4 flex justify-center py-4">Gastos</th>
+                        <th class="w-1/4 flex justify-center py-4">Balance</th>
                     </tr>
-                    <tr class="flex justify-between text-left">
-                        <td class="p-4 w-[25%]">Mes</td>
-                        <td class="p-4 text-green-600">Entrada</td>
-                        <td class="p-4 text-red-600">Salida</td>
-                        <td class="p-4">Total</td>
+                    <tr class="flex justify-between items-center">
+                        <td class="w-1/4 flex justify-start py-4">Mes</td>
+                        <td class="w-1/4 flex justify-center py-4 text-green-600">Entrada</td>
+                        <td class="w-1/4 flex justify-center py-4 text-red-600">Salida</td>
+                        <td class="w-1/4 flex justify-center py-4">Total</td>
                     </tr>
                 </table>
             </div>
