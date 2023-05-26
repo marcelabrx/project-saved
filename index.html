@@ -103,9 +103,9 @@
                         <div class=" text-gray-900">
                             <label class="text-lg font-bold ml-1">Tipo</label>
                             <select id="select-panel" class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                                <option value="">Todos</option>
-                                <option value="">Gasto</option>
-                                <option value="">Ganancia</option>
+                                <option value="Todos">Todos</option>
+                                <option value="Gasto">Gasto</option>
+                                <option value="Ganancia">Ganancia</option>
                             </select>
                         </div>
                         <!-- Filters Panel - Category -->
@@ -119,18 +119,18 @@
                         <!-- Filters Panel - Since -->
                         <div class=" text-gray-900">
                             <div class="text-lg font-bold">Desde</div>
-                            <input type="date" name="" id="" class="w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                            <input type="date" name="" id="selector-date" class="w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
                         </div>
                         <!-- Filters Panel - Order -->
                         <div class="text-gray-900">
                             <label class="text-lg font-bold">Ordenar por</label>
-                            <select class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                                <option value="">Más reciente</option>
-                                <option value="">Menos reciente</option>
-                                <option value="">Mayor monto</option>
-                                <option value="">Menor monto</option>
-                                <option value="">A/Z</option>
-                                <option value="">Z/A</option>
+                            <select id="order-select" class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
+                                <option value="more-recent">Más reciente</option>
+                                <option value="les-recent">Menos reciente</option>
+                                <option value="more-amount">Mayor monto</option>
+                                <option value="les-amount">Menor monto</option>
+                                <option value="a-z">A/Z</option>
+                                <option value="z-a">Z/A</option>
                             </select>
                         </div>
                     </form>

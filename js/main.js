@@ -619,19 +619,92 @@ const initializeApp = () => {
         const categoryId = e.target.value
         const currentsOperations = getInfo("operations")
         if (!categoryId) {
-            renderOperations("currentsOperations")
+            renderOperations(allOperations)
         } else {
             const filteredOperations = currentsOperations.filter(operation => operation.category === categoryId)
             renderOperations(filteredOperations) 
         }    
     })
 
-    //profits / expenses selector
-    $("#select-panel").addEventListener("click", () => {
-        const selectPanel = $("#select-panel").value
+    //expenses/profits selector
+    $("#select-panel").addEventListener("change", (e) => {
+        e.preventDefault()
+        const selectPanel = $("#select-panel").value  
+        if(selectPanel === "Todos"){
+            return renderOperations(allOperations)
+        }
+        const typeFiltered = allOperations.filter((operation) =>{
+            return operation.type=== selectPanel})
+        renderOperations(typeFiltered)
         showElement("#new-operation")
         hideElement("#any-operation")
+      })
+
+          //Date filter    
+    $("#selector-date").addEventListener("input", (e)=>{
+        e.preventDefault()
+        let filteredOperations= []
+        const selectedDate= new Date(e.target.value)
+            for (let i = 0; i < allOperations.length; i++){
+            let operationDate = new Date(allOperations[i].date)
+            if(operationDate >= selectedDate){
+            filteredOperations.push(allOperations[i]) 
+            renderOperations(filteredOperations)
+            }
+            else if(filteredOperations < selectedDate){
+                showElement("#any-operation")
+                hideElement("#new-operation")
+            }
+        } 
     })
+    
+    $("#order-select").addEventListener("input", (e)=>{
+        e.preventDefault()
+        const currentsOperations = getInfo("operations")
+        selectedOption= $("#order-select").value 
+        let amountFiltred =[] 
+            //date order
+        if(selectedOption === "more-recent")  {
+        allOperations.sort((a, b) => b.date.localeCompare(a.date));
+        renderOperations(allOperations)
+        }
+        if(selectedOption === "les-recent") {
+            allOperations.sort((a, b) => a.date.localeCompare(b.date));
+        renderOperations(allOperations)
+        } 
+            //amount order
+        if(selectedOption === "more-amount")  {
+           for(const {amount} of allOperations){
+            amountFiltred.push(amount)
+            amountFiltred.sort(function compare(a, b) {
+                if (b < a) {
+                  return -1;
+                }
+                if (b > a) {
+                  return 1;
+                }
+                return 0;
+              })
+              console.log(amountFiltred)  
+           } }
+        
+        if(selectedOption === "les-amount")  
+            for(const {amount} of allOperations){
+                console.log(amount)
+                 amountFiltred.push(amount)
+                console.log(amountFiltred.toSorted((a,b)=> a - b))
+            }
+        if(selectedOption === "a-z") {
+            currentsOperations.sort((a, b) => a.description.localeCompare(b.description));
+        renderOperations(currentsOperations)
+        }   
+        if(selectedOption === "z-a") {
+            currentsOperations.sort((a, b) => b.description.localeCompare(a.description));
+        renderOperations(currentsOperations)
+        }   
+    })
+
+
 
     //section categorias
     $("#btn-add-categories").addEventListener("click", () => {
