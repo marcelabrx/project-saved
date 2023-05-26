@@ -74,7 +74,7 @@ const renderOperations = (operations) => {
                 <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
                 <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
                     <button onclick="editOperationForm('${id}')"><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
-                    <button data-id="${id}" onclick="openDeleteModal('${id}')"><i class="btn-delete fa-solid fa-trash text-red-600"></i></button>
+                    <button data-id="${id}" onclick="modalToDeleteOperations('${id}')"><i class="btn-delete fa-solid fa-trash text-red-600"></i></button>
                 </td>                            
             </tr>
             `
@@ -93,7 +93,7 @@ const renderCategories = (categories) => {
             <p class="p-2 w-fit rounded-lg bg-purple-50 text-purple-500" data-id="${id}">${categoryName}</p>
             <div>
                 <button><i class="btn-edit-categories fa-solid fa-pen-to-square mr-2 text-green-600" onclick=editCategoriesForm("${id}")></i></button>
-                <button><i class="btn-delete-categories fa-solid fa-trash text-red-600" onclick=deleteCategoryId("${id}")></i></button>
+                <button><i class="btn-delete-categories fa-solid fa-trash text-red-600" onclick=modalToDeleteCategories("${id}")></i></button>
             </div>
         </article>
         `
@@ -113,13 +113,7 @@ const renderCategoriesOptions = (categories) => {
 
 
 //Save data operations
-//union de save categorie, preguntar
-const saveCategoriesData1 = (selector) => {
-    return{
-        id : randomId(),
-        categoryName: $(selector).value
-    }
-}
+
 const saveCategoriesData = () => {
     return{
         id : randomId(),
@@ -127,7 +121,7 @@ const saveCategoriesData = () => {
     }
 }
 
-const saveCategoriesData2 = () => {
+const saveEditedCategoriesData = () => {
     return{
         id : randomId(),
         categoryName: $("#input-edit-categories").value
@@ -135,7 +129,7 @@ const saveCategoriesData2 = () => {
 }
 
 
-const validateForm = () => {
+const validateFormOperations = () => {
     const date = $("#date").value
     const description = $("#description").value.trim()
     const amount = $("#amount").valueAsNumber 
@@ -184,62 +178,38 @@ const sendNewData = (key, callback) => {
     currentData.push(newData)
     setInfo(key, currentData)
 }
-// no puedo usar el sendNewData en add categories porque en saveCteorieData no puedo pasarle el selected
-const addCategories = () => {
-    const currentCategory = getInfo("categories")
-    const newCategory = saveCategoriesData()
-    currentCategory.push(newCategory)
-    setInfo("categories", currentCategory)
-}
 
 //modifying funtions  
-//podemos unificar estas dos delete  
 const deleteData = (id, keys) => {
     const currentData = getInfo(keys).filter(key => key.id != id)
     setInfo(keys, currentData)
 }
 
-// quise unir las delete category e operation en una pero no funciona porque se la paso en un onclick a el boton de eliminar en render operations 
-const openDeleteModal1 = (id, keys, render) => {
-    showElement("#modal-window")
-    const selectedAction = getInfo(keys).find(key => key.id === id)
-    $(".modal-text").innerHTML = selectedAction[1]
-    $("#modal-delete").setAttribute("data-id", id)
-    $("#modal-delete").addEventListener("click", () => {
-        deleteData(id, keys)
-        window.location.reload()
-    })
-    render(getInfo(keys))
-}
 
-////podemos unificar estas dos delete 
-const openDeleteModal = (id) => {
+//delete operations and categories
+const modalToDeleteOperations = (id) => {
     showElement("#modal-window")
     const selectedOperation = getInfo("operations").find(operation => operation.id === id)
     $(".modal-text").innerHTML = selectedOperation.description
     $("#modal-delete").setAttribute("data-id", id)
     $("#modal-delete").addEventListener("click", () => {
-        // const operationId = $("#modal-delete").getAttribute("data-id")
         deleteData(id, "operations")
         window.location.reload()
     })
     renderOperations(getInfo("operations"))
 }
 
-
-const deleteCategoryId = (id) => {
+const modalToDeleteCategories = (id) => {
     showElement("#modal-window")
     $("#modal-delete").setAttribute("data-id",id)
     const selectedCategory= getInfo("categories").find(category => category.id === id)
     $(".modal-text").innerText= selectedCategory.categoryName
-    
     $("#modal-delete").addEventListener("click", () => {
         deleteData(id, "categories")
         window.location.reload()
     })
     renderCategories(getInfo("categories"))
 }
-
 
 const editOperation = () => {
     const operationId = $("#btn-edit-operation").getAttribute("data-id")
@@ -251,7 +221,6 @@ const editOperation = () => {
     })
     setInfo("operations", editedOperations)
 }
-
 
 const editOperationForm = (id) => {
     showElements(["#operations-form", "#btn-edit-operation", ".edit-operation-title"])
@@ -269,7 +238,7 @@ const editCategory = () => {
     const categoryId= $("#btn-confirm-add").getAttribute("data-id")
     const editedCategory= getInfo("categories").map(category => {
         if(category.id === categoryId){
-            return saveCategoriesData2(categoryId)
+            return saveEditedCategoriesData(categoryId)
         }
         return category
     })
@@ -283,34 +252,34 @@ const editCategoriesForm = (id) => {
     const categorySelected = getInfo("categories").find(category => category.id === id)
     $("#input-edit-categories").value = categorySelected.categoryName
 }
-// let restar=(a,b)=>{
-//   return a - b
-// }
 
-// let sumar=(a,b)=>{
-//   return a + b
-// }
+/*
+  ************** REPORTS SECTION  **************
+*/
 
-// const changeBalanceColor = (total) => {
-//     className = ""
-//     if (total > 0){
-//         $("#total-balance").classList.add("text-green-500")
-//     } else if (total < 0) {
-//         $("#total-balance").classList.add("text-red-600")
-//     } else if (total = 0) {
-//         $("#total-balance").classList.add("text-gray-900")
-//     }
-// }
 const renderReports = () => {
     const currentOperations = getInfo("operations")
     const allCategories = getInfo("categories")
-    if (currentOperations.length >= 2) {
-        // for(const {type})
-        getTotalsForCategories(currentOperations, allCategories)
+    let hasProfit = false
+    let hasExpenditure = false
+    
+    for (const { type } of currentOperations) {
+        if (type === "Ganancia") {
+            hasProfit = true
+        } else if (type === "Gasto") {
+            hasExpenditure = true
+        }
+    }
+
+    if (hasProfit && hasExpenditure) {
+        summaryByCategories(currentOperations, allCategories)
+        summaryByMonths(currentOperations)
+        totalsForCategory(currentOperations, allCategories)
+
     } else {
-        showElement(".any-reports")
-        hideElement("#reports-table")
-    }      
+        showElement(".any-reports");
+        hideElement("#reports-table");
+    }
 }
 
 const getBalance = (operations) => {
@@ -319,21 +288,19 @@ const getBalance = (operations) => {
     let total = 0 
     
     for (const operation of operations){
-        const {type, amount} = operation
+        const { type, amount } = operation
         if (type === "Ganancia"){
             profits += amount
             total += amount
-            $("#balance-profits").innerHTML =+ profits
         }
 
         if (type === "Gasto" ){
             expenses += amount
             total -= amount
-            $("#balance-expenses").innerHTML =+ expenses
         }
-        $("#total-balance").innerHTML =+ total 
+        
     }
-    
+ 
     return {
         profits: profits,
         expenses: expenses,
@@ -341,29 +308,33 @@ const getBalance = (operations) => {
     }
 }
 
-const generateBalance = () => {
+const generateBalance = (operations) => {
+    const { profits, expenses, total } = getBalance(operations)
+    
+    $("#balance-profits").innerHTML = `+$${profits}`
+    $("#balance-expenses").innerHTML = `-$${expenses}`
+
+    let symbol = ""
     let className = "" 
     if (total > 0){
         className = "text-green-500"
+        symbol = "+"
     } else if (total < 0) {
         className = "text-red-600"
+        symbol = "-"
     } else {
         className = "text-gray-900"
     }
     $("#total-balance").innerHTML = `
-    $<span class="font-bold ${className}">$${total}</span>
+    <span class="font-bold ${className}">${symbol}$${(Math.abs(total))}</span>
     `
 }
 
-/*
-  ************** REPORTS SECTION  **************
- */
-const getTotalsForCategories = (operations, categories) => {
+const summaryByCategories = (operations, categories) => {
     
     const categoryTotals = {}
 
-    for (const operation of operations) {
-        const { category, amount, type } = operation;
+    for (const { category, amount, type } of operations) {
         
         if (!categoryTotals[category]) {
             categoryTotals[category] = {
@@ -386,7 +357,7 @@ const getTotalsForCategories = (operations, categories) => {
     let maxAmountBalance = 0
 
     for (const category in categoryTotals) {
-        const {profits, expenses} = categoryTotals[category]
+        const { profits, expenses } = categoryTotals[category]
         const balance = profits - expenses
         
         if (profits > maxAmountProfits) {
@@ -403,23 +374,122 @@ const getTotalsForCategories = (operations, categories) => {
         }
     }
 
-    for (const {id, categoryName} of categories){
+    for (const { id, categoryName } of categories){
         if (id === maxCategoryProfits){
             $("#highest-category-profits").innerHTML = categoryName 
-            $("#total-hg-category-profits").innerHTML =+ maxAmountProfits  
+            $("#total-hg-category-profits").innerHTML = `+$${maxAmountProfits}`  
         }
         if (id === maxCategoryExpenses) {
             $("#highest-category-expenses").innerHTML = categoryName
-            $("#total-hg-category-expenses").innerHTML =+ maxAmountExpenses
+            $("#total-hg-category-expenses").innerHTML = `-$${maxAmountExpenses}`
         }
         if (id === maxCategoryBalance){
             $("#highest-category-balance").innerHTML = categoryName
-            $("#total-hg-category-balance").innerHTML =+ maxAmountBalance
+            $("#total-hg-category-balance").innerHTML = `$${maxAmountBalance}`
         }
     }
    
 }
 
+const summaryByMonths = (operations) => {
+
+    const monthTotals = {}
+
+    for (const { date, type, amount } of operations) {
+        const currentDate = new Date(date)
+        const monthYear = `${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`
+
+        if(!monthTotals[monthYear]){
+            monthTotals[monthYear] = {
+                profits: 0,
+                expenses: 0, 
+            }
+        }
+        if (type === "Ganancia"){
+            monthTotals[monthYear].profits += amount
+        } else if (type === "Gasto") {
+            monthTotals[monthYear].expenses += amount
+        }
+    }
+    
+    let maxMonthProfits = ""
+    let maxAmountProfits = 0
+    let maxMonthExpenses = ""
+    let maxAmountExpenses = 0
+
+    for (const monthYear in monthTotals) {
+        const { profits, expenses } = monthTotals[monthYear]
+
+        if (profits > maxAmountProfits) {
+            maxAmountProfits = profits
+            maxMonthProfits = monthYear
+        }
+        if (expenses > maxAmountExpenses) {
+            maxAmountExpenses = expenses
+            maxMonthExpenses = monthYear
+        }
+    }
+    $("#month-highest-profit").innerHTML = maxMonthProfits
+    $("#total-month-hg-profit").innerHTML = `+$${maxAmountProfits}`
+    $("#month-highest-expenditure").innerHTML = maxMonthExpenses
+    $("#total-month-hg-expenditure").innerHTML = `-$${maxAmountExpenses}`
+}
+
+const totalsForCategory = (operations, categories) => {
+
+    const balanceByCategory = {}
+    
+    for (const { category, type, amount } of operations) {
+        const categoryFiltered = categories.find(cat => cat.id === category)
+
+        if (categoryFiltered) {
+            const { categoryName } = categoryFiltered
+
+            if (!balanceByCategory[categoryName]) {
+                balanceByCategory[categoryName] = {
+                    profits: 0,
+                    expenses: 0,
+                    total: 0
+                }
+            }
+
+            if (type === "Ganancia") {
+                balanceByCategory[categoryName].profits += amount
+                balanceByCategory[categoryName].total += amount
+            } else if (type === "Gasto") {
+                balanceByCategory[categoryName].expenses += amount
+                balanceByCategory[categoryName].total -= amount
+            }
+        }
+    }
+
+    return (balanceByCategory)
+}
+
+const generateTotalsForCategory = (operations, categories) => {
+    const balanceByCategory = totalsForCategory(operations, categories)
+    
+    let tableContent = cleanContainer("#totals-category")
+    for (const categoryName in balanceByCategory) {
+        const { profits, expenses, total } = balanceByCategory[categoryName]
+        
+        const tableRow = `
+            <tr class="flex justify-between items-center">
+                <td class="w-1/5 flex justify-start p-4"><span class="px-2 py-1 rounded-lg bg-purple-50 text-purple-500">${categoryName}</span></td>
+                <td class="w-1/5 flex justify-end p-4 text-green-600">$${profits}</td>
+                <td class="w-1/5 flex justify-end p-4 text-red-600">$${expenses}</td>
+                <td class="w-1/5 flex justify-end p-4">$${total}</td>
+            </tr>
+            
+        `
+        tableContent += tableRow
+    }
+    $("#totals-category").innerHTML += tableContent
+}
+
+const totalsPerMonth = () => {
+
+}
 
 
 const initializeApp = () => { 
@@ -429,14 +499,15 @@ const initializeApp = () => {
     renderCategories(allCategories)
     renderCategoriesOptions(allCategories)
     getBalance(allOperations)
-    
+    generateBalance(allOperations)
+    generateTotalsForCategory(allOperations, allCategories)
+    renderReports()
 
     const home = () => {
         showElements(["#balance-section", "#balance-card-left", "#balance-card-right"])
         hideElements(["#category-section", "#reports-section", "#operations-form"])
     }
 
-    //Falta que muestre el contendio de la tabla cuando tiene informacion
     $("#title-home").addEventListener("click", () => {
         home()
         renderOperations(getInfo("operations"))
@@ -447,8 +518,6 @@ const initializeApp = () => {
         home()
         renderOperations(getInfo("operations")) 
         renderCategories(getInfo("categories"))
-        showElements(["#new-operation", "#table"])
-
     })
 
     //btn categorías
@@ -475,27 +544,38 @@ const initializeApp = () => {
         hideElements(["#category-section", "#balance-section", "#reports-section", "#balance-card-left", "#balance-card-right"])        
     })
 
-    //add and edit operation 
+    //btn add operation 
     $("#btn-add-operation").addEventListener("click", (e) => {
         e.preventDefault()
-        if (validateForm()) {
+        if (validateFormOperations()) {
             sendNewData("operations", saveOperationsData)
             renderOperations(getInfo("operations"))
             renderCategoriesOptions(getInfo("operations"))
             renderCategories(getInfo("categories"))
             getBalance(getInfo("operations"))
+            generateBalance(getInfo("operations"))
+            $("#form").reset()
             showElements(["#new-operation", "#table", "#succesfull-alert"]) 
             home()
         }
     })
-    
-    $("#amount").addEventListener("input", (e) => {
-        const value = e.target.valueAsNumber
-        if (isNaN(value)) {
-            $("#amount").value = ""
+
+    //btn edit operation 
+    $("#btn-edit-operation").addEventListener("click", (e) => {
+        e.preventDefault()
+        if (validateFormOperations()) {
+            editOperation()
+            showElements(["#new-operation", "#table"]) 
+            renderOperations(getInfo("operations"))
+            renderCategories(getInfo("categories"))
+            getBalance(getInfo("operations"))
+            generateBalance(getInfo("operations"))
+            home()
         }
+        
     })
 
+    //btn cancel operation 
     $("#btn-cancel-operation").addEventListener("click",(e) => {
         e.preventDefault()
         renderOperations(getInfo("operations"))
@@ -503,15 +583,12 @@ const initializeApp = () => {
         home()
     })
     
-    $("#btn-edit-operation").addEventListener("click", (e) => {
-        e.preventDefault()
-        if (validateForm()) {
-            editOperation()
-            showElements(["#new-operation", "#table"]) 
-            home()
-            renderOperations(getInfo("operations"))
+    //input only accepts numbers
+    $("#amount").addEventListener("input", (e) => {
+        const value = e.target.valueAsNumber
+        if (isNaN(value)) {
+            $("#amount").value = ""
         }
-        
     })
 
     //mobile - open menu
@@ -519,7 +596,7 @@ const initializeApp = () => {
         showElements([".fa-xmark", "#options-menu"])
         hideElement(".fa-bars")
     })
-
+    // mobile - close menu
     $(".fa-xmark").addEventListener("click", () => {
         showElement(".fa-bars")
         hideElements([".fa-xmark", "#options-menu"])
@@ -549,7 +626,7 @@ const initializeApp = () => {
         }    
     })
 
-    //selector gasto/ganancia
+    //profits / expenses selector
     $("#select-panel").addEventListener("click", () => {
         const selectPanel = $("#select-panel").value
         showElement("#new-operation")

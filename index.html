@@ -73,11 +73,15 @@
                     <h2 class="py-6 text-4xl font-bold">Balance</h2>
                     <div class="flex justify-between py-2 text-gray-900">
                         <div class="text-lg">Ganancias</div>
-                        <div class="text-green-500">+$<span id="balance-profits">0</span></div>
+                        <div id="balance-profits" class="text-green-500">
+                            <span>+$0</span>
+                        </div>
                     </div>
                     <div class="flex justify-between py-2 text-gray-900">
                         <div class="text-lg">Gastos</div>
-                        <div class="text-red-600">-$<span id="balance-expenses">0</span></div>
+                        <div id="balance-expenses" class="text-red-600">
+                            <span>-$0</span>
+                        </div>
                     </div>
                     <div class="flex justify-between py-2 text-gray-900">
                         <div class="text-2xl">Total</div>
@@ -169,7 +173,7 @@
         </section>
         <!-- Card - New operation / Edit Operation -->
         <div id="operations-form" class="hidden lg:my-20">
-            <form class="flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
+            <form id="form" class="flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
                 <h2 class="new-operation-title pt-6 pb-10 ml-3 text-4xl font-bold">Nueva Operación</h2>
                 <h2 class="edit-operation-title hidden pt-6 pb-10 ml-3 text-4xl font-bold">Editar Operación</h2>
                 <section class="flex flex-wrap">
@@ -241,54 +245,46 @@
                 <p class="text-center pt-4 pb-20">Prueba agregando más operaciones</p>
             </div>
             <div id="reports-table">
-                <table class="table-fixed w-full">
+                <table class="table-fixed w-full justify-between">
                     <caption class="text-bold text-2xl text-start p-4">Resumen</caption>
-                    <tr class="flex justify-between text-left">
-                        <th class="p-4 w-[45%]">Categoría con mayor ganancia</th>
-                        <td class="p-4"><p id="highest-category-profits" class="w-fit rounded-lg bg-purple-50 text-purple-500 px-2 py-1">Categorías</p></td>
-                        <td id="total-hg-category-profits" class="p-4 text-green-600">Total</td>
+                    <tr class="w-full flex justify-between items-center">
+                        <th class="p-4">Categoría con mayor ganancia</th>
+                        <td id="highest-category-profits" class="px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
+                        <td id="total-hg-category-profits" class="p-4 text-green-600 font-bold"></td>
                     </tr>
-                    <tr class="flex justify-between text-left">
-                        <th class="p-4 w-[45%]">Categoría con mayor gasto</th>
-                        <td class="p-4"><p id="highest-category-expenses" class="w-fit rounded-lg bg-purple-50 text-purple-500 px-2 py-1">Categorías</p></td>
-                        <td id="total-hg-category-expenses" class="p-4 text-red-600">Total</td>
+                    <tr class="w-full flex justify-between items-center ">
+                        <th class="p-4">Categoría con mayor gasto</th>
+                        <td id="highest-category-expenses" class="px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
+                        <td id="total-hg-category-expenses" class="p-4 text-red-600 font-bold"></td>
                     </tr>
-                    <tr class="flex justify-between text-left">
-                        <th class="p-4 w-[45%]">Categoría con mayor balance</th>
-                        <td class="p-4"><p id="highest-category-balance" class="w-fit rounded-lg bg-purple-50 text-purple-500 px-2 py-1">Categorías </p></td>
-                        <td id="total-hg-category-balance" class="p-4 text-bold">Total</td>
+                    <tr class="w-full flex justify-between items-center">
+                        <th class="p-4">Categoría con mayor balance</th>
+                        <td id="highest-category-balance" class="px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
+                        <td id="total-hg-category-balance" class="p-4 font-bold"></td>
                     </tr>
-                    <tr class="flex justify-between text-left">
-                        <th class="p-4 w-[45%]">Mes con mayor ganancia</th>
-                        <td class="p-4">Fecha</td>
-                        <td class="p-4 text-green-600">Total</td>
+                    <tr class="w-full flex justify-between items-center">
+                        <th class="p-4">Mes con mayor ganancia</th>
+                        <td id="month-highest-profit" class="pl-8"></td>
+                        <td id="total-month-hg-profit"class="p-4 text-green-600 font-bold"></td>
                     </tr>
-                    <tr class="flex justify-between text-left">
-                        <th class="p-4 w-[45%]">Mes con mayor gasto</th>
-                        <td class="p-4">Fecha</td>
-                        <td class="p-4 text-red-600">Total</td>
+                    <tr class="w-full flex justify-between items-center">
+                        <th class="p-4">Mes con mayor gasto</th>
+                        <td id="month-highest-expenditure" class="pl-14"></td>
+                        <td id="total-month-hg-expenditure" class="p-4 text-red-600 font-bold"></td>
                     </tr>
                 </table>
                 <table class="table-fixed w-full my-20">
                     <caption class="text-bold text-2xl text-start p-4">Totales por categoría</caption>
-                    <tr class="flex justify-between text-left">
-                        <th class="p-4 w-[25%]">Categoría</th>
-                        <th class="p-4">Ganancias</th>
-                        <th class="p-4">Gastos</th>
-                        <th class="p-4">Balance</th>
+
+                    <tr class="flex justify-between">
+                        <th class="w-1/5 flex justify-start p-4">Categoría</th>
+                        <th class="w-1/5 flex justify-end p-4">Ganancias</th>
+                        <th class="w-1/5 flex justify-end p-4">Gastos</th>
+                        <th class="w-1/5 flex justify-end p-4">Balance</th>
                     </tr>
-                    <tr class="flex justify-between text-left">
-                        <th class="p-4 w-[25%]">Categoría</th>
-                        <td class="p-4 text-green-600">Entrada</td>
-                        <td class="p-4 text-red-600">Salida</td>
-                        <td class="p-4">Total</td>
-                    </tr>
-                    <tr class="flex justify-between text-left">
-                        <th class="p-4 w-[25%]">Categoría</th>
-                        <td class="p-4 text-green-600">Entrada</td>
-                        <td class="p-4 text-red-600 ">Salida</td>
-                        <td class="p-4">Total</td>
-                    </tr>
+                    <tbody id="totals-category">
+                        <!--rendered for local storage-->
+                    </tbody>
                 </table>
                 <table class="table-fixed w-full my-20">
                     <caption class="text-bold text-2xl text-start p-4">Totales por mes</caption>
