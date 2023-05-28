@@ -64,14 +64,24 @@ const renderOperations = (operations) => {
     if (operations.length){
         hideElement("#any-operation")
         showElements(["#new-operation", "#table"])
-        for (const {id, description, category, date, amount} of operations){
+        for (const {id, description, category, date, amount, type } of operations){
+            
+            let symbol
+            let className 
+
+            type === "Ganancia"
+            ? ((className = "text-green-500"), (symbol = "+"))
+            : ((className = "text-red-600"), (symbol = "-"))
+            
             const categorySelected = getInfo("categories").find(cat => cat.id === category)
+           
+
             $("#operations-table").innerHTML += `
             <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
                 <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">${description}</td>
                 <td class="w-1/2 px-4 py-2 flex items-end justify-end text-purple-500 md:w-1/5 md:flex md:justify-start">${categorySelected.categoryName}</td>
-                <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${date}</td>
-                <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start">${amount}</td>
+                <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${getCurrentDate(date)}</td>
+                <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start font-bold ${className}">${symbol}$${amount}</td>
                 <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
                     <button onclick="editOperationForm('${id}')"><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
                     <button data-id="${id}" onclick="modalToDeleteOperations('${id}')"><i class="btn-delete fa-solid fa-trash text-red-600"></i></button>
@@ -82,6 +92,15 @@ const renderOperations = (operations) => {
     }else {
         showElement("#any-operation")
     }
+}
+
+const getCurrentDate = (date) => {
+    const currentDate = new Date(date).toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    })
+    return currentDate
 }
 
 const renderCategories = (categories) => {
@@ -110,7 +129,6 @@ const renderCategoriesOptions = (categories) => {
     }
 }
 
-
 //Save data operations
 
 const saveCategoriesData = () => {
@@ -126,7 +144,6 @@ const saveEditedCategoriesData = () => {
         categoryName: $("#input-edit-categories").value
     }
 }
-
 
 const validateFormOperations = () => {
     const date = $("#date").value
@@ -178,14 +195,14 @@ const sendNewData = (key, callback) => {
     setInfo(key, currentData)
 }
 
-//modifying funtions  
+//delete data of operations and categories
 const deleteData = (id, keys) => {
     const currentData = getInfo(keys).filter(key => key.id != id)
     setInfo(keys, currentData)
 }
 
 
-//delete operations and categories
+//open modal to delete
 const modalToDeleteOperations = (id) => {
     showElement("#modal-window")
     const selectedOperation = getInfo("operations").find(operation => operation.id === id)
@@ -202,7 +219,7 @@ const modalToDeleteCategories = (id) => {
     showElement("#modal-window")
     $("#modal-delete").setAttribute("data-id",id)
     const selectedCategory= getInfo("categories").find(category => category.id === id)
-    $(".modal-text").innerText= selectedCategory.categoryName
+    $(".modal-text").innerText = selectedCategory.categoryName
     $("#modal-delete").addEventListener("click", () => {
         deleteData(id, "categories")
         window.location.reload()
@@ -274,10 +291,11 @@ const renderReports = () => {
         summaryByCategories(currentOperations, allCategories)
         summaryByMonths(currentOperations)
         totalsForCategory(currentOperations, allCategories)
+        totalsPerMonth(currentOperations)
 
     } else {
-        showElement(".any-reports");
-        hideElement("#reports-table");
+        showElement(".any-reports")
+        hideElement("#reports-table")
     }
 }
 
@@ -462,34 +480,94 @@ const totalsForCategory = (operations, categories) => {
         }
     }
 
-    return (balanceByCategory)
+    return balanceByCategory
 }
 
 const generateTotalsForCategory = (operations, categories) => {
     const balanceByCategory = totalsForCategory(operations, categories)
     
-    let tableContent = cleanContainer("#totals-category")
+    let tableContent = cleanContainer("#totals-all-categories")
+    
     for (const categoryName in balanceByCategory) {
         const { profits, expenses, total } = balanceByCategory[categoryName]
+
+        let symbol = ""
+        if (total < 0){
+            symbol = "-"
+        }
         
         const tableRow = `
             <tr class="flex justify-between items-center">
                 <td class="w-1/4 flex justify-start py-4"><span class="rounded-lg bg-purple-50 text-purple-500">${categoryName}</span></td>
-                <td class="w-1/4 flex justify-center py-4 text-green-600">$${profits}</td>
-                <td class="w-1/4 flex justify-center py-4 text-red-600">$${expenses}</td>
-                <td class="w-1/4 flex justify-center py-4">$${total}</td>
+                <td class="w-1/4 flex justify-center py-4 text-green-600">+$${profits}</td>
+                <td class="w-1/4 flex justify-center py-4 text-red-600">-$${expenses}</td>
+                <td class="w-1/4 flex justify-center py-4">${symbol}$${Math.abs(total)}</td>
             </tr>
             
         `
         tableContent += tableRow
     }
-    $("#totals-category").innerHTML += tableContent
+    $("#totals-all-categories").innerHTML += tableContent
 }
 
-const totalsPerMonth = () => {
+const totalsPerMonth = (operations) => {
+    const balancePerMonth = {}
 
+    for (const { date, type, amount } of operations) {
+        const currentDate = new Date(date)
+        const monthYear = `${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`
+
+        if (!balancePerMonth[monthYear]){
+            balancePerMonth[monthYear] = {
+                profits: 0,
+                expenses: 0,
+                total: 0
+            }
+        }
+        if (type === "Ganancia") {
+            balancePerMonth[monthYear].profits += amount
+            balancePerMonth[monthYear].total += amount
+        } else if (type === "Gasto") {
+            balancePerMonth[monthYear].expenses += amount
+            balancePerMonth[monthYear].total -= amount
+        }
+
+    }
+    return balancePerMonth
 }
 
+
+const generateTotalsPerMonth = (operations) => {
+
+    const balancePerMonth = totalsPerMonth(operations)
+    let tableContent = cleanContainer("#totals-all-months")
+
+    for (const monthYear in balancePerMonth) {
+        const { profits, expenses, total } = balancePerMonth[monthYear]
+        
+        let symbol = ""
+        if (total < 0){
+            symbol = "-"
+        }
+       
+        const tableRow = `
+        <tr class="flex justify-between items-center">
+            <td class="w-1/4 flex justify-start py-4">${monthYear}</td>
+            <td class="w-1/4 flex justify-center py-4 text-green-600">+$${profits}</td>
+            <td class="w-1/4 flex justify-center py-4 text-red-600">-$${expenses}</td>
+            <td class="w-1/4 flex justify-center py-4">${symbol}$${Math.abs(total)}</td>
+        </tr>
+        
+        `
+        tableContent += tableRow
+    }
+    $("#totals-all-months").innerHTML += tableContent
+}
+
+
+/*
+  ************** INITIALIZE APP SECTION  **************
+*/
 
 const initializeApp = () => { 
     setInfo("operations", allOperations)
@@ -500,6 +578,7 @@ const initializeApp = () => {
     getBalance(allOperations)
     generateBalance(allOperations)
     generateTotalsForCategory(allOperations, allCategories)
+    generateTotalsPerMonth(allOperations)
     renderReports()
 
     const home = () => {
@@ -551,8 +630,9 @@ const initializeApp = () => {
             renderOperations(getInfo("operations"))
             renderCategoriesOptions(getInfo("operations"))
             renderCategories(getInfo("categories"))
-            getBalance(getInfo("operations"))
-            generateBalance(getInfo("operations"))
+            renderReports()
+            // getBalance(getInfo("operations"))
+            // generateBalance(getInfo("operations"))
             $("#form").reset()
             showElements(["#new-operation", "#table", "#succesfull-alert"]) 
             home()
@@ -567,8 +647,9 @@ const initializeApp = () => {
             showElements(["#new-operation", "#table"]) 
             renderOperations(getInfo("operations"))
             renderCategories(getInfo("categories"))
-            getBalance(getInfo("operations"))
-            generateBalance(getInfo("operations"))
+            renderReports()
+            // getBalance(getInfo("operations"))
+            // generateBalance(getInfo("operations"))
             home()
         }
         
@@ -637,9 +718,9 @@ const initializeApp = () => {
         renderOperations(typeFiltered)
         showElement("#new-operation")
         hideElement("#any-operation")
-      })
+    })
 
-          //Date filter    
+    //Date filter    
     $("#selector-date").addEventListener("input", (e)=>{
         e.preventDefault()
         let filteredOperations= []
@@ -657,10 +738,10 @@ const initializeApp = () => {
         } 
     })
     
-    $("#order-select").addEventListener("input", (e)=>{
+    $("#order-select").addEventListener("input", (e) =>{
         e.preventDefault()
         const currentsOperations = getInfo("operations")
-        selectedOption= $("#order-select").value 
+        selectedOption = $("#order-select").value 
         let amountFiltred =[] 
             //date order
         if(selectedOption === "more-recent")  {
