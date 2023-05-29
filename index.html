@@ -112,7 +112,6 @@
                         <div class=" text-gray-900">
                             <label for="categories-select" class="text-lg font-bold">Categoría</label>
                             <select id="categories-select" class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                                <option value="">Todas</option>
                                 <!--Operations rendered from the localstorage -->
                             </select>
                         </div>
@@ -217,7 +216,8 @@
                 <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Categorías</h2>
                 <section class="flex flex-wrap justify-between w-full align-center">
                     <p class="p-4 w-full font-bold"> Nombre </p>
-                        <input type="text" id="input-add-categories" class="p-2 ml-2 w-[65%] border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 lg:w-[85%]">
+                        <input type="text" id="input-add-categories" name="input-add-categories" class="p-2 ml-2 w-[65%] border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 lg:w-[85%]">
+                        <p class="description-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una categoría válida.</p>
                     <button id="btn-add-categories" class="px-4 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700 lg:w-[10%]">Agregar</button>
                 </section>
                 <div id="categories-section" class="flex flex-col text-md">
@@ -229,7 +229,8 @@
         <section id="edit-categories" class="hidden my-20">
             <form class= "flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
                 <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Editar categoría</h2>
-                <input type="text" id="input-edit-categories"  class="p-2 ml-2 w-full border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 w-full">
+                <input type="text" id="input-edit-categories" value="" class="p-2 ml-2 w-full border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 w-full">
+                <p class="description-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una categoria válida.</p>
                 <div class="flex items-end justify-end mt-10">
                     <button id="btn-cancel-add" class="px-8 py-2 mr-4 rounded-md bg-neutral-100 hover:bg-[#ebebeb]">Cancelar</button> 
                     <button id="btn-confirm-add" class="px-8 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700 text-white">Confirmar</button>
@@ -249,28 +250,28 @@
                     <caption class="text-bold text-2xl text-start p-4">Resumen</caption>
                     <tr class="w-full flex justify-between items-center">
                         <th class="w-1/2 flex justify-start p-4">Categoría con mayor ganancia</th>
-                        <td id="highest-category-profits" class="px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
-                        <td id="total-hg-category-profits" class="p-4 text-green-600 font-bold"></td>
+                        <td id="highest-category-profits" class="p-4 px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
+                        <td id="total-hg-category-profits" class="w-1/4 p-4 text-green-600 font-bold"></td>
                     </tr>
                     <tr class="w-full flex justify-between items-center ">
                         <th class="w-1/2 flex justify-start p-4">Categoría con mayor gasto</th>
-                        <td id="highest-category-expenses" class="px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
-                        <td id="total-hg-category-expenses" class="p-4 text-red-600 font-bold"></td>
+                        <td id="highest-category-expenses" class=" px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
+                        <td id="total-hg-category-expenses" class="w-1/4 p-4 text-red-600 font-bold"></td>
                     </tr>
                     <tr class="w-full flex justify-between items-center">
                         <th class="w-1/2 flex justify-start p-4">Categoría con mayor balance</th>
                         <td id="highest-category-balance" class="px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
-                        <td id="total-hg-category-balance" class="p-4 font-bold"></td>
+                        <td id="total-hg-category-balance" class="w-1/4 p-4 font-bold"></td>
                     </tr>
                     <tr class="w-full flex justify-between items-center">
                         <th class="w-1/2 flex justify-start p-4">Mes con mayor ganancia</th>
-                        <td id="month-highest-profit"></td>
-                        <td id="total-month-hg-profit"class="px-2 py-1 text-green-600 font-bold"></td>
+                        <td id="month-highest-profit" class="p-4"></td>
+                        <td id="total-month-hg-profit"class="w-1/4 p-4 text-green-600 font-bold"></td>
                     </tr>
                     <tr class="w-full flex justify-between items-center">
                         <th class="w-1/2 flex justify-start p-4">Mes con mayor gasto</th>
-                        <td id="month-highest-expenditure"></td>
-                        <td id="total-month-hg-expenditure" class="px-2 py-1 text-red-600 font-bold"></td>
+                        <td id="month-highest-expenditure" class="p-4"></td>
+                        <td id="total-month-hg-expenditure" class="w-1/4 p-4 text-red-600 font-bold"></td>
                     </tr>
                 </table>
                 <table class="table-fixed w-full my-20">
