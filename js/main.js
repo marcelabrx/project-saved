@@ -61,26 +61,21 @@ const allCategories = getInfo("categories") || defaultCategories
 //Render functions
 const renderOperations = (operations) => {
     cleanContainer("#operations-table")
-    if (operations.length){
+    if (operations.length) {
         hideElement("#any-operation")
         showElements(["#new-operation", "#table"])
         for (const {id, description, category, date, amount, type } of operations){
             
-            let symbol
-            let className 
-
-            type === "Ganancia"
-            ? ((className = "text-green-500"), (symbol = "+"))
-            : ((className = "text-red-600"), (symbol = "-"))
+            let className = type === "Ganancia" ? "text-green-500" : "text-red-600"
+            let symbol = type === "Ganancia" ? "+" : "-"
             
             const categorySelected = getInfo("categories").find(cat => cat.id === category)
-           
 
             $("#operations-table").innerHTML += `
             <tr class="flex flex-wrap justify-between md:flex-nowrap md:items-center border border-purple-100 odd:bg-white even:bg-purple-50">
                 <td class="w-1/2 px-4 py-2 md:w-1/5 md:flex md:justify-start">${description}</td>
                 <td class="w-1/2 px-4 py-2 flex items-end justify-end text-purple-500 md:w-1/5 md:flex md:justify-start">${categorySelected.categoryName}</td>
-                <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${getCurrentDate(date)}</td>
+                <td class="px-4 py-2 hidden md:w-1/5 md:flex md:items-center md:justify-start">${transformCurrentDate(date)}</td>
                 <td class="w-1/2 px-4 py-2 text-3xl md:w-1/5 md:text-base md:flex md:justify-start font-bold ${className}">${symbol}$${amount}</td>
                 <td class="w-1/2 px-4 py-2 flex items-center justify-end md:w-1/5 md:flex md:justify-start">
                     <button onclick="editOperationForm('${id}')"><i class="fa-solid fa-pen-to-square mr-2 text-green-600"></i></button> 
@@ -89,12 +84,12 @@ const renderOperations = (operations) => {
             </tr>
             `
         }
-    }else {
+    } else {
         showElement("#any-operation")
     }
 }
 
-const getCurrentDate = (date) => {
+const transformCurrentDate = (date) => {
     const currentDate = new Date(date).toLocaleDateString('es-ES', {
         day: '2-digit',
         month: '2-digit',
@@ -121,22 +116,24 @@ const renderCategories = (categories) => {
 const renderCategoriesOptions = (categories) => {
     cleanContainer("#categories-select")
     cleanContainer("#category")
-     if(categories.length){
+
+    if (categories.length){
         $("#categories-select").innerHTML += `
-    <option value="">Todas</option>`
-    for (const {id, categoryName} of  categories) { 
+        <option value="">Todas</option>`
+        for (const {id, categoryName} of  categories) { 
         $("#categories-select").innerHTML += `
         <option value="${id}">${categoryName}</option>
-    `}}
-    for( const {id, categoryName} of categories){
-        $("#category").innerHTML +=`
-        <option value="${id}">${categoryName}</option>
-    `
+        `}
+
+        for( const {id, categoryName} of categories){
+            $("#category").innerHTML +=`
+            <option value="${id}">${categoryName}</option>
+            `
+        }
     }
 }
 
 //Save data operations
-
 const saveCategoriesData = () => {
     return{
         id : randomId(),
@@ -173,13 +170,14 @@ const validateFormOperations = () => {
         $("#amount").classList.remove("border-red-600")
     }
     
-    if(date === "") {
+    if (date === "") {
         showElement(".date-error")
         $("#date").classList.add("border-red-600")
     } else {
         hideElement(".date-error")
         $("#date").classList.remove("border-red-600")
     }
+
     return description !== "" && !isNaN(amount) && date !== ""
 }
 
@@ -225,7 +223,7 @@ const modalToDeleteOperations = (id) => {
 const modalToDeleteCategories = (id) => {
     showElement("#modal-window")
     $("#modal-delete").setAttribute("data-id",id)
-    const selectedCategory= getInfo("categories").find(category => category.id === id)
+    const selectedCategory = getInfo("categories").find(category => category.id === id)
     $(".modal-text").innerText = selectedCategory.categoryName
     $("#modal-delete").addEventListener("click", () => {
         deleteData(id, "categories")
@@ -259,11 +257,10 @@ const editOperationForm = (id) => {
 }
 
 //edit category
-
 const editCategory = () => {
     const categoryId= $("#btn-confirm-add").getAttribute("data-id")
     const editedCategory= getInfo("categories").map(category => {
-        if(category.id === categoryId){
+        if (category.id === categoryId){
             return saveEditedCategoriesData(categoryId)
         }
         return category
@@ -279,18 +276,32 @@ const editCategoriesForm = (id) => {
     $("#input-edit-categories").value = categorySelected.categoryName
 }
 
-const validateEditForm=()=>{
-    const descriptionEdited= $("#input-add-categories").value.trim()
-    if(descriptionEdited === "") {
-        showElement(".description-error")
+const validateAddCategory = () => {
+    const category = $("#input-add-categories").value.trim()
+
+    if (category === "") {
+        showElement(".category-error")
         $("#input-add-categories").classList.add("border-red-600")
-        } 
-        else {
-        hideElement(".description-error")
+    } else {
+        hideElement(".category-error")
         $("#input-add-categories").classList.remove("border-red-600")
-        }
-        return descriptionEdited !== "" 
+        
     }
+    return category !== "" 
+}
+
+const validateEditCategory = () => {
+    const editedCategory = $("#input-edit-categories").value.trim()
+
+    if (editedCategory === "") {
+        showElement(".edited-category-error")
+        $("#input-edit-categories").classList.add("border-red-600")
+    } else {
+        hideElement(".edited-category-error")
+        $("#input-edit-categories").classList.remove("border-red-600")
+    }
+    return editedCategory !== "" 
+}
     
 /*
   ************** REPORTS SECTION  **************
@@ -315,6 +326,8 @@ const renderReports = () => {
         summaryByMonths(currentOperations)
         totalsForCategory(currentOperations, allCategories)
         totalsPerMonth(currentOperations)
+        generateTotalsForCategory(currentOperations, allCategories)
+        generateTotalsPerMonth(currentOperations)
 
     } else {
         showElement(".any-reports")
@@ -327,8 +340,8 @@ const getBalance = (operations) => {
     let expenses = 0 
     let total = 0 
     
-    for (const operation of operations){
-        const { type, amount } = operation
+    for (const { type, amount } of operations){
+
         if (type === "Ganancia"){
             profits += amount
             total += amount
@@ -338,7 +351,6 @@ const getBalance = (operations) => {
             expenses += amount
             total -= amount
         }
-        
     }
  
     return {
@@ -354,17 +366,9 @@ const generateBalance = (operations) => {
     $("#balance-profits").innerHTML = `+$${profits}`
     $("#balance-expenses").innerHTML = `-$${expenses}`
 
-    let symbol = ""
-    let className = "" 
-    if (total > 0){
-        className = "text-green-500"
-        symbol = "+"
-    } else if (total < 0) {
-        className = "text-red-600"
-        symbol = "-"
-    } else {
-        className = "text-gray-900"
-    }
+    let className = total > 0 ? "text-green-500" : total < 0 ? "text-red-600" : "text-gray-900"
+    let symbol = total > 0 ? "+" : total < 0 ? "-" : ""
+    
     $("#total-balance").innerHTML = `
     <span class="font-bold ${className}">${symbol}$${(Math.abs(total))}</span>
     `
@@ -514,19 +518,14 @@ const generateTotalsForCategory = (operations, categories) => {
     for (const categoryName in balanceByCategory) {
         const { profits, expenses, total } = balanceByCategory[categoryName]
 
-        let symbol = ""
-        if (total < 0){
-            symbol = "-"
-        }
-        
+        let symbol = total < 0 ? "-" : ""
         const tableRow = `
             <tr class="flex justify-between items-center">
                 <td class="w-1/4 flex justify-start py-4"><span class="rounded-lg bg-purple-50 text-purple-500">${categoryName}</span></td>
                 <td class="w-1/4 flex justify-center py-4 text-green-600">+$${profits}</td>
                 <td class="w-1/4 flex justify-center py-4 text-red-600">-$${expenses}</td>
                 <td class="w-1/4 flex justify-center py-4">${symbol}$${Math.abs(total)}</td>
-            </tr>
-            
+            </tr> 
         `
         tableContent += tableRow
     }
@@ -568,10 +567,7 @@ const generateTotalsPerMonth = (operations) => {
     for (const monthYear in balancePerMonth) {
         const { profits, expenses, total } = balancePerMonth[monthYear]
         
-        let symbol = ""
-        if (total < 0){
-            symbol = "-"
-        }
+        let symbol = total < 0 ? "-" : ""
        
         const tableRow = `
         <tr class="flex justify-between items-center">
@@ -598,11 +594,9 @@ const initializeApp = () => {
     renderOperations(allOperations)
     renderCategories(allCategories)
     renderCategoriesOptions(allCategories)
-    getBalance(allOperations)
-    generateBalance(allOperations)
-    generateTotalsForCategory(allOperations, allCategories)
-    generateTotalsPerMonth(allOperations)
     renderReports()
+    generateBalance(allOperations)
+    
 
     const home = () => {
         showElements(["#balance-section", "#balance-card-left", "#balance-card-right"])
@@ -612,6 +606,7 @@ const initializeApp = () => {
     $("#title-home").addEventListener("click", () => {
         home()
         renderOperations(getInfo("operations"))
+        renderCategories(getInfo("categories"))
     })
 
     // btn balance 
@@ -625,6 +620,7 @@ const initializeApp = () => {
     $("#category-btn").addEventListener("click", () => {
         showElement("#category-section")
         hideElements(["#balance-section", "#reports-section", "#balance-card-left", "#balance-card-right", "#new-operation", "#operations-form"]) 
+        renderCategories(getInfo("categories"))
     })
 
     //btn reportes
@@ -650,14 +646,13 @@ const initializeApp = () => {
         e.preventDefault()
         if (validateFormOperations()) {
             sendNewData("operations", saveOperationsData)
+            showElements(["#new-operation", "#table", "#succesfull-alert"]) 
             renderOperations(getInfo("operations"))
-            renderCategoriesOptions(getInfo("operations"))
+            renderCategoriesOptions(getInfo("categories"))
             renderCategories(getInfo("categories"))
             renderReports()
-            //getBalance(getInfo("operations"))
-            //generateBalance(getInfo("operations"))
+            generateBalance(getInfo("operations"))
             $("#form").reset()
-            showElements(["#new-operation", "#table", "#succesfull-alert"]) 
             home()
         }
     })
@@ -670,12 +665,10 @@ const initializeApp = () => {
             showElements(["#new-operation", "#table"]) 
             renderOperations(getInfo("operations"))
             renderCategories(getInfo("categories"))
+            generateBalance(getInfo("operations"))
             renderReports()
-            // getBalance(getInfo("operations"))
-            // generateBalance(getInfo("operations"))
             home()
-        }
-        
+        }  
     })
 
     //btn cancel operation 
@@ -699,6 +692,7 @@ const initializeApp = () => {
         showElements([".fa-xmark", "#options-menu"])
         hideElement(".fa-bars")
     })
+    
     // mobile - close menu
     $(".fa-xmark").addEventListener("click", () => {
         showElement(".fa-bars")
@@ -725,100 +719,94 @@ const initializeApp = () => {
         hideElement("#table")
         if (!categoryId) {
             renderOperations(allOperations)
-
-        } 
-        else {
+        } else {
             const filteredOperations = currentsOperations.filter(operation => operation.category === categoryId)
             renderOperations(filteredOperations) 
         }    
     })
 
-        //expenses/profits selector
-        $("#select-panel").addEventListener("change", (e) => {
-            e.preventDefault()
-            const selectPanel = $("#select-panel").value  
-            if(selectPanel === "Todos")
-            {
-                return renderOperations(allOperations)
-            }
-            const typeFiltered = allOperations.filter((operation) =>{
-                return operation.type=== selectPanel})
-            renderOperations(typeFiltered)
-            showElement("#new-operation")
-            hideElement("#any-operation")
-          })
-       
+    //expenses/profits selector
+    $("#select-panel").addEventListener("change", (e) => {
+        e.preventDefault()
+        const selectPanel = $("#select-panel").value  
+        if (selectPanel === "Todos"){
+            return renderOperations(allOperations)
+        }
+
+        const typeFiltered = allOperations.filter((operation) => {
+            return operation.type === selectPanel
+        })
+
+        renderOperations(typeFiltered)
+        showElement("#new-operation")
+        hideElement("#any-operation")
+    })
     
-        //Date filter    
-        $("#selector-date").addEventListener("input", (e)=>{
-            e.preventDefault()
-            let filteredOperations= []
-            const selectedDate= new Date(e.target.value)
-                for (let i = 0; i < allOperations.length; i++)
-                {
-                let operationDate = new Date(allOperations[i].date)
-                if(operationDate >= selectedDate){
+    //Date filter    
+    $("#selector-date").addEventListener("input", (e) => {
+        e.preventDefault()
+        let filteredOperations = []
+        const selectedDate = new Date(e.target.value)
+        for (let i = 0; i < allOperations.length; i++) {
+            let operationDate = new Date(allOperations[i].date)
+            
+            if (operationDate >= selectedDate) {
                 filteredOperations.push(allOperations[i]) 
                 renderOperations(filteredOperations)
-                }
-                else if(filteredOperations < selectedDate){
-                    showElement("#any-operation")
-                    hideElement("#new-operation")
-                }
-            } 
-        })
-        
-        
-        //order filter
-        $("#order-select").addEventListener("input", (e) => {
-            e.preventDefault();
-            const currentsOperations = getInfo("operations")
-            let selectedOption = $("#order-select").value
-           
-            if (selectedOption === "more-recent") {
-            currentsOperations.sort((a, b) => b.date.localeCompare(a.date))
-              renderOperations(currentsOperations)
             }
-          
-            if (selectedOption === "les-recent") {
-              currentsOperations.sort((a, b) => a.date.localeCompare(b.date))
-              renderOperations(currentsOperations)
+            else if (filteredOperations < selectedDate) {
+                showElement("#any-operation")
+                hideElement("#new-operation")
             }
-        
-            if (selectedOption === "more-amount") {
-              currentsOperations.sort((a, b) => b.amount - a.amount)
-              renderOperations(currentsOperations)
-            }
-            
-            if (selectedOption === "les-amount") {
-              currentsOperations.sort((a, b) => a.amount - b.amount)
-              renderOperations(currentsOperations)
-            }
-           
-            if (selectedOption === "a-z") {
-              currentsOperations.sort((a, b) =>
-                a.description.localeCompare(b.description)
-              )
-              renderOperations(currentsOperations)
-            }
-           
-            if (selectedOption === "z-a") {
-              currentsOperations.sort((a, b) =>
-                b.description.localeCompare(a.description)
-              )
-              renderOperations(currentsOperations)
-            }
-          })
-        
+        }
+    })
 
-
+    //order filter
+    $("#order-select").addEventListener("input", (e) => {
+        e.preventDefault();
+        const currentsOperations = getInfo("operations")
+        let selectedOption = $("#order-select").value
+        
+        if (selectedOption === "more-recent") {
+        currentsOperations.sort((a, b) => b.date.localeCompare(a.date))
+            renderOperations(currentsOperations)
+        }
+        
+        if (selectedOption === "les-recent") {
+            currentsOperations.sort((a, b) => a.date.localeCompare(b.date))
+            renderOperations(currentsOperations)
+        }
+    
+        if (selectedOption === "more-amount") {
+            currentsOperations.sort((a, b) => b.amount - a.amount)
+            renderOperations(currentsOperations)
+        }
+        
+        if (selectedOption === "les-amount") {
+            currentsOperations.sort((a, b) => a.amount - b.amount)
+            renderOperations(currentsOperations)
+        }
+        
+        if (selectedOption === "a-z") {
+            currentsOperations.sort((a, b) =>
+            a.description.localeCompare(b.description))
+            renderOperations(currentsOperations)
+        }
+        
+        if (selectedOption === "z-a") {
+            currentsOperations.sort((a, b) =>
+            b.description.localeCompare(a.description))
+            renderOperations(currentsOperations)
+        }
+    })
+        
     //section categorias
     $("#btn-add-categories").addEventListener("click", () => {
-        if(validateEditForm()){
-        sendNewData("categories", saveCategoriesData)
-        renderCategories(getInfo("categories"))
-        renderCategoriesOptions(getInfo("categories"))
-        showElement("#succesfull-alert") 
+        if (validateAddCategory()) {
+            sendNewData("categories", saveCategoriesData)
+            renderCategories(getInfo("categories"))
+            renderCategoriesOptions(getInfo("categories"))
+            showElement("#succesfull-alert") 
         }
     })
     
@@ -829,18 +817,20 @@ const initializeApp = () => {
     })
     
     $("#btn-confirm-add").addEventListener("click", () => {
-        editCategory()
-        hideElement("#edit-categories")
-        showElement("#category-section")
-        renderCategories(getInfo("categories"))
+        if (validateEditCategory()) {
+            editCategory()
+            hideElement("#edit-categories")
+            showElement("#category-section")
+            renderCategories(getInfo("categories"))
+        }
     })
 
     //modal-window buttons
-    $("#modal-cancel").addEventListener("click", () =>{
+    $("#modal-cancel").addEventListener("click", () => {
         hideElement("#modal-window")
     })
 
-    $("#modal-delete").addEventListener("click", () =>{
+    $("#modal-delete").addEventListener("click", () => {
         hideElement("#modal-window")
     })
 }

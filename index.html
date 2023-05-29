@@ -1,337 +1,615 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AhorrAdas is the tool you need to record and control your profits and expenses, easy to use and secure.">
+    <meta name="keywords" content="AhorrADAs, Balance, Categorías, Reportes, Filtros, ">
     <!--Tailwind-->
     <script src="https://cdn.tailwindcss.com"></script>
     <!--Icons-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    <script src="https://kit.fontawesome.com/a7b05e6997.js" crossorigin="anonymous"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/a7b05e6997.js"
+      crossorigin="anonymous"
+    ></script>
     <title>Proyecto Ahorradas</title>
-    <link rel="icon" href="./img/saved.ico">
-</head>
-<body class="bg-[#ebebeb] box-border m-0 p-0">
+    <link rel="icon" href="./img/saved.ico" />
+  </head>
+  <body class="bg-[#ebebeb]">
     <!-- ****** Header ****** -->
     <header>
-        <!-- Navbar-->
-        <nav class="bg-[#9C9BD2]">
-            <div class="lg:flex lg:justify-between lg:p-2 lg:mx-2">
-                <div class="flex justify-between mr-5">
-                    <!-- Title section and hide and pop up burger menu -->
-                    <a href="" class="p-4">
-                        <h1
-                        id="title-home"
-                        class="block margin-5 p-2 rounded-md text-white text-3xl font-medium active:bg-[#fbfbfb] active:text-purple-500 hover:bg-[#fbfbfb] hover:text-purple-500 lg:p-4 lg:text-4xl"
-                        ><i class="fa-solid fa-wallet text-2xl lg:text-4xl"></i> AhorrADAs
-                        </h1>
-                    </a>
-                    <button class="lg:hidden">
-                        <i class="fa-solid fa-bars text-white text-xl"></i>
-                        <i class="fa-solid fa-xmark text-white text-xl hidden"></i>
-                    </button>
-                </div>
-                <!-- Section : Drop-down menu -->
-                <div id="options-menu" class="hidden bg-white space-y-1 px-2 pb-3 pt-2 shadow-lg lg:flex lg:items-center lg:bg-[#9C9BD2] lg:shadow-none">
-                    <a
-                    id="balance-btn"
-                    href="#"
-                    class="block mt-1 px-3 py-2 rounded-md text-gray-900 text-base font-medium active:bg-[#fbfbfb] active:text-purple-500 hover:bg-[#fbfbfb] hover:text-purple-500 lg:mr-2 lg:p4 lg:text-white lg:text-lg"
-                    ></i><i class="fa-solid fa-chart-line"></i> Balance</a
-                    >
-                    <a
-                    id="category-btn"
-                    href="#"
-                    class="block mt-1 px-3 py-2 rounded-md text-gray-900 text-base font-medium active:bg-[#fbfbfb] active:text-purple-500 hover:bg-[#fbfbfb] hover:text-purple-500 lg:mr-2 lg:p4 lg:text-white lg:text-lg"
-                    ><i class="fa-solid fa-tag"></i> Categorias</a
-                    >
-                    <a
-                    id="reports-btn"
-                    href="#"
-                    class="block mt-1 px-3 py-2 rounded-md text-gray-900 text-base font-medium active:bg-[#fbfbfb] active:text-purple-500 hover:bg-[#fbfbfb] hover:text-purple-500 lg:mr-2 lg:p4 lg:text-white lg:text-lg"
-                    ><i class="fa-solid fa-chart-pie"></i> Reportes</a
-                    >
-                </div>
-            </div>
-        </nav>
+      <!-- Navbar-->
+      <nav class="bg-[#9C9BD2]">
+        <div class="lg:flex lg:justify-between lg:p-2 lg:mx-2">
+          <div class="flex justify-between mr-5">
+            <!-- Title section and hide and pop up burger menu -->
+            <a href="" class="p-4">
+              <h1
+                id="title-home"
+                class="block margin-5 p-2 rounded-md text-white text-3xl font-medium active:bg-[#fbfbfb] active:text-purple-500 hover:bg-[#fbfbfb] hover:text-purple-500 lg:p-4 lg:text-4xl"
+              >
+                <i class="fa-solid fa-wallet text-2xl lg:text-4xl"></i>
+                AhorrADAs
+              </h1>
+            </a>
+            <button class="lg:hidden">
+              <i class="fa-solid fa-bars text-white text-xl"></i>
+              <i class="fa-solid fa-xmark text-white text-xl hidden"></i>
+            </button>
+          </div>
+          <!-- Section : Drop-down menu -->
+          <div
+            id="options-menu"
+            class="hidden bg-white space-y-1 px-2 pb-3 pt-2 shadow-lg lg:flex lg:items-center lg:bg-[#9C9BD2] lg:shadow-none"
+          >
+            <a
+              id="balance-btn"
+              href="#"
+              class="block mt-1 px-3 py-2 rounded-md text-gray-900 text-base font-medium active:bg-[#fbfbfb] active:text-purple-500 hover:bg-[#fbfbfb] hover:text-purple-500 lg:mr-2 lg:p4 lg:text-white lg:text-lg"
+              ><i class="fa-solid fa-chart-line"></i> Balance</a
+            >
+            <a
+              id="category-btn"
+              href="#"
+              class="block mt-1 px-3 py-2 rounded-md text-gray-900 text-base font-medium active:bg-[#fbfbfb] active:text-purple-500 hover:bg-[#fbfbfb] hover:text-purple-500 lg:mr-2 lg:p4 lg:text-white lg:text-lg"
+              ><i class="fa-solid fa-tag"></i> Categorias</a
+            >
+            <a
+              id="reports-btn"
+              href="#"
+              class="block mt-1 px-3 py-2 rounded-md text-gray-900 text-base font-medium active:bg-[#fbfbfb] active:text-purple-500 hover:bg-[#fbfbfb] hover:text-purple-500 lg:mr-2 lg:p4 lg:text-white lg:text-lg"
+              ><i class="fa-solid fa-chart-pie"></i> Reportes</a
+            >
+          </div>
+        </div>
+      </nav>
     </header>
     <main>
-        <!-- Succesfull alert -->
-        <div id="succesfull-alert" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-            <strong class="font-bold">¡Increíble!</strong>
-            <span class="block sm:inline">Su elección ha sido agregada satisfactoriamente.</span>
-            <button id="close-succesfull-alert" role="button" class="absolute top-0 bottom-0 right-0 px-4 py-3">
-               <i class="fa-solid fa-xmark fill-current h-6 w-6 text-green-500"></i>
+      <!-- Succesfull alert -->
+      <div
+        id="succesfull-alert"
+        class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+        role="alert"
+      >
+        <strong class="font-bold">¡Increíble!</strong>
+        <span class="block sm:inline"
+          >Su elección ha sido agregada satisfactoriamente.</span
+        >
+        <button
+          id="close-succesfull-alert"
+          class="absolute top-0 bottom-0 right-0 px-4 py-3"
+        >
+          <i class="fa-solid fa-xmark fill-current h-6 w-6 text-green-500"></i>
+        </button>
+      </div>
+      <!-- Section - Balance -->
+      <section
+        id="balance-section"
+        class="lg:flex lg:justify-center lg:align-start"
+      >
+        <div id="balance-card-left" class="lg:w-1/4">
+          <!-- Card - Balance -->
+          <div
+            class="flex-col bg-white mx-6 my-20 px-4 radius rounded-lg shadow-xl lg:mb-0"
+          >
+            <h2 class="py-6 text-4xl font-bold">Balance</h2>
+            <div class="flex justify-between py-2 text-gray-900">
+              <div class="text-lg">Ganancias</div>
+              <div id="balance-profits" class="text-green-500">
+                <span>+$0</span>
+              </div>
+            </div>
+            <div class="flex justify-between py-2 text-gray-900">
+              <div class="text-lg">Gastos</div>
+              <div id="balance-expenses" class="text-red-600">
+                <span>-$0</span>
+              </div>
+            </div>
+            <div class="flex justify-between py-2 text-gray-900">
+              <div class="text-2xl">Total</div>
+              <div id="total-balance">
+                <!--total balance rendered from the localstorage -->
+              </div>
+            </div>
+          </div>
+          <!-- Card - Filters -->
+          <div
+            class="flex-col bg-white mx-6 my-20 px-4 pb-4 radius rounded-lg shadow-xl lg:mt-6"
+          >
+            <div class="flex justify-between">
+              <h2 class="py-6 text-gray-900 text-2xl font-bold">Filtros</h2>
+              <a
+                id="btn-hide-filters"
+                href=""
+                class="pt-8 pb-10 text-blue-600 hover:text-gray-900 active:text-gray-900"
+                >Ocultar Filtros</a
+              >
+              <a
+                id="btn-show-filters"
+                href=""
+                class="hidden pt-8 pb-10 text-blue-600"
+                >Mostrar Filtros</a
+              >
+            </div>
+            <!-- Filters Panel -->
+            <form id="filters-panel" action="">
+              <!-- Filters Panel - Type -->
+              <div class="text-gray-900 mb-2">
+                <label class="ml-1 text-lg font-bold">Tipo</label>
+                <select
+                  id="select-panel"
+                  class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300"
+                >
+                  <option value="Todos">Todos</option>
+                  <option value="Gasto">Gasto</option>
+                  <option value="Ganancia">Ganancia</option>
+                </select>
+              </div>
+              <!-- Filters Panel - Category -->
+              <div class="text-gray-900 mb-2">
+                <label for="categories-select" class="ml-1 text-lg font-bold"
+                  >Categoría</label
+                >
+                <select
+                  id="categories-select"
+                  class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300"
+                >
+                  <!--Operations rendered from the localstorage -->
+                </select>
+              </div>
+              <!-- Filters Panel - Since -->
+              <div class="text-gray-900 mb-2">
+                <div class="ml-1 text-lg font-bold">Desde</div>
+                <input
+                  type="date"
+                  name="selector-date"
+                  id="selector-date"
+                  class="w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300"
+                />
+              </div>
+              <!-- Filters Panel - Order -->
+              <div class="text-gray-900">
+                <label class="ml-1 text-lg font-bold">Ordenar por</label>
+                <select
+                  id="order-select"
+                  class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300"
+                >
+                  <option value="more-recent">Más reciente</option>
+                  <option value="les-recent">Menos reciente</option>
+                  <option value="more-amount">Mayor monto</option>
+                  <option value="les-amount">Menor monto</option>
+                  <option value="a-z">A/Z</option>
+                  <option value="z-a">Z/A</option>
+                </select>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Card - Operations -->
+        <div
+          id="balance-card-right"
+          class="flex-col bg-white mx-6 mt-20 mb-10 px-4 pb-4 radius rounded-lg shadow-xl lg:w-2/4 lg:mb-20 lg:h-fit"
+        >
+          <div>
+            <div class="lg:flex justify-between items-center lg:m-5">
+              <h2 class="pt-6 pb-6 text-gray-900 text-2xl font-bold">
+                Operaciones
+              </h2>
+              <button
+                id="btn-new-operation"
+                class="px-2 py-2 bg-purple-500 rounded-md text-white hover:bg-purple-700"
+              >
+                + Nueva Operación
+              </button>
+            </div>
+            <!-- Section - Any operation -->
+            <div
+              id="any-operation"
+              class="hidden flex items-center justify-center text-gray-600 pb-4"
+            >
+              <div class="flex-col">
+                <img
+                  class="p-4"
+                  src="./img/wallet.svg"
+                  alt="wallet__operation"
+                />
+                <p class="mb-4 text-xl font-bold text-center">Sin resultados</p>
+                <p class="text-center">
+                  Cambia los filtros o agrega operaciones
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Section - Information new operation -->
+          <div id="new-operation" class="hidden mt-4">
+            <table
+              id="table"
+              class="w-full table-fixed border border-purple-100 flex-wrap"
+            >
+              <thead>
+                <tr
+                  class="hidden border border-purple-100 md:flex md:justify-between"
+                >
+                  <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">
+                    Descripción
+                  </th>
+                  <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">
+                    Categoría
+                  </th>
+                  <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">
+                    Fecha
+                  </th>
+                  <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">
+                    Monto
+                  </th>
+                  <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="operations-table">
+                <!--Operations rendered from the localstorage -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <!-- Card - New operation / Edit Operation -->
+      <div id="operations-form" class="hidden lg:my-20">
+        <form
+          id="form"
+          class="flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5"
+        >
+          <h2 class="new-operation-title pt-6 pb-10 ml-3 text-4xl font-bold">
+            Nueva Operación
+          </h2>
+          <h2
+            class="edit-operation-title hidden pt-6 pb-10 ml-3 text-4xl font-bold"
+          >
+            Editar Operación
+          </h2>
+          <section class="flex flex-wrap">
+            <label class="font-bold w-full px-4 pt-6 pb-2">Descripción</label>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300"
+            />
+            <p class="description-error hidden p-2 ml-2 text-red-600">
+              <i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una
+              descripción válida.
+            </p>
+          </section>
+          <section class="flex flex-wrap">
+            <label class="font-bold w-full px-4 pt-6 pb-2">Monto</label>
+            <input
+              type="number"
+              id="amount"
+              name="amount"
+              class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300"
+            />
+            <p class="amount-error hidden p-2 ml-2 text-red-600">
+              <i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese un
+              monto válido.
+            </p>
+          </section>
+          <section class="flex flex-wrap">
+            <label class="font-bold w-full px-4 pt-6 pb-2">Tipo</label>
+            <select
+              name="type"
+              id="type"
+              class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300"
+            >
+              <option id="expenses" value="Gasto">Gasto</option>
+              <option id="profits" value="Ganancia">Ganancia</option>
+            </select>
+          </section>
+          <section class="flex flex-wrap">
+            <label for="catogory" class="font-bold w-full px-4 pt-6 pb-2"
+              >Categoría</label
+            >
+            <select
+              name="category"
+              id="category"
+              class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300"
+            >
+              <!--Operations rendered from the localstorage -->
+            </select>
+          </section>
+          <section class="flex flex-wrap">
+            <label for="date" class="font-bold w-full px-4 pt-6 pb-2"
+              >Fecha</label
+            >
+            <input
+              type="date"
+              name="date"
+              id="date"
+              class="w-full flex items-start border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300"
+            />
+            <p class="date-error hidden p-2 ml-2 text-red-600">
+              <i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una
+              fecha válida.
+            </p>
+          </section>
+          <div class="flex items-end justify-end mt-10">
+            <button
+              id="btn-cancel-operation"
+              class="px-8 py-2 mr-4 rounded-md bg-neutral-100 hover:bg-[#ebebeb]"
+            >
+              Cancelar
             </button>
+            <button
+              id="btn-add-operation"
+              class="px-8 py-2 rounded-md bg-purple-500 hover:bg-purple-700 text-white"
+            >
+              Agregar
+            </button>
+            <button
+              id="btn-edit-operation"
+              class="hidden px-8 py-2 rounded-md bg-purple-500 hover:bg-purple-700 text-white"
+            >
+              Editar
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- Section - Categories -->
+      <section id="category-section" class="hidden my-20">
+        <div
+          class="flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5"
+        >
+          <h2 class="pt-6 pb-10 ml-3 text-4xl font-bold">Categorías</h2>
+          <section class="flex flex-wrap justify-between w-full align-center">
+            <p class="p-4 w-full font-bold">Nombre</p>
+            <input
+              type="text"
+              id="input-add-categories"
+              name="input-add-categories"
+              class="p-2 ml-2 w-[65%] border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 lg:w-[85%]"
+            />
+            <button
+              id="btn-add-categories"
+              class="px-4 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700 lg:w-[10%]"
+            >
+              Agregar
+            </button>
+            <p class="category-error hidden p-2 ml-2 text-red-600">
+              <i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una
+              categoría válida.
+            </p>
+          </section>
+          <div id="categories-section" class="flex flex-col text-md">
+            <!--Categories rendered from the localstorage -->
+          </div>
         </div>
-        <!-- Section - Balance -->
-        <section id="balance-section" class="lg:flex lg:justify-center lg:align-start">
-            <div id="balance-card-left" class="lg:w-1/4">
-                <!-- Card - Balance -->
-                <div class="flex-col bg-white mx-6 my-20 px-4 radius rounded-lg shadow-xl lg:mb-0">
-                    <h2 class="py-6 text-4xl font-bold">Balance</h2>
-                    <div class="flex justify-between py-2 text-gray-900">
-                        <div class="text-lg">Ganancias</div>
-                        <div id="balance-profits" class="text-green-500">
-                            <span>+$0</span>
-                        </div>
-                    </div>
-                    <div class="flex justify-between py-2 text-gray-900">
-                        <div class="text-lg">Gastos</div>
-                        <div id="balance-expenses" class="text-red-600">
-                            <span>-$0</span>
-                        </div>
-                    </div>
-                    <div class="flex justify-between py-2 text-gray-900">
-                        <div class="text-2xl">Total</div>
-                        <div id="total-balance">
-                            <!--total balance rendered from the localstorage -->
-                        </div>
-                    </div>
-                </div>
-                <!-- Card - Filters -->
-                <div class="flex-col bg-white mx-6 my-20 px-4 pb-4 radius rounded-lg shadow-xl lg:mt-6">
-                    <div class="flex justify-between">
-                        <h2 class="py-6 text-gray-900 text-2xl font-bold">Filtros</h2>
-                        <a id="btn-hide-filters" href="" class="pt-8 pb-10 text-blue-600 hover:text-gray-900 active:text-gray-900">Ocultar Filtros</a>
-                        <a id="btn-show-filters" href="" class="hidden pt-8 pb-10 text-blue-600">Mostrar Filtros</a>
-                    </div>
-                    <!-- Filters Panel -->
-                    <form id="filters-panel" action="" >
-                        <!-- Filters Panel - Type -->
-                        <div class=" text-gray-900">
-                            <label class="text-lg font-bold ml-1">Tipo</label>
-                            <select id="select-panel" class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                                <option value="Todos">Todos</option>
-                                <option value="Gasto">Gasto</option>
-                                <option value="Ganancia">Ganancia</option>
-                            </select>
-                        </div>
-                        <!-- Filters Panel - Category -->
-                        <div class=" text-gray-900">
-                            <label for="categories-select" class="text-lg font-bold">Categoría</label>
-                            <select id="categories-select" class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                                <!--Operations rendered from the localstorage -->
-                            </select>
-                        </div>
-                        <!-- Filters Panel - Since -->
-                        <div class=" text-gray-900">
-                            <div class="text-lg font-bold">Desde</div>
-                            <input type="date" name="" id="selector-date" class="w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                        </div>
-                        <!-- Filters Panel - Order -->
-                        <div class="text-gray-900">
-                            <label class="text-lg font-bold">Ordenar por</label>
-                            <select id="order-select" class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                                <option value="more-recent">Más reciente</option>
-                                <option value="les-recent">Menos reciente</option>
-                                <option value="more-amount">Mayor monto</option>
-                                <option value="les-amount">Menor monto</option>
-                                <option value="a-z">A/Z</option>
-                                <option value="z-a">Z/A</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- Card - Operations -->
-            <div id="balance-card-right" class="flex-col bg-white mx-6 mt-20 mb-10 px-4 pb-4 radius rounded-lg shadow-xl lg:w-2/4 lg:mb-20 lg:h-fit">
-                <div>
-                    <div class="lg:flex justify-between items-center lg:m-5">
-                        <h2 class="pt-6 pb-6 text-gray-900 text-2xl font-bold">Operaciones</h2>
-                        <button id="btn-new-operation" class="px-2 py-2 bg-purple-500 rounded-md text-white hover:bg-purple-700">+ Nueva Operación</button>
-                    </div>
-                    <!-- Section - Any operation -->
-                    <div id="any-operation" class="hidden flex items-center justify-center text-gray-600 pb-4">
-                        <div class="flex-col">
-                            <img class="p-4" src="./img/wallet.svg" alt="wallet__operation">
-                            <p class="mb-4 text-xl font-bold text-center">Sin resultados</p>
-                            <p class="text-center">Cambia los filtros o agrega operaciones</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Section - Information new operation -->
-                <div id="new-operation" class="hidden mt-4">
-                    <table id="table" class="w-full table-fixed border border-purple-100 flex-wrap">
-                        <thead >
-                            <tr class="hidden border border-purple-100 md:flex md:justify-between">
-                                <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Descripción</th>
-                                <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Categoría</th>
-                                <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Fecha</th>
-                                <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Monto</th>
-                                <th class="px-4 py-2 md:w-1/5 md:flex md:justify-start">Acciones</th>
-                            </tr>
-                        </thead>           
-                        <tbody id="operations-table">
-                            <!--Operations rendered from the localstorage -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-        <!-- Card - New operation / Edit Operation -->
-        <div id="operations-form" class="hidden lg:my-20">
-            <form id="form" class="flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
-                <h2 class="new-operation-title pt-6 pb-10 ml-3 text-4xl font-bold">Nueva Operación</h2>
-                <h2 class="edit-operation-title hidden pt-6 pb-10 ml-3 text-4xl font-bold">Editar Operación</h2>
-                <section class="flex flex-wrap">
-                    <label class="font-bold w-full px-4 pt-6 pb-2">Descripción</label>
-                    <input type="text" id="description" name="description" class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
-                    <p class="description-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una descripción válida.</p>
-                </section>
-                <section class="flex flex-wrap">
-                    <label class="font-bold w-full px-4 pt-6 pb-2">Monto</label>
-                    <input type="number" id="amount" name="amount" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300 ">
-                    <p class="amount-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese un monto válido.</p>
-                </section>
-                <section class="flex flex-wrap">
-                    <label class="font-bold w-full px-4 pt-6 pb-2">Tipo</label>
-                    <select name="type" id="type" class=" w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                        <option id="expenses" value="Gasto">Gasto</option>
-                        <option id="profits" value="Ganancia">Ganancia</option>
-                    </select>
-                </section>
-                <section class="flex flex-wrap">
-                    <label for="catogorie" class="font-bold w-full px-4 pt-6 pb-2">Categoría</label>
-                    <select name="category" id="category" class="w-full border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                       <!--Operations rendered from the localstorage -->
-                    </select>
-                </section>
-                <section class="flex flex-wrap">
-                    <label for="" class="font-bold w-full px-4 pt-6 pb-2">Fecha</label>
-                    <input type="date" name="date" id="date" class="w-full flex items-start border border-2 border-[#ebebeb] p-2 ml-3 rounded-lg hover:border-neutral-300 focus:outline-none focus:border focus:border-2 focus:border-purple-300">
-                    <p class="date-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una fecha válida.</p>
-                </section>
-                <div class="flex items-end justify-end mt-10">
-                    <button id="btn-cancel-operation" class="px-8 py-2 mr-4 rounded-md bg-neutral-100 hover:bg-[#ebebeb]">Cancelar</button> 
-                    <button id="btn-add-operation" class="px-8 py-2 rounded-md bg-purple-500 hover:bg-purple-700 text-white">Agregar</button>
-                    <button id="btn-edit-operation" class="hidden px-8 py-2 rounded-md bg-purple-500 hover:bg-purple-700 text-white">Editar</button>
-                </div>
-            </form>
+      </section>
+      <!--Card - Edit categories-->
+      <section id="edit-categories" class="hidden my-20">
+        <form
+          class="flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5"
+        >
+          <h2 class="pt-6 pb-10 ml-3 text-4xl font-bold">Editar categoría</h2>
+          <input
+            type="text"
+            id="input-edit-categories"
+            value=""
+            class="p-2 ml-2 w-full border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 w-full"
+          />
+          <p class="edited-category-error hidden p-2 ml-2 text-red-600">
+            <i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una
+            categoria válida.
+          </p>
+          <div class="flex items-end justify-end mt-10">
+            <button
+              id="btn-cancel-add"
+              class="px-8 py-2 mr-4 rounded-md bg-neutral-100 hover:bg-[#ebebeb]"
+            >
+              Cancelar
+            </button>
+            <button
+              id="btn-confirm-add"
+              class="px-8 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700 text-white"
+            >
+              Confirmar
+            </button>
+          </div>
+        </form>
+      </section>
+      <!--Section - Reports-->
+      <section
+        id="reports-section"
+        class="hidden flex-col mx-6 my-20 pl-10 pb-1 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:pr-10 lg:pl-24 lg:pt-5 lg:my-20"
+      >
+        <h2 class="py-4 pt-6 pb-10 text-4xl font-bold">Reportes</h2>
+        <div class="any-reports hidden">
+          <img src="./img/charts.svg" alt="charts.svg" class="px-[20%]" />
+          <p class="font-bold text-2xl text-center pt-10">
+            Operaciones insuficientes
+          </p>
+          <p class="text-center pt-4 pb-20">Prueba agregando más operaciones</p>
         </div>
-        <!-- Section - Categories -->
-        <section id="category-section" class="hidden my-20">
-            <div class= "flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
-                <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Categorías</h2>
-                <section class="flex flex-wrap justify-between w-full align-center">
-                    <p class="p-4 w-full font-bold"> Nombre </p>
-                        <input type="text" id="input-add-categories" name="input-add-categories" class="p-2 ml-2 w-[65%] border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 lg:w-[85%]">
-                        <p class="description-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una categoría válida.</p>
-                    <button id="btn-add-categories" class="px-4 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700 lg:w-[10%]">Agregar</button>
-                </section>
-                <div id="categories-section" class="flex flex-col text-md">
-                    <!--Categories rendered from the localstorage -->
-                </div>    
-            </div>
-        </section>
-        <!--Card - Edit categories-->
-        <section id="edit-categories" class="hidden my-20">
-            <form class= "flex-col mx-6 mt-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5">
-                <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Editar categoría</h2>
-                <input type="text" id="input-edit-categories" value="" class="p-2 ml-2 w-full border border-2 border-[#ebebeb] rounded-lg focus:outline-none focus:border focus:border-2 focus:border-purple-300 w-full">
-                <p class="description-error hidden p-2 ml-2 text-red-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Ingrese una categoria válida.</p>
-                <div class="flex items-end justify-end mt-10">
-                    <button id="btn-cancel-add" class="px-8 py-2 mr-4 rounded-md bg-neutral-100 hover:bg-[#ebebeb]">Cancelar</button> 
-                    <button id="btn-confirm-add" class="px-8 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700 text-white">Confirmar</button>
-                </div>
-            </form>
-        </section>
-        <!--Section - Reports-->
-        <section id="reports-section" class="hidden flex-col mx-6 my-20 p-4 radius rounded-lg shadow-xl bg-white lg:w-3/4 lg:m-auto lg:px-10 lg:pt-5 lg:my-20">
-            <h2 class= "pt-6 pb-10 ml-3 text-4xl font-bold">Reportes</h2>
-            <div class="any-reports hidden">
-                <img src="./img/charts.svg" alt="charts.svg" class="px-[20%]">
-                <p class="font-bold text-2xl text-center pt-10">Operaciones insuficientes</p>
-                <p class="text-center pt-4 pb-20">Prueba agregando más operaciones</p>
-            </div>
-            <div id="reports-table">
-                <table class="table-fixed w-full justify-between">
-                    <caption class="text-bold text-2xl text-start p-4">Resumen</caption>
-                    <tr class="w-full flex justify-between items-center">
-                        <th class="w-1/2 flex justify-start p-4">Categoría con mayor ganancia</th>
-                        <td id="highest-category-profits" class="p-4 px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
-                        <td id="total-hg-category-profits" class="w-1/4 p-4 text-green-600 font-bold"></td>
-                    </tr>
-                    <tr class="w-full flex justify-between items-center ">
-                        <th class="w-1/2 flex justify-start p-4">Categoría con mayor gasto</th>
-                        <td id="highest-category-expenses" class=" px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
-                        <td id="total-hg-category-expenses" class="w-1/4 p-4 text-red-600 font-bold"></td>
-                    </tr>
-                    <tr class="w-full flex justify-between items-center">
-                        <th class="w-1/2 flex justify-start p-4">Categoría con mayor balance</th>
-                        <td id="highest-category-balance" class="px-2 py-1 rounded-lg bg-purple-50 text-purple-500"></td>
-                        <td id="total-hg-category-balance" class="w-1/4 p-4 font-bold"></td>
-                    </tr>
-                    <tr class="w-full flex justify-between items-center">
-                        <th class="w-1/2 flex justify-start p-4">Mes con mayor ganancia</th>
-                        <td id="month-highest-profit" class="p-4"></td>
-                        <td id="total-month-hg-profit"class="w-1/4 p-4 text-green-600 font-bold"></td>
-                    </tr>
-                    <tr class="w-full flex justify-between items-center">
-                        <th class="w-1/2 flex justify-start p-4">Mes con mayor gasto</th>
-                        <td id="month-highest-expenditure" class="p-4"></td>
-                        <td id="total-month-hg-expenditure" class="w-1/4 p-4 text-red-600 font-bold"></td>
-                    </tr>
-                </table>
-                <table class="table-fixed w-full my-20">
-                    <caption class="text-bold text-2xl flex justify-start py-4">Totales por categoría</caption>
-                    <tr class="flex justify-between items-center">
-                        <th class="w-1/4 flex justify-start py-4">Categoría</th>
-                        <th class="w-1/4 flex justify-center py-4">Ganancias</th>
-                        <th class="w-1/4 flex justify-center py-4">Gastos</th>
-                        <th class="w-1/4 flex justify-center py-4">Balance</th>
-                    </tr>
-                    <tbody id="totals-all-categories">
-                        <!-- categories totals rendered from the localstorage -->
-                    </tbody>
-                </table>
-                <table class="table-fixed w-full my-20">
-                    <caption class="text-bold text-2xl flex justify-start py-4">Totales por mes</caption>
-                    <tr class="flex justify-between items-center">
-                        <th class="w-1/4 flex justify-start py-4">Mes</th>
-                        <th class="w-1/4 flex justify-center py-4">Ganancias</th>
-                        <th class="w-1/4 flex justify-center py-4">Gastos</th>
-                        <th class="w-1/4 flex justify-center py-4">Balance</th>
-                    </tr>
-                    <tbody id="totals-all-months">
-                        <!--months totals rendered from the localstorage -->
-                    </tbody>
-                </table>
-            </div>
-        </section> 
-        <!-- Modal Window -->  
-        <div  id="modal-window" class="hidden relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="fixed inset-0 bg-transparent backdrop-blur-sm bg-opacity-75 transition-opacity">
-                <div class="fixed inset-0 z-10 overflow-y-auto">
-                    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                        <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                                <div class="sm:flex sm:items-start">
-                                    <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                        <div class="h-6 w-6 text-red-600 text-center" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                            <i class="fa-solid fa-trash text-red-600"></i>
-                                        </div>
-                                    </div>
-                                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Eliminar</h3>
-                                        <div class="mt-2">
-                                            <p class="text-sm text-gray-500">¿Estás seguro de querer eliminar "<span class="modal-text text-red-600 font-bold"></span>"? Toda la información será removida de forma permanente. Esta acción no podrá deshacerse.</p>
-                                        </div>    
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                <button id="modal-delete" type="button" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Eliminar</button>
-                                <button id="modal-cancel" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancelar</button>
-                            </div> 
-                        </div>
-                    </div>  
-                </div>
-            </div>
+        <div id="reports-table">
+          <table class="table-fixed w-full justify-between">
+            <caption class="text-bold text-2xl text-start py-4">
+              Resumen
+            </caption>
+            <tr class="w-full flex justify-between items-center">
+              <th class="w-1/3 flex justify-start py-4">
+                Categoría con mayor ganancia
+              </th>
+              <td
+                id="highest-category-profits"
+                class="flex justify-center px-2 py-1 rounded-lg bg-purple-50 text-purple-500"
+              ></td>
+              <td
+                id="total-hg-category-profits"
+                class="w-1/4 flex justify-center py-4 text-green-600 font-bold"
+              ></td>
+            </tr>
+            <tr class="w-full flex justify-between items-center">
+              <th class="w-1/3 flex justify-start p-y">
+                Categoría con mayor gasto
+              </th>
+              <td
+                id="highest-category-expenses"
+                class="flex justify-center px-2 py-1 rounded-lg bg-purple-50 text-purple-500"
+              ></td>
+              <td
+                id="total-hg-category-expenses"
+                class="w-1/4 flex justify-center p-4 text-red-600 font-bold"
+              ></td>
+            </tr>
+            <tr class="w-full flex justify-between items-center">
+              <th class="w-1/3 flex justify-start py-4">
+                Categoría con mayor balance
+              </th>
+              <td
+                id="highest-category-balance"
+                class="flex justify-center px-2 py-1 rounded-lg bg-purple-50 text-purple-500"
+              ></td>
+              <td
+                id="total-hg-category-balance"
+                class="w-1/4 flex justify-center p-4 font-bold"
+              ></td>
+            </tr>
+            <tr class="w-full flex justify-between items-center">
+              <th class="w-1/3 flex justify-start py-4">
+                Mes con mayor ganancia
+              </th>
+              <td
+                id="month-highest-profit"
+                class="flex justify-center p-4"
+              ></td>
+              <td
+                id="total-month-hg-profit"
+                class="w-1/4 flex justify-center p-4 text-green-600 font-bold"
+              ></td>
+            </tr>
+            <tr class="w-full flex justify-between items-center">
+              <th class="w-1/3 flex justify-start py-4">Mes con mayor gasto</th>
+              <td
+                id="month-highest-expenditure"
+                class="flex justify-center p-4"
+              ></td>
+              <td
+                id="total-month-hg-expenditure"
+                class="w-1/4 flex justify-center p-4 text-red-600 font-bold"
+              ></td>
+            </tr>
+          </table>
+          <table class="table-fixed w-full my-20">
+            <caption class="text-bold text-2xl flex justify-start py-4">
+              Totales por categoría
+            </caption>
+            <tr class="flex justify-between items-center">
+              <th class="w-1/4 flex justify-start py-4">Categoría</th>
+              <th class="w-1/4 flex justify-center py-4">Ganancias</th>
+              <th class="w-1/4 flex justify-center py-4">Gastos</th>
+              <th class="w-1/4 flex justify-center py-4">Balance</th>
+            </tr>
+            <tbody id="totals-all-categories">
+              <!-- categories totals rendered from the localstorage -->
+            </tbody>
+          </table>
+          <table class="table-fixed w-full my-20">
+            <caption class="text-bold text-2xl flex justify-start py-4">
+              Totales por mes
+            </caption>
+            <tr class="flex justify-between items-center">
+              <th class="w-1/4 flex justify-start py-4">Mes</th>
+              <th class="w-1/4 flex justify-center py-4">Ganancias</th>
+              <th class="w-1/4 flex justify-center py-4">Gastos</th>
+              <th class="w-1/4 flex justify-center py-4">Balance</th>
+            </tr>
+            <tbody id="totals-all-months">
+              <!--months totals rendered from the localstorage -->
+            </tbody>
+          </table>
         </div>
-        
+      </section>
+      <!-- Modal Window -->
+      <div
+        id="modal-window"
+        class="hidden relative z-10"
+        aria-labelledby="modal-title"
+        role="dialog"
+        aria-modal="true"
+      >
+        <div
+          class="fixed inset-0 bg-transparent backdrop-blur-sm bg-opacity-75 transition-opacity"
+        >
+          <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div
+              class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+            >
+              <div
+                class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+              >
+                <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                  <div class="sm:flex sm:items-start">
+                    <div
+                      class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
+                    >
+                      <div
+                        class="h-6 w-6 text-red-600 text-center"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <i class="fa-solid fa-trash text-red-600"></i>
+                      </div>
+                    </div>
+                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                      <h3
+                        class="text-base font-semibold leading-6 text-gray-900"
+                        id="modal-title"
+                      >
+                        Eliminar
+                      </h3>
+                      <div class="mt-2">
+                        <p class="text-sm text-gray-500">
+                          ¿Estás seguro de querer eliminar "<span
+                            class="modal-text text-red-600 font-bold"
+                          ></span
+                          >"? Toda la información será removida de forma
+                          permanente. Esta acción no podrá deshacerse.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6"
+                >
+                  <button
+                    id="modal-delete"
+                    type="button"
+                    class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                  >
+                    Eliminar
+                  </button>
+                  <button
+                    id="modal-cancel"
+                    type="button"
+                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
     <script src="./js/main.js"></script>
-</body>
+  </body>
 </html>
