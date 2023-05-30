@@ -712,19 +712,21 @@ const initializeApp = () => {
         hideElement("#btn-show-filters")
     })
 
-    //categories filter
-    $("#categories-select").addEventListener("input", (e) => {
+    
+          
+      //categories filter
+      $("#categories-select").addEventListener("input", (e) => {
         const categoryId = e.target.value
         const currentsOperations = getInfo("operations")
         hideElement("#table")
         if (!categoryId) {
-            renderOperations(allOperations)
+            renderOperations(currentsOperations)
         } else {
             const filteredOperations = currentsOperations.filter(operation => operation.category === categoryId)
             renderOperations(filteredOperations) 
         }    
-    })
-
+    })    
+    
     //expenses/profits selector
     $("#select-panel").addEventListener("change", (e) => {
         e.preventDefault()
