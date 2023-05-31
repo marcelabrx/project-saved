@@ -4,7 +4,7 @@ AhorrAdas is the final proyect of the third unit of "Introduction to Front-end D
 
 It was developed d with knowledges of HTML5 and concepts of JAVASCRIPT. Also, we have used Tailwind CSS, a framework that enables agile development, based on utility classes that can be easily applied in code.
 
-This project was done collaboratively with Github service.
+This project was done collaboratively with Github service, and you can view it through this [link](https://marcelabrx.github.io/project-saved/?#).
 
 ## How to use
 
@@ -24,22 +24,19 @@ The user will find three diferents sections where it will introduce theirs profi
 
  Also the user will sort them by amount, date and description.
 
- In this part of the app. the user will be able to add new operations, edit and delete them.
+ In this section of the app, the user will be able to add new operations, edit and delete them.
  
  ![Readme-newOperation](https://github.com/marcelabrx/project-saved/assets/121632953/abe05c91-88e4-473c-b13d-a81c38b220f2)
 
 ### Categories card
+In this section of the app, the user will be able to add new categories, edit and delete them.
 
 ![Readme-2](https://github.com/marcelabrx/project-saved/assets/121632953/c65f6a5b-191c-4a4f-8069-4f5599aa6134)
 
- In this section of the app, the user will be able to add new categories, edit and delete them.
-
-![Readme-newCategory](https://github.com/marcelabrx/project-saved/assets/121632953/aab763ad-6d1a-4d6b-baf0-10f879c7439e)
-
 ### Reports card
-Foto
+ 
  The last section is a summary of all the operations. It was planned to give the user details of their profists and expenses.
- In the first table ,the user will see the category whith more profits, more expenses, the category whit better balance, the month with more proftis and more expenses.
+ In the first table, the user will see the category whith more profits, more expenses, the category whit better balance, the month with more proftis and more expenses.
  
  ![Readme-3](https://github.com/marcelabrx/project-saved/assets/121632953/aac08baa-74f9-4936-b0a0-e4b42680317c)
  
@@ -50,8 +47,10 @@ Foto
 
 
 ### Finals considerations
- AhorrAdas is designed so that it can be used in the simplest and most efficient way for the user, with each section detailed and easy to use, so that their can control your expenses with the best experience. 
- We whish the users could enjoy it!
+⚠ WARNING! For the best experience when using this program, we recommend that you use Google Chrome ⚠
+
+AhorrAdas is designed so that it can be used in the simplest and most efficient way for the user, with each section detailed and easy to use, so that their can  control your expenses with the best experience. 
+We whish the users could enjoy it!
 
 
 
