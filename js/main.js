@@ -382,7 +382,7 @@ const generateBalance = (operations) => {
     let symbol = total > 0 ? "+" : total < 0 ? "-" : ""
     
     $("#total-balance").innerHTML = `
-    <span class="font-bold ${className}">${symbol}$${(Math.abs(total))}</span>
+    <span class="font-bold ${className}">${symbol}$${(Math.abs(total).toFixed(1))}</span>
     `
 }
 
@@ -536,7 +536,7 @@ const generateTotalsForCategory = (operations, categories) => {
                 <td class="w-1/4 flex justify-start py-4"><span class="rounded-lg bg-purple-50 text-purple-500">${categoryName}</span></td>
                 <td class="w-1/4 flex justify-center py-4 text-green-600">+$${profits}</td>
                 <td class="w-1/4 flex justify-center py-4 text-red-600">-$${expenses}</td>
-                <td class="w-1/4 flex justify-center py-4">${symbol}$${Math.abs(total)}</td>
+                <td class="w-1/4 flex justify-center py-4">${symbol}$${Math.abs(total).toFixed(1)}</td>
             </tr> 
         `
         tableContent += tableRow
@@ -586,7 +586,7 @@ const generateTotalsPerMonth = (operations) => {
             <td class="w-1/4 flex justify-start py-4">${monthYear}</td>
             <td class="w-1/4 flex justify-center py-4 text-green-600">+$${profits}</td>
             <td class="w-1/4 flex justify-center py-4 text-red-600">-$${expenses}</td>
-            <td class="w-1/4 flex justify-center py-4">${symbol}$${Math.abs(total)}</td>
+            <td class="w-1/4 flex justify-center py-4">${symbol}$${Math.abs(total).toFixed(1)}</td>
         </tr>
         
         `
