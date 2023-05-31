@@ -90,12 +90,16 @@ const renderOperations = (operations) => {
 }
 
 const transformCurrentDate = (date) => {
-    const currentDate = new Date(date).toLocaleDateString('es-ES', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
+    const currentDate = new Date(date)
+    currentDate.setDate(currentDate.getDate() + 1)
+    
+    const formattedDate = currentDate.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
     })
-    return currentDate
+    
+    return formattedDate;
 }
 
 const renderCategories = (categories) => {
@@ -114,14 +118,14 @@ const renderCategories = (categories) => {
 }
 
 const renderCategoriesOptions = (categories) => {
-    cleanContainer("#categories-select")
+    cleanContainer("#category-filter")
     cleanContainer("#category")
 
     if (categories.length){
-        $("#categories-select").innerHTML += `
+        $("#category-filter").innerHTML += `
         <option value="">Todas</option>`
         for (const {id, categoryName} of  categories) { 
-        $("#categories-select").innerHTML += `
+        $("#category-filter").innerHTML += `
         <option value="${id}">${categoryName}</option>
         `}
 
@@ -215,7 +219,10 @@ const modalToDeleteOperations = (id) => {
     $("#modal-delete").setAttribute("data-id", id)
     $("#modal-delete").addEventListener("click", () => {
         deleteData(id, "operations")
-        window.location.reload()
+        getBalance(getInfo("operations"))
+        generateBalance(getInfo("operations"))
+        const updatedOperations = getInfo("operations").filter(operation => operation.id !== id)
+        renderOperations(updatedOperations)
     })
     renderOperations(getInfo("operations"))
 }
@@ -227,7 +234,10 @@ const modalToDeleteCategories = (id) => {
     $(".modal-text").innerText = selectedCategory.categoryName
     $("#modal-delete").addEventListener("click", () => {
         deleteData(id, "categories")
-        window.location.reload()
+        const updatedCategories = getInfo("categories").filter(category => category.id !== id)
+        renderCategories(updatedCategories)
+        const updatedOperations = getInfo("operations").filter(operation => operation.category !== selectedCategory.id)
+        setInfo("operations", updatedOperations)
     })
     renderCategories(getInfo("categories"))
 }
@@ -322,6 +332,8 @@ const renderReports = () => {
     }
 
     if (hasProfit && hasExpenditure) {
+        showElement("#reports-table")
+        hideElement(".any-reports")
         summaryByCategories(currentOperations, allCategories)
         summaryByMonths(currentOperations)
         totalsForCategory(currentOperations, allCategories)
@@ -582,6 +594,87 @@ const generateTotalsPerMonth = (operations) => {
     }
     $("#totals-all-months").innerHTML += tableContent
 }
+const applyFilters = () => {
+    const operations = getInfo("operations")
+    const type = $("#type-filter").value 
+    const category = $("#category-filter").value  
+    const order = $("#order-filter").value
+    const date = Number(transformCurrentDate($("#date-filter").value).split("/").join(""))
+
+
+    const filterByType = operations.filter((operation) => {
+        if (type === "Todos") {
+            return operation
+        }
+        return operation.type === type
+    })
+    
+    const filterByCategory = filterByType.filter((operation) => {
+        if (!category) {
+            return operation
+        }
+        return operation.category === category
+    })
+    
+    let filterByDate = filterByCategory.filter((operation) => {
+        const dateOperation = Number(transformCurrentDate(operation.date).split("/").join(""))
+        
+        return date <= dateOperation 
+    })
+    
+    let finalFilter = []
+    
+    if (!filterByDate.length){
+        filterByDate = filterByCategory
+    }
+    
+    if (order === "more-recent") {
+        finalFilter = filterByDate.toSorted((a, b) => {
+           let aDate = Number(transformCurrentDate(a.date).split("/").join(""))
+           let bDate =  Number(transformCurrentDate(b.date).split("/").join(""))
+           
+            return bDate - aDate
+        })
+        
+    }
+    
+    if (order === "les-recent") {
+        finalFilter = filterByDate.toSorted((a, b) => {
+            let bDate = Number(transformCurrentDate(b.date).split("/").join(""))
+            let aDate =  Number(transformCurrentDate(a.date).split("/").join(""))
+
+            return aDate - bDate
+        })
+        
+    }
+
+    if (order === "more-amount") {
+        finalFilter = filterByDate.toSorted((a, b) => b.amount - a.amount)
+    }
+    
+    if (order === "les-amount") {
+        finalFilter = filterByDate.toSorted((a, b) => a.amount - b.amount)
+    }
+
+    if (order === "a-z") {
+        finalFilter = filterByDate.toSorted((a, b) => a.description.localeCompare(b.description))
+
+    }
+
+    if (order === "z-a") {
+        finalFilter = filterByDate.toSorted((a, b) => b.description.localeCompare(a.description))
+    }
+
+    if (!finalFilter.length){
+        hideElement("#new-operation")
+        showElement("#any-operation")
+    } else {
+        showElement("#new-operation")
+        hideElement("#any-operation")
+    }
+    
+    renderOperations(finalFilter)
+}
 
 
 /*
@@ -630,6 +723,18 @@ const initializeApp = () => {
         hideElements(["#category-section", "#balance-section", "#balance-card-left", "#balance-card-right", "#new-operation", "#operations-form"])
     })
 
+    //mobile - open menu
+    $(".fa-bars").addEventListener("click", () => {
+        showElements([".fa-xmark", "#options-menu"])
+        hideElement(".fa-bars")
+    })
+    
+    // mobile - close menu
+    $(".fa-xmark").addEventListener("click", () => {
+        showElement(".fa-bars")
+        hideElements([".fa-xmark", "#options-menu"])
+    })
+    
     //btn succesfull alert
     $("#close-succesfull-alert").addEventListener("click", () => {
         hideElement("#succesfull-alert")
@@ -637,8 +742,9 @@ const initializeApp = () => {
 
     // btn add new operation
     $("#btn-new-operation").addEventListener("click", () => {
-        showElement("#operations-form")
-        hideElements(["#category-section", "#balance-section", "#reports-section", "#balance-card-left", "#balance-card-right"])        
+        showElements(["#operations-form", "#btn-add-operation", ".new-operation-title"])
+        hideElements(["#category-section", "#balance-section", "#reports-section", "#balance-card-left", "#balance-card-right", "#btn-edit-operation", ".edit-operation-title"])
+        $("#form").reset()        
     })
 
     //btn add operation 
@@ -646,7 +752,7 @@ const initializeApp = () => {
         e.preventDefault()
         if (validateFormOperations()) {
             sendNewData("operations", saveOperationsData)
-            showElements(["#new-operation", "#table", "#succesfull-alert"]) 
+            showElements(["#new-operation", "#table", "#succesfull-alert", ".head-table"]) 
             renderOperations(getInfo("operations"))
             renderCategoriesOptions(getInfo("categories"))
             renderCategories(getInfo("categories"))
@@ -687,18 +793,6 @@ const initializeApp = () => {
         }
     })
 
-    //mobile - open menu
-    $(".fa-bars").addEventListener("click", () => {
-        showElements([".fa-xmark", "#options-menu"])
-        hideElement(".fa-bars")
-    })
-    
-    // mobile - close menu
-    $(".fa-xmark").addEventListener("click", () => {
-        showElement(".fa-bars")
-        hideElements([".fa-xmark", "#options-menu"])
-    })
-
     //filters panel 
     $("#btn-hide-filters").addEventListener("click", (e) => {
         e.preventDefault()
@@ -712,96 +806,14 @@ const initializeApp = () => {
         hideElement("#btn-show-filters")
     })
 
-    
-          
-      //categories filter
-      $("#categories-select").addEventListener("input", (e) => {
-        const categoryId = e.target.value
-        const currentsOperations = getInfo("operations")
-        hideElement("#table")
-        if (!categoryId) {
-            renderOperations(currentsOperations)
-        } else {
-            const filteredOperations = currentsOperations.filter(operation => operation.category === categoryId)
-            renderOperations(filteredOperations) 
-        }    
-    })    
-    
-    //expenses/profits selector
-    $("#select-panel").addEventListener("change", (e) => {
-        e.preventDefault()
-        const selectPanel = $("#select-panel").value  
-        if (selectPanel === "Todos"){
-            return renderOperations(allOperations)
-        }
+    $("#type-filter").addEventListener("change", applyFilters )
 
-        const typeFiltered = allOperations.filter((operation) => {
-            return operation.type === selectPanel
-        })
-
-        renderOperations(typeFiltered)
-        showElement("#new-operation")
-        hideElement("#any-operation")
-    })
+    $("#category-filter").addEventListener("change", applyFilters)
     
-    //Date filter    
-    $("#selector-date").addEventListener("input", (e) => {
-        e.preventDefault()
-        let filteredOperations = []
-        const selectedDate = new Date(e.target.value)
-        for (let i = 0; i < allOperations.length; i++) {
-            let operationDate = new Date(allOperations[i].date)
-            
-            if (operationDate >= selectedDate) {
-                filteredOperations.push(allOperations[i]) 
-                renderOperations(filteredOperations)
-            }
-            else if (filteredOperations < selectedDate) {
-                showElement("#any-operation")
-                hideElement("#new-operation")
-            }
-        }
-    })
-
-    //order filter
-    $("#order-select").addEventListener("input", (e) => {
-        e.preventDefault();
-        const currentsOperations = getInfo("operations")
-        let selectedOption = $("#order-select").value
-        
-        if (selectedOption === "more-recent") {
-        currentsOperations.sort((a, b) => b.date.localeCompare(a.date))
-            renderOperations(currentsOperations)
-        }
-        
-        if (selectedOption === "les-recent") {
-            currentsOperations.sort((a, b) => a.date.localeCompare(b.date))
-            renderOperations(currentsOperations)
-        }
+    $("#date-filter").addEventListener("change", applyFilters)
     
-        if (selectedOption === "more-amount") {
-            currentsOperations.sort((a, b) => b.amount - a.amount)
-            renderOperations(currentsOperations)
-        }
-        
-        if (selectedOption === "les-amount") {
-            currentsOperations.sort((a, b) => a.amount - b.amount)
-            renderOperations(currentsOperations)
-        }
-        
-        if (selectedOption === "a-z") {
-            currentsOperations.sort((a, b) =>
-            a.description.localeCompare(b.description))
-            renderOperations(currentsOperations)
-        }
-        
-        if (selectedOption === "z-a") {
-            currentsOperations.sort((a, b) =>
-            b.description.localeCompare(a.description))
-            renderOperations(currentsOperations)
-        }
-    })
-        
+    $("#order-filter").addEventListener("change", applyFilters)
+
     //section categorias
     $("#btn-add-categories").addEventListener("click", () => {
         if (validateAddCategory()) {

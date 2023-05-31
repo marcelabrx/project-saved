@@ -142,7 +142,7 @@
               <div class="text-gray-900 mb-2">
                 <label class="ml-1 text-lg font-bold">Tipo</label>
                 <select
-                  id="select-panel"
+                  id="type-filter"
                   class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300"
                 >
                   <option value="Todos">Todos</option>
@@ -152,11 +152,11 @@
               </div>
               <!-- Filters Panel - Category -->
               <div class="text-gray-900 mb-2">
-                <label for="categories-select" class="ml-1 text-lg font-bold"
+                <label for="category-filter" class="ml-1 text-lg font-bold"
                   >Categoría</label
                 >
                 <select
-                  id="categories-select"
+                  id="category-filter"
                   class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300"
                 >
                   <!--Operations rendered from the localstorage -->
@@ -167,8 +167,8 @@
                 <div class="ml-1 text-lg font-bold">Desde</div>
                 <input
                   type="date"
-                  name="selector-date"
-                  id="selector-date"
+                  name="date-filter"
+                  id="date-filter"
                   class="w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300"
                 />
               </div>
@@ -176,7 +176,7 @@
               <div class="text-gray-900">
                 <label class="ml-1 text-lg font-bold">Ordenar por</label>
                 <select
-                  id="order-select"
+                  id="order-filter"
                   class="block w-full p-2 mt-2 rounded-md border-2 border-[#ebebeb] focus:outline-none focus:border focus:border-2 focus:border-purple-300"
                 >
                   <option value="more-recent">Más reciente</option>
@@ -231,7 +231,7 @@
               id="table"
               class="w-full table-fixed border border-purple-100 flex-wrap"
             >
-              <thead>
+              <thead class="head-table hidden">
                 <tr
                   class="hidden border border-purple-100 md:flex md:justify-between"
                 >
@@ -375,7 +375,7 @@
             />
             <button
               id="btn-add-categories"
-              class="px-4 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700 lg:w-[10%]"
+              class="px-4 py-2 rounded-md bg-purple-500 text-white hover:bg-purple-700 lg:w-[12%]"
             >
               Agregar
             </button>
